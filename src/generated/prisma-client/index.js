@@ -12,6 +12,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/jordan-cd4ab8/quality-hub-core-be/dev`
+  endpoint: `https://us1.prisma.sh/quail/quality-hub-core-be/dev`
 });
 exports.prisma = new exports.Prisma();
