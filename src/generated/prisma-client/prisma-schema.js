@@ -3,7 +3,15 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateIndustry {
+  count: Int!
+}
+
+type AggregateResume {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,9 +19,204 @@ type BatchPayload {
   count: Long!
 }
 
+type Industry {
+  id: ID!
+  name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type IndustryConnection {
+  pageInfo: PageInfo!
+  edges: [IndustryEdge]!
+  aggregate: AggregateIndustry!
+}
+
+input IndustryCreateInput {
+  id: ID
+  name: String!
+  users: UserCreateManyWithoutIndustriesInput
+}
+
+input IndustryCreateManyWithoutUsersInput {
+  create: [IndustryCreateWithoutUsersInput!]
+  connect: [IndustryWhereUniqueInput!]
+}
+
+input IndustryCreateWithoutUsersInput {
+  id: ID
+  name: String!
+}
+
+type IndustryEdge {
+  node: Industry!
+  cursor: String!
+}
+
+enum IndustryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type IndustryPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input IndustryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [IndustryScalarWhereInput!]
+  OR: [IndustryScalarWhereInput!]
+  NOT: [IndustryScalarWhereInput!]
+}
+
+type IndustrySubscriptionPayload {
+  mutation: MutationType!
+  node: Industry
+  updatedFields: [String!]
+  previousValues: IndustryPreviousValues
+}
+
+input IndustrySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: IndustryWhereInput
+  AND: [IndustrySubscriptionWhereInput!]
+  OR: [IndustrySubscriptionWhereInput!]
+  NOT: [IndustrySubscriptionWhereInput!]
+}
+
+input IndustryUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutIndustriesInput
+}
+
+input IndustryUpdateManyDataInput {
+  name: String
+}
+
+input IndustryUpdateManyMutationInput {
+  name: String
+}
+
+input IndustryUpdateManyWithoutUsersInput {
+  create: [IndustryCreateWithoutUsersInput!]
+  delete: [IndustryWhereUniqueInput!]
+  connect: [IndustryWhereUniqueInput!]
+  set: [IndustryWhereUniqueInput!]
+  disconnect: [IndustryWhereUniqueInput!]
+  update: [IndustryUpdateWithWhereUniqueWithoutUsersInput!]
+  upsert: [IndustryUpsertWithWhereUniqueWithoutUsersInput!]
+  deleteMany: [IndustryScalarWhereInput!]
+  updateMany: [IndustryUpdateManyWithWhereNestedInput!]
+}
+
+input IndustryUpdateManyWithWhereNestedInput {
+  where: IndustryScalarWhereInput!
+  data: IndustryUpdateManyDataInput!
+}
+
+input IndustryUpdateWithoutUsersDataInput {
+  name: String
+}
+
+input IndustryUpdateWithWhereUniqueWithoutUsersInput {
+  where: IndustryWhereUniqueInput!
+  data: IndustryUpdateWithoutUsersDataInput!
+}
+
+input IndustryUpsertWithWhereUniqueWithoutUsersInput {
+  where: IndustryWhereUniqueInput!
+  update: IndustryUpdateWithoutUsersDataInput!
+  create: IndustryCreateWithoutUsersInput!
+}
+
+input IndustryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [IndustryWhereInput!]
+  OR: [IndustryWhereInput!]
+  NOT: [IndustryWhereInput!]
+}
+
+input IndustryWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createIndustry(data: IndustryCreateInput!): Industry!
+  updateIndustry(data: IndustryUpdateInput!, where: IndustryWhereUniqueInput!): Industry
+  updateManyIndustries(data: IndustryUpdateManyMutationInput!, where: IndustryWhereInput): BatchPayload!
+  upsertIndustry(where: IndustryWhereUniqueInput!, create: IndustryCreateInput!, update: IndustryUpdateInput!): Industry!
+  deleteIndustry(where: IndustryWhereUniqueInput!): Industry
+  deleteManyIndustries(where: IndustryWhereInput): BatchPayload!
+  createResume(data: ResumeCreateInput!): Resume!
+  updateResume(data: ResumeUpdateInput!, where: ResumeWhereUniqueInput!): Resume
+  updateManyResumes(data: ResumeUpdateManyMutationInput!, where: ResumeWhereInput): BatchPayload!
+  upsertResume(where: ResumeWhereUniqueInput!, create: ResumeCreateInput!, update: ResumeUpdateInput!): Resume!
+  deleteResume(where: ResumeWhereUniqueInput!): Resume
+  deleteManyResumes(where: ResumeWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,13 +243,240 @@ type PageInfo {
 }
 
 type Query {
+  industry(where: IndustryWhereUniqueInput!): Industry
+  industries(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Industry]!
+  industriesConnection(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IndustryConnection!
+  resume(where: ResumeWhereUniqueInput!): Resume
+  resumes(where: ResumeWhereInput, orderBy: ResumeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resume]!
+  resumesConnection(where: ResumeWhereInput, orderBy: ResumeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResumeConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Resume {
+  id: ID!
+  user: User!
+  name: String!
+  url: String!
+}
+
+type ResumeConnection {
+  pageInfo: PageInfo!
+  edges: [ResumeEdge]!
+  aggregate: AggregateResume!
+}
+
+input ResumeCreateInput {
+  id: ID
+  user: UserCreateOneWithoutResumesInput!
+  name: String!
+  url: String!
+}
+
+input ResumeCreateManyWithoutUserInput {
+  create: [ResumeCreateWithoutUserInput!]
+  connect: [ResumeWhereUniqueInput!]
+}
+
+input ResumeCreateWithoutUserInput {
+  id: ID
+  name: String!
+  url: String!
+}
+
+type ResumeEdge {
+  node: Resume!
+  cursor: String!
+}
+
+enum ResumeOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  url_ASC
+  url_DESC
+}
+
+type ResumePreviousValues {
+  id: ID!
+  name: String!
+  url: String!
+}
+
+input ResumeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [ResumeScalarWhereInput!]
+  OR: [ResumeScalarWhereInput!]
+  NOT: [ResumeScalarWhereInput!]
+}
+
+type ResumeSubscriptionPayload {
+  mutation: MutationType!
+  node: Resume
+  updatedFields: [String!]
+  previousValues: ResumePreviousValues
+}
+
+input ResumeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ResumeWhereInput
+  AND: [ResumeSubscriptionWhereInput!]
+  OR: [ResumeSubscriptionWhereInput!]
+  NOT: [ResumeSubscriptionWhereInput!]
+}
+
+input ResumeUpdateInput {
+  user: UserUpdateOneRequiredWithoutResumesInput
+  name: String
+  url: String
+}
+
+input ResumeUpdateManyDataInput {
+  name: String
+  url: String
+}
+
+input ResumeUpdateManyMutationInput {
+  name: String
+  url: String
+}
+
+input ResumeUpdateManyWithoutUserInput {
+  create: [ResumeCreateWithoutUserInput!]
+  delete: [ResumeWhereUniqueInput!]
+  connect: [ResumeWhereUniqueInput!]
+  set: [ResumeWhereUniqueInput!]
+  disconnect: [ResumeWhereUniqueInput!]
+  update: [ResumeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ResumeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ResumeScalarWhereInput!]
+  updateMany: [ResumeUpdateManyWithWhereNestedInput!]
+}
+
+input ResumeUpdateManyWithWhereNestedInput {
+  where: ResumeScalarWhereInput!
+  data: ResumeUpdateManyDataInput!
+}
+
+input ResumeUpdateWithoutUserDataInput {
+  name: String
+  url: String
+}
+
+input ResumeUpdateWithWhereUniqueWithoutUserInput {
+  where: ResumeWhereUniqueInput!
+  data: ResumeUpdateWithoutUserDataInput!
+}
+
+input ResumeUpsertWithWhereUniqueWithoutUserInput {
+  where: ResumeWhereUniqueInput!
+  update: ResumeUpdateWithoutUserDataInput!
+  create: ResumeCreateWithoutUserInput!
+}
+
+input ResumeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [ResumeWhereInput!]
+  OR: [ResumeWhereInput!]
+  NOT: [ResumeWhereInput!]
+}
+
+input ResumeWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
+  resume(where: ResumeSubscriptionWhereInput): ResumeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -54,20 +484,22 @@ type User {
   id: ID!
   first_name: String!
   last_name: String!
-  password: String!
   email: String!
+  password: String!
   city: String!
   state: String!
-  image: String
   gender: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
+  bio: String
+  industries(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Industry!]
+  image_url: String
   portfolio_url: String
   linkedin_url: String
   github_url: String
-  bio: String
-  payment_info: Boolean
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  resumes(where: ResumeWhereInput, orderBy: ResumeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resume!]
+  activated_stripe: Boolean
 }
 
 type UserConnection {
@@ -80,20 +512,74 @@ input UserCreateInput {
   id: ID
   first_name: String!
   last_name: String!
-  password: String!
   email: String!
+  password: String!
   city: String!
   state: String!
-  image: String
   gender: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
+  bio: String
+  industries: IndustryCreateManyWithoutUsersInput
+  image_url: String
   portfolio_url: String
   linkedin_url: String
   github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  resumes: ResumeCreateManyWithoutUserInput
+  activated_stripe: Boolean
+}
+
+input UserCreateManyWithoutIndustriesInput {
+  create: [UserCreateWithoutIndustriesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutResumesInput {
+  create: UserCreateWithoutResumesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutIndustriesInput {
+  id: ID
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  city: String!
+  state: String!
+  gender: String
   bio: String
-  payment_info: Boolean
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  resumes: ResumeCreateManyWithoutUserInput
+  activated_stripe: Boolean
+}
+
+input UserCreateWithoutResumesInput {
+  id: ID
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  city: String!
+  state: String!
+  gender: String
+  bio: String
+  industries: IndustryCreateManyWithoutUsersInput
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
 }
 
 type UserEdge {
@@ -108,54 +594,286 @@ enum UserOrderByInput {
   first_name_DESC
   last_name_ASC
   last_name_DESC
-  password_ASC
-  password_DESC
   email_ASC
   email_DESC
+  password_ASC
+  password_DESC
   city_ASC
   city_DESC
   state_ASC
   state_DESC
-  image_ASC
-  image_DESC
   gender_ASC
   gender_DESC
-  personal_url_ASC
-  personal_url_DESC
-  blog_url_ASC
-  blog_url_DESC
-  twitter_url_ASC
-  twitter_url_DESC
+  bio_ASC
+  bio_DESC
+  image_url_ASC
+  image_url_DESC
   portfolio_url_ASC
   portfolio_url_DESC
   linkedin_url_ASC
   linkedin_url_DESC
   github_url_ASC
   github_url_DESC
-  bio_ASC
-  bio_DESC
-  payment_info_ASC
-  payment_info_DESC
+  personal_url_ASC
+  personal_url_DESC
+  blog_url_ASC
+  blog_url_DESC
+  twitter_url_ASC
+  twitter_url_DESC
+  activated_stripe_ASC
+  activated_stripe_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   first_name: String!
   last_name: String!
-  password: String!
   email: String!
+  password: String!
   city: String!
   state: String!
-  image: String
   gender: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
+  bio: String
+  image_url: String
   portfolio_url: String
   linkedin_url: String
   github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  first_name: String
+  first_name_not: String
+  first_name_in: [String!]
+  first_name_not_in: [String!]
+  first_name_lt: String
+  first_name_lte: String
+  first_name_gt: String
+  first_name_gte: String
+  first_name_contains: String
+  first_name_not_contains: String
+  first_name_starts_with: String
+  first_name_not_starts_with: String
+  first_name_ends_with: String
+  first_name_not_ends_with: String
+  last_name: String
+  last_name_not: String
+  last_name_in: [String!]
+  last_name_not_in: [String!]
+  last_name_lt: String
+  last_name_lte: String
+  last_name_gt: String
+  last_name_gte: String
+  last_name_contains: String
+  last_name_not_contains: String
+  last_name_starts_with: String
+  last_name_not_starts_with: String
+  last_name_ends_with: String
+  last_name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  state: String
+  state_not: String
+  state_in: [String!]
+  state_not_in: [String!]
+  state_lt: String
+  state_lte: String
+  state_gt: String
+  state_gte: String
+  state_contains: String
+  state_not_contains: String
+  state_starts_with: String
+  state_not_starts_with: String
+  state_ends_with: String
+  state_not_ends_with: String
+  gender: String
+  gender_not: String
+  gender_in: [String!]
+  gender_not_in: [String!]
+  gender_lt: String
+  gender_lte: String
+  gender_gt: String
+  gender_gte: String
+  gender_contains: String
+  gender_not_contains: String
+  gender_starts_with: String
+  gender_not_starts_with: String
+  gender_ends_with: String
+  gender_not_ends_with: String
   bio: String
-  payment_info: Boolean
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  image_url: String
+  image_url_not: String
+  image_url_in: [String!]
+  image_url_not_in: [String!]
+  image_url_lt: String
+  image_url_lte: String
+  image_url_gt: String
+  image_url_gte: String
+  image_url_contains: String
+  image_url_not_contains: String
+  image_url_starts_with: String
+  image_url_not_starts_with: String
+  image_url_ends_with: String
+  image_url_not_ends_with: String
+  portfolio_url: String
+  portfolio_url_not: String
+  portfolio_url_in: [String!]
+  portfolio_url_not_in: [String!]
+  portfolio_url_lt: String
+  portfolio_url_lte: String
+  portfolio_url_gt: String
+  portfolio_url_gte: String
+  portfolio_url_contains: String
+  portfolio_url_not_contains: String
+  portfolio_url_starts_with: String
+  portfolio_url_not_starts_with: String
+  portfolio_url_ends_with: String
+  portfolio_url_not_ends_with: String
+  linkedin_url: String
+  linkedin_url_not: String
+  linkedin_url_in: [String!]
+  linkedin_url_not_in: [String!]
+  linkedin_url_lt: String
+  linkedin_url_lte: String
+  linkedin_url_gt: String
+  linkedin_url_gte: String
+  linkedin_url_contains: String
+  linkedin_url_not_contains: String
+  linkedin_url_starts_with: String
+  linkedin_url_not_starts_with: String
+  linkedin_url_ends_with: String
+  linkedin_url_not_ends_with: String
+  github_url: String
+  github_url_not: String
+  github_url_in: [String!]
+  github_url_not_in: [String!]
+  github_url_lt: String
+  github_url_lte: String
+  github_url_gt: String
+  github_url_gte: String
+  github_url_contains: String
+  github_url_not_contains: String
+  github_url_starts_with: String
+  github_url_not_starts_with: String
+  github_url_ends_with: String
+  github_url_not_ends_with: String
+  personal_url: String
+  personal_url_not: String
+  personal_url_in: [String!]
+  personal_url_not_in: [String!]
+  personal_url_lt: String
+  personal_url_lte: String
+  personal_url_gt: String
+  personal_url_gte: String
+  personal_url_contains: String
+  personal_url_not_contains: String
+  personal_url_starts_with: String
+  personal_url_not_starts_with: String
+  personal_url_ends_with: String
+  personal_url_not_ends_with: String
+  blog_url: String
+  blog_url_not: String
+  blog_url_in: [String!]
+  blog_url_not_in: [String!]
+  blog_url_lt: String
+  blog_url_lte: String
+  blog_url_gt: String
+  blog_url_gte: String
+  blog_url_contains: String
+  blog_url_not_contains: String
+  blog_url_starts_with: String
+  blog_url_not_starts_with: String
+  blog_url_ends_with: String
+  blog_url_not_ends_with: String
+  twitter_url: String
+  twitter_url_not: String
+  twitter_url_in: [String!]
+  twitter_url_not_in: [String!]
+  twitter_url_lt: String
+  twitter_url_lte: String
+  twitter_url_gt: String
+  twitter_url_gte: String
+  twitter_url_contains: String
+  twitter_url_not_contains: String
+  twitter_url_starts_with: String
+  twitter_url_not_starts_with: String
+  twitter_url_ends_with: String
+  twitter_url_not_ends_with: String
+  activated_stripe: Boolean
+  activated_stripe_not: Boolean
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
 }
 
 type UserSubscriptionPayload {
@@ -179,39 +897,140 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   first_name: String
   last_name: String
-  password: String
   email: String
+  password: String
   city: String
   state: String
-  image: String
   gender: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
+  bio: String
+  industries: IndustryUpdateManyWithoutUsersInput
+  image_url: String
   portfolio_url: String
   linkedin_url: String
   github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  resumes: ResumeUpdateManyWithoutUserInput
+  activated_stripe: Boolean
+}
+
+input UserUpdateManyDataInput {
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  city: String
+  state: String
+  gender: String
   bio: String
-  payment_info: Boolean
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
 }
 
 input UserUpdateManyMutationInput {
   first_name: String
   last_name: String
-  password: String
   email: String
+  password: String
   city: String
   state: String
-  image: String
   gender: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
+  bio: String
+  image_url: String
   portfolio_url: String
   linkedin_url: String
   github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
+}
+
+input UserUpdateManyWithoutIndustriesInput {
+  create: [UserCreateWithoutIndustriesInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutIndustriesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutIndustriesInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredWithoutResumesInput {
+  create: UserCreateWithoutResumesInput
+  update: UserUpdateWithoutResumesDataInput
+  upsert: UserUpsertWithoutResumesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutIndustriesDataInput {
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  city: String
+  state: String
+  gender: String
   bio: String
-  payment_info: Boolean
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  resumes: ResumeUpdateManyWithoutUserInput
+  activated_stripe: Boolean
+}
+
+input UserUpdateWithoutResumesDataInput {
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  city: String
+  state: String
+  gender: String
+  bio: String
+  industries: IndustryUpdateManyWithoutUsersInput
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
+}
+
+input UserUpdateWithWhereUniqueWithoutIndustriesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutIndustriesDataInput!
+}
+
+input UserUpsertWithoutResumesInput {
+  update: UserUpdateWithoutResumesDataInput!
+  create: UserCreateWithoutResumesInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutIndustriesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutIndustriesDataInput!
+  create: UserCreateWithoutIndustriesInput!
 }
 
 input UserWhereInput {
@@ -257,20 +1076,6 @@ input UserWhereInput {
   last_name_not_starts_with: String
   last_name_ends_with: String
   last_name_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]
@@ -285,6 +1090,20 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   city: String
   city_not: String
   city_in: [String!]
@@ -313,20 +1132,6 @@ input UserWhereInput {
   state_not_starts_with: String
   state_ends_with: String
   state_not_ends_with: String
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
   gender: String
   gender_not: String
   gender_in: [String!]
@@ -341,48 +1146,37 @@ input UserWhereInput {
   gender_not_starts_with: String
   gender_ends_with: String
   gender_not_ends_with: String
-  personal_url: String
-  personal_url_not: String
-  personal_url_in: [String!]
-  personal_url_not_in: [String!]
-  personal_url_lt: String
-  personal_url_lte: String
-  personal_url_gt: String
-  personal_url_gte: String
-  personal_url_contains: String
-  personal_url_not_contains: String
-  personal_url_starts_with: String
-  personal_url_not_starts_with: String
-  personal_url_ends_with: String
-  personal_url_not_ends_with: String
-  blog_url: String
-  blog_url_not: String
-  blog_url_in: [String!]
-  blog_url_not_in: [String!]
-  blog_url_lt: String
-  blog_url_lte: String
-  blog_url_gt: String
-  blog_url_gte: String
-  blog_url_contains: String
-  blog_url_not_contains: String
-  blog_url_starts_with: String
-  blog_url_not_starts_with: String
-  blog_url_ends_with: String
-  blog_url_not_ends_with: String
-  twitter_url: String
-  twitter_url_not: String
-  twitter_url_in: [String!]
-  twitter_url_not_in: [String!]
-  twitter_url_lt: String
-  twitter_url_lte: String
-  twitter_url_gt: String
-  twitter_url_gte: String
-  twitter_url_contains: String
-  twitter_url_not_contains: String
-  twitter_url_starts_with: String
-  twitter_url_not_starts_with: String
-  twitter_url_ends_with: String
-  twitter_url_not_ends_with: String
+  bio: String
+  bio_not: String
+  bio_in: [String!]
+  bio_not_in: [String!]
+  bio_lt: String
+  bio_lte: String
+  bio_gt: String
+  bio_gte: String
+  bio_contains: String
+  bio_not_contains: String
+  bio_starts_with: String
+  bio_not_starts_with: String
+  bio_ends_with: String
+  bio_not_ends_with: String
+  industries_every: IndustryWhereInput
+  industries_some: IndustryWhereInput
+  industries_none: IndustryWhereInput
+  image_url: String
+  image_url_not: String
+  image_url_in: [String!]
+  image_url_not_in: [String!]
+  image_url_lt: String
+  image_url_lte: String
+  image_url_gt: String
+  image_url_gte: String
+  image_url_contains: String
+  image_url_not_contains: String
+  image_url_starts_with: String
+  image_url_not_starts_with: String
+  image_url_ends_with: String
+  image_url_not_ends_with: String
   portfolio_url: String
   portfolio_url_not: String
   portfolio_url_in: [String!]
@@ -425,22 +1219,53 @@ input UserWhereInput {
   github_url_not_starts_with: String
   github_url_ends_with: String
   github_url_not_ends_with: String
-  bio: String
-  bio_not: String
-  bio_in: [String!]
-  bio_not_in: [String!]
-  bio_lt: String
-  bio_lte: String
-  bio_gt: String
-  bio_gte: String
-  bio_contains: String
-  bio_not_contains: String
-  bio_starts_with: String
-  bio_not_starts_with: String
-  bio_ends_with: String
-  bio_not_ends_with: String
-  payment_info: Boolean
-  payment_info_not: Boolean
+  personal_url: String
+  personal_url_not: String
+  personal_url_in: [String!]
+  personal_url_not_in: [String!]
+  personal_url_lt: String
+  personal_url_lte: String
+  personal_url_gt: String
+  personal_url_gte: String
+  personal_url_contains: String
+  personal_url_not_contains: String
+  personal_url_starts_with: String
+  personal_url_not_starts_with: String
+  personal_url_ends_with: String
+  personal_url_not_ends_with: String
+  blog_url: String
+  blog_url_not: String
+  blog_url_in: [String!]
+  blog_url_not_in: [String!]
+  blog_url_lt: String
+  blog_url_lte: String
+  blog_url_gt: String
+  blog_url_gte: String
+  blog_url_contains: String
+  blog_url_not_contains: String
+  blog_url_starts_with: String
+  blog_url_not_starts_with: String
+  blog_url_ends_with: String
+  blog_url_not_ends_with: String
+  twitter_url: String
+  twitter_url_not: String
+  twitter_url_in: [String!]
+  twitter_url_not_in: [String!]
+  twitter_url_lt: String
+  twitter_url_lte: String
+  twitter_url_gt: String
+  twitter_url_gte: String
+  twitter_url_contains: String
+  twitter_url_not_contains: String
+  twitter_url_starts_with: String
+  twitter_url_not_starts_with: String
+  twitter_url_ends_with: String
+  twitter_url_not_ends_with: String
+  resumes_every: ResumeWhereInput
+  resumes_some: ResumeWhereInput
+  resumes_none: ResumeWhereInput
+  activated_stripe: Boolean
+  activated_stripe_not: Boolean
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
