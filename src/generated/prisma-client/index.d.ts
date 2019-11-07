@@ -104,8 +104,10 @@ export interface ClientConstructor<T> {
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
+  | "first_name_ASC"
+  | "first_name_DESC"
+  | "last_name_ASC"
+  | "last_name_DESC"
   | "password_ASC"
   | "password_DESC"
   | "email_ASC"
@@ -139,7 +141,8 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  first_name: String;
+  last_name: String;
   password: String;
   email: String;
   city: String;
@@ -153,11 +156,12 @@ export interface UserCreateInput {
   linkedin_url?: Maybe<String>;
   github_url?: Maybe<String>;
   bio?: Maybe<String>;
-  payment_info: Boolean;
+  payment_info?: Maybe<Boolean>;
 }
 
 export interface UserUpdateInput {
-  name?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
   password?: Maybe<String>;
   email?: Maybe<String>;
   city?: Maybe<String>;
@@ -189,20 +193,34 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  first_name?: Maybe<String>;
+  first_name_not?: Maybe<String>;
+  first_name_in?: Maybe<String[] | String>;
+  first_name_not_in?: Maybe<String[] | String>;
+  first_name_lt?: Maybe<String>;
+  first_name_lte?: Maybe<String>;
+  first_name_gt?: Maybe<String>;
+  first_name_gte?: Maybe<String>;
+  first_name_contains?: Maybe<String>;
+  first_name_not_contains?: Maybe<String>;
+  first_name_starts_with?: Maybe<String>;
+  first_name_not_starts_with?: Maybe<String>;
+  first_name_ends_with?: Maybe<String>;
+  first_name_not_ends_with?: Maybe<String>;
+  last_name?: Maybe<String>;
+  last_name_not?: Maybe<String>;
+  last_name_in?: Maybe<String[] | String>;
+  last_name_not_in?: Maybe<String[] | String>;
+  last_name_lt?: Maybe<String>;
+  last_name_lte?: Maybe<String>;
+  last_name_gt?: Maybe<String>;
+  last_name_gte?: Maybe<String>;
+  last_name_contains?: Maybe<String>;
+  last_name_not_contains?: Maybe<String>;
+  last_name_starts_with?: Maybe<String>;
+  last_name_not_starts_with?: Maybe<String>;
+  last_name_ends_with?: Maybe<String>;
+  last_name_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
   password_not?: Maybe<String>;
   password_in?: Maybe<String[] | String>;
@@ -393,7 +411,8 @@ export interface UserWhereInput {
 }
 
 export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
   password?: Maybe<String>;
   email?: Maybe<String>;
   city?: Maybe<String>;
@@ -423,6 +442,7 @@ export interface UserSubscriptionWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
 export interface NodeNode {
@@ -463,7 +483,8 @@ export interface BatchPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
+  first_name: String;
+  last_name: String;
   password: String;
   email: String;
   city: String;
@@ -477,14 +498,15 @@ export interface UserPreviousValues {
   linkedin_url?: String;
   github_url?: String;
   bio?: String;
-  payment_info: Boolean;
+  payment_info?: Boolean;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
   city: () => Promise<String>;
@@ -505,7 +527,8 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   city: () => Promise<AsyncIterator<String>>;
@@ -566,7 +589,8 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface User {
   id: ID_Output;
-  name: String;
+  first_name: String;
+  last_name: String;
   password: String;
   email: String;
   city: String;
@@ -580,12 +604,13 @@ export interface User {
   linkedin_url?: String;
   github_url?: String;
   bio?: String;
-  payment_info: Boolean;
+  payment_info?: Boolean;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
   city: () => Promise<String>;
@@ -606,7 +631,8 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   city: () => Promise<AsyncIterator<String>>;
@@ -627,7 +653,8 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
   city: () => Promise<String>;

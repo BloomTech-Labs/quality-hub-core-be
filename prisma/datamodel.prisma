@@ -1,8 +1,9 @@
 type User {
   id: ID! @id
-  name: String!
+  first_name: String!
+  last_name: String!
   password: String!
-  email: String!  
+  email: String! @unique
   city: String!
   state: String!
   image: String
