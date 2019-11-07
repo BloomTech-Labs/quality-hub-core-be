@@ -16,6 +16,8 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  industry: (where?: IndustryWhereInput) => Promise<boolean>;
+  resume: (where?: ResumeWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +40,44 @@ export interface Prisma {
    * Queries
    */
 
+  industry: (where: IndustryWhereUniqueInput) => IndustryNullablePromise;
+  industries: (args?: {
+    where?: IndustryWhereInput;
+    orderBy?: IndustryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Industry>;
+  industriesConnection: (args?: {
+    where?: IndustryWhereInput;
+    orderBy?: IndustryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => IndustryConnectionPromise;
+  resume: (where: ResumeWhereUniqueInput) => ResumeNullablePromise;
+  resumes: (args?: {
+    where?: ResumeWhereInput;
+    orderBy?: ResumeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Resume>;
+  resumesConnection: (args?: {
+    where?: ResumeWhereInput;
+    orderBy?: ResumeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ResumeConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +103,38 @@ export interface Prisma {
    * Mutations
    */
 
+  createIndustry: (data: IndustryCreateInput) => IndustryPromise;
+  updateIndustry: (args: {
+    data: IndustryUpdateInput;
+    where: IndustryWhereUniqueInput;
+  }) => IndustryPromise;
+  updateManyIndustries: (args: {
+    data: IndustryUpdateManyMutationInput;
+    where?: IndustryWhereInput;
+  }) => BatchPayloadPromise;
+  upsertIndustry: (args: {
+    where: IndustryWhereUniqueInput;
+    create: IndustryCreateInput;
+    update: IndustryUpdateInput;
+  }) => IndustryPromise;
+  deleteIndustry: (where: IndustryWhereUniqueInput) => IndustryPromise;
+  deleteManyIndustries: (where?: IndustryWhereInput) => BatchPayloadPromise;
+  createResume: (data: ResumeCreateInput) => ResumePromise;
+  updateResume: (args: {
+    data: ResumeUpdateInput;
+    where: ResumeWhereUniqueInput;
+  }) => ResumePromise;
+  updateManyResumes: (args: {
+    data: ResumeUpdateManyMutationInput;
+    where?: ResumeWhereInput;
+  }) => BatchPayloadPromise;
+  upsertResume: (args: {
+    where: ResumeWhereUniqueInput;
+    create: ResumeCreateInput;
+    update: ResumeUpdateInput;
+  }) => ResumePromise;
+  deleteResume: (where: ResumeWhereUniqueInput) => ResumePromise;
+  deleteManyResumes: (where?: ResumeWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +160,12 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  industry: (
+    where?: IndustrySubscriptionWhereInput
+  ) => IndustrySubscriptionPayloadSubscription;
+  resume: (
+    where?: ResumeSubscriptionWhereInput
+  ) => ResumeSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -108,74 +186,667 @@ export type UserOrderByInput =
   | "first_name_DESC"
   | "last_name_ASC"
   | "last_name_DESC"
-  | "password_ASC"
-  | "password_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "city_ASC"
   | "city_DESC"
   | "state_ASC"
   | "state_DESC"
-  | "image_ASC"
-  | "image_DESC"
   | "gender_ASC"
   | "gender_DESC"
-  | "personal_url_ASC"
-  | "personal_url_DESC"
-  | "blog_url_ASC"
-  | "blog_url_DESC"
-  | "twitter_url_ASC"
-  | "twitter_url_DESC"
+  | "bio_ASC"
+  | "bio_DESC"
+  | "image_url_ASC"
+  | "image_url_DESC"
   | "portfolio_url_ASC"
   | "portfolio_url_DESC"
   | "linkedin_url_ASC"
   | "linkedin_url_DESC"
   | "github_url_ASC"
   | "github_url_DESC"
-  | "bio_ASC"
-  | "bio_DESC"
-  | "payment_info_ASC"
-  | "payment_info_DESC";
+  | "personal_url_ASC"
+  | "personal_url_DESC"
+  | "blog_url_ASC"
+  | "blog_url_DESC"
+  | "twitter_url_ASC"
+  | "twitter_url_DESC"
+  | "activated_stripe_ASC"
+  | "activated_stripe_DESC";
+
+export type IndustryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type ResumeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "url_ASC"
+  | "url_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface ResumeScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ResumeScalarWhereInput[] | ResumeScalarWhereInput>;
+  OR?: Maybe<ResumeScalarWhereInput[] | ResumeScalarWhereInput>;
+  NOT?: Maybe<ResumeScalarWhereInput[] | ResumeScalarWhereInput>;
+}
+
+export type IndustryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpsertWithWhereUniqueWithoutIndustriesInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutIndustriesDataInput;
+  create: UserCreateWithoutIndustriesInput;
+}
+
+export interface ResumeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  user?: Maybe<UserWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ResumeWhereInput[] | ResumeWhereInput>;
+  OR?: Maybe<ResumeWhereInput[] | ResumeWhereInput>;
+  NOT?: Maybe<ResumeWhereInput[] | ResumeWhereInput>;
+}
+
+export interface UserScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  first_name?: Maybe<String>;
+  first_name_not?: Maybe<String>;
+  first_name_in?: Maybe<String[] | String>;
+  first_name_not_in?: Maybe<String[] | String>;
+  first_name_lt?: Maybe<String>;
+  first_name_lte?: Maybe<String>;
+  first_name_gt?: Maybe<String>;
+  first_name_gte?: Maybe<String>;
+  first_name_contains?: Maybe<String>;
+  first_name_not_contains?: Maybe<String>;
+  first_name_starts_with?: Maybe<String>;
+  first_name_not_starts_with?: Maybe<String>;
+  first_name_ends_with?: Maybe<String>;
+  first_name_not_ends_with?: Maybe<String>;
+  last_name?: Maybe<String>;
+  last_name_not?: Maybe<String>;
+  last_name_in?: Maybe<String[] | String>;
+  last_name_not_in?: Maybe<String[] | String>;
+  last_name_lt?: Maybe<String>;
+  last_name_lte?: Maybe<String>;
+  last_name_gt?: Maybe<String>;
+  last_name_gte?: Maybe<String>;
+  last_name_contains?: Maybe<String>;
+  last_name_not_contains?: Maybe<String>;
+  last_name_starts_with?: Maybe<String>;
+  last_name_not_starts_with?: Maybe<String>;
+  last_name_ends_with?: Maybe<String>;
+  last_name_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  state?: Maybe<String>;
+  state_not?: Maybe<String>;
+  state_in?: Maybe<String[] | String>;
+  state_not_in?: Maybe<String[] | String>;
+  state_lt?: Maybe<String>;
+  state_lte?: Maybe<String>;
+  state_gt?: Maybe<String>;
+  state_gte?: Maybe<String>;
+  state_contains?: Maybe<String>;
+  state_not_contains?: Maybe<String>;
+  state_starts_with?: Maybe<String>;
+  state_not_starts_with?: Maybe<String>;
+  state_ends_with?: Maybe<String>;
+  state_not_ends_with?: Maybe<String>;
+  gender?: Maybe<String>;
+  gender_not?: Maybe<String>;
+  gender_in?: Maybe<String[] | String>;
+  gender_not_in?: Maybe<String[] | String>;
+  gender_lt?: Maybe<String>;
+  gender_lte?: Maybe<String>;
+  gender_gt?: Maybe<String>;
+  gender_gte?: Maybe<String>;
+  gender_contains?: Maybe<String>;
+  gender_not_contains?: Maybe<String>;
+  gender_starts_with?: Maybe<String>;
+  gender_not_starts_with?: Maybe<String>;
+  gender_ends_with?: Maybe<String>;
+  gender_not_ends_with?: Maybe<String>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  image_url?: Maybe<String>;
+  image_url_not?: Maybe<String>;
+  image_url_in?: Maybe<String[] | String>;
+  image_url_not_in?: Maybe<String[] | String>;
+  image_url_lt?: Maybe<String>;
+  image_url_lte?: Maybe<String>;
+  image_url_gt?: Maybe<String>;
+  image_url_gte?: Maybe<String>;
+  image_url_contains?: Maybe<String>;
+  image_url_not_contains?: Maybe<String>;
+  image_url_starts_with?: Maybe<String>;
+  image_url_not_starts_with?: Maybe<String>;
+  image_url_ends_with?: Maybe<String>;
+  image_url_not_ends_with?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  portfolio_url_not?: Maybe<String>;
+  portfolio_url_in?: Maybe<String[] | String>;
+  portfolio_url_not_in?: Maybe<String[] | String>;
+  portfolio_url_lt?: Maybe<String>;
+  portfolio_url_lte?: Maybe<String>;
+  portfolio_url_gt?: Maybe<String>;
+  portfolio_url_gte?: Maybe<String>;
+  portfolio_url_contains?: Maybe<String>;
+  portfolio_url_not_contains?: Maybe<String>;
+  portfolio_url_starts_with?: Maybe<String>;
+  portfolio_url_not_starts_with?: Maybe<String>;
+  portfolio_url_ends_with?: Maybe<String>;
+  portfolio_url_not_ends_with?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  linkedin_url_not?: Maybe<String>;
+  linkedin_url_in?: Maybe<String[] | String>;
+  linkedin_url_not_in?: Maybe<String[] | String>;
+  linkedin_url_lt?: Maybe<String>;
+  linkedin_url_lte?: Maybe<String>;
+  linkedin_url_gt?: Maybe<String>;
+  linkedin_url_gte?: Maybe<String>;
+  linkedin_url_contains?: Maybe<String>;
+  linkedin_url_not_contains?: Maybe<String>;
+  linkedin_url_starts_with?: Maybe<String>;
+  linkedin_url_not_starts_with?: Maybe<String>;
+  linkedin_url_ends_with?: Maybe<String>;
+  linkedin_url_not_ends_with?: Maybe<String>;
+  github_url?: Maybe<String>;
+  github_url_not?: Maybe<String>;
+  github_url_in?: Maybe<String[] | String>;
+  github_url_not_in?: Maybe<String[] | String>;
+  github_url_lt?: Maybe<String>;
+  github_url_lte?: Maybe<String>;
+  github_url_gt?: Maybe<String>;
+  github_url_gte?: Maybe<String>;
+  github_url_contains?: Maybe<String>;
+  github_url_not_contains?: Maybe<String>;
+  github_url_starts_with?: Maybe<String>;
+  github_url_not_starts_with?: Maybe<String>;
+  github_url_ends_with?: Maybe<String>;
+  github_url_not_ends_with?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  personal_url_not?: Maybe<String>;
+  personal_url_in?: Maybe<String[] | String>;
+  personal_url_not_in?: Maybe<String[] | String>;
+  personal_url_lt?: Maybe<String>;
+  personal_url_lte?: Maybe<String>;
+  personal_url_gt?: Maybe<String>;
+  personal_url_gte?: Maybe<String>;
+  personal_url_contains?: Maybe<String>;
+  personal_url_not_contains?: Maybe<String>;
+  personal_url_starts_with?: Maybe<String>;
+  personal_url_not_starts_with?: Maybe<String>;
+  personal_url_ends_with?: Maybe<String>;
+  personal_url_not_ends_with?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  blog_url_not?: Maybe<String>;
+  blog_url_in?: Maybe<String[] | String>;
+  blog_url_not_in?: Maybe<String[] | String>;
+  blog_url_lt?: Maybe<String>;
+  blog_url_lte?: Maybe<String>;
+  blog_url_gt?: Maybe<String>;
+  blog_url_gte?: Maybe<String>;
+  blog_url_contains?: Maybe<String>;
+  blog_url_not_contains?: Maybe<String>;
+  blog_url_starts_with?: Maybe<String>;
+  blog_url_not_starts_with?: Maybe<String>;
+  blog_url_ends_with?: Maybe<String>;
+  blog_url_not_ends_with?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  twitter_url_not?: Maybe<String>;
+  twitter_url_in?: Maybe<String[] | String>;
+  twitter_url_not_in?: Maybe<String[] | String>;
+  twitter_url_lt?: Maybe<String>;
+  twitter_url_lte?: Maybe<String>;
+  twitter_url_gt?: Maybe<String>;
+  twitter_url_gte?: Maybe<String>;
+  twitter_url_contains?: Maybe<String>;
+  twitter_url_not_contains?: Maybe<String>;
+  twitter_url_starts_with?: Maybe<String>;
+  twitter_url_not_starts_with?: Maybe<String>;
+  twitter_url_ends_with?: Maybe<String>;
+  twitter_url_not_ends_with?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  activated_stripe_not?: Maybe<Boolean>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+}
+
+export interface IndustryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  users_every?: Maybe<UserWhereInput>;
+  users_some?: Maybe<UserWhereInput>;
+  users_none?: Maybe<UserWhereInput>;
+  AND?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+  OR?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+  NOT?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+}
+
+export interface UserUpdateManyWithoutIndustriesInput {
+  create?: Maybe<
+    UserCreateWithoutIndustriesInput[] | UserCreateWithoutIndustriesInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutIndustriesInput[]
+    | UserUpdateWithWhereUniqueWithoutIndustriesInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutIndustriesInput[]
+    | UserUpsertWithWhereUniqueWithoutIndustriesInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResumeUpdateInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutResumesInput>;
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutIndustriesInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutIndustriesDataInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserUpdateWithoutIndustriesDataInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  resumes?: Maybe<ResumeUpdateManyWithoutUserInput>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface ResumeSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ResumeWhereInput>;
+  AND?: Maybe<ResumeSubscriptionWhereInput[] | ResumeSubscriptionWhereInput>;
+  OR?: Maybe<ResumeSubscriptionWhereInput[] | ResumeSubscriptionWhereInput>;
+  NOT?: Maybe<ResumeSubscriptionWhereInput[] | ResumeSubscriptionWhereInput>;
+}
+
+export interface ResumeUpdateManyWithoutUserInput {
+  create?: Maybe<ResumeCreateWithoutUserInput[] | ResumeCreateWithoutUserInput>;
+  delete?: Maybe<ResumeWhereUniqueInput[] | ResumeWhereUniqueInput>;
+  connect?: Maybe<ResumeWhereUniqueInput[] | ResumeWhereUniqueInput>;
+  set?: Maybe<ResumeWhereUniqueInput[] | ResumeWhereUniqueInput>;
+  disconnect?: Maybe<ResumeWhereUniqueInput[] | ResumeWhereUniqueInput>;
+  update?: Maybe<
+    | ResumeUpdateWithWhereUniqueWithoutUserInput[]
+    | ResumeUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ResumeUpsertWithWhereUniqueWithoutUserInput[]
+    | ResumeUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ResumeScalarWhereInput[] | ResumeScalarWhereInput>;
+  updateMany?: Maybe<
+    | ResumeUpdateManyWithWhereNestedInput[]
+    | ResumeUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateManyMutationInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface ResumeUpdateWithWhereUniqueWithoutUserInput {
+  where: ResumeWhereUniqueInput;
+  data: ResumeUpdateWithoutUserDataInput;
+}
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   first_name: String;
   last_name: String;
-  password: String;
   email: String;
+  password: String;
   city: String;
   state: String;
-  image?: Maybe<String>;
   gender?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
+  bio?: Maybe<String>;
+  industries?: Maybe<IndustryCreateManyWithoutUsersInput>;
+  image_url?: Maybe<String>;
   portfolio_url?: Maybe<String>;
   linkedin_url?: Maybe<String>;
   github_url?: Maybe<String>;
-  bio?: Maybe<String>;
-  payment_info?: Maybe<Boolean>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  resumes?: Maybe<ResumeCreateManyWithoutUserInput>;
+  activated_stripe?: Maybe<Boolean>;
 }
 
-export interface UserUpdateInput {
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  image?: Maybe<String>;
+export interface ResumeUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface ResumeUpdateManyMutationInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface ResumeUpsertWithWhereUniqueWithoutUserInput {
+  where: ResumeWhereUniqueInput;
+  update: ResumeUpdateWithoutUserDataInput;
+  create: ResumeCreateWithoutUserInput;
+}
+
+export interface IndustryUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface IndustryUpdateWithoutUsersDataInput {
+  name?: Maybe<String>;
+}
+
+export interface IndustryUpdateManyWithWhereNestedInput {
+  where: IndustryScalarWhereInput;
+  data: IndustryUpdateManyDataInput;
+}
+
+export interface ResumeUpdateManyWithWhereNestedInput {
+  where: ResumeScalarWhereInput;
+  data: ResumeUpdateManyDataInput;
+}
+
+export interface IndustryUpsertWithWhereUniqueWithoutUsersInput {
+  where: IndustryWhereUniqueInput;
+  update: IndustryUpdateWithoutUsersDataInput;
+  create: IndustryCreateWithoutUsersInput;
+}
+
+export interface ResumeUpdateManyDataInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface IndustryCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  users?: Maybe<UserCreateManyWithoutIndustriesInput>;
+}
+
+export interface IndustryUpdateWithWhereUniqueWithoutUsersInput {
+  where: IndustryWhereUniqueInput;
+  data: IndustryUpdateWithoutUsersDataInput;
+}
+
+export interface UserCreateWithoutIndustriesInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
   gender?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
   portfolio_url?: Maybe<String>;
   linkedin_url?: Maybe<String>;
   github_url?: Maybe<String>;
-  bio?: Maybe<String>;
-  payment_info?: Maybe<Boolean>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  resumes?: Maybe<ResumeCreateManyWithoutUserInput>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface IndustryUpdateManyWithoutUsersInput {
+  create?: Maybe<
+    IndustryCreateWithoutUsersInput[] | IndustryCreateWithoutUsersInput
+  >;
+  delete?: Maybe<IndustryWhereUniqueInput[] | IndustryWhereUniqueInput>;
+  connect?: Maybe<IndustryWhereUniqueInput[] | IndustryWhereUniqueInput>;
+  set?: Maybe<IndustryWhereUniqueInput[] | IndustryWhereUniqueInput>;
+  disconnect?: Maybe<IndustryWhereUniqueInput[] | IndustryWhereUniqueInput>;
+  update?: Maybe<
+    | IndustryUpdateWithWhereUniqueWithoutUsersInput[]
+    | IndustryUpdateWithWhereUniqueWithoutUsersInput
+  >;
+  upsert?: Maybe<
+    | IndustryUpsertWithWhereUniqueWithoutUsersInput[]
+    | IndustryUpsertWithWhereUniqueWithoutUsersInput
+  >;
+  deleteMany?: Maybe<IndustryScalarWhereInput[] | IndustryScalarWhereInput>;
+  updateMany?: Maybe<
+    | IndustryUpdateManyWithWhereNestedInput[]
+    | IndustryUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResumeCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  url: String;
 }
 
 export interface UserWhereInput {
@@ -221,20 +892,6 @@ export interface UserWhereInput {
   last_name_not_starts_with?: Maybe<String>;
   last_name_ends_with?: Maybe<String>;
   last_name_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -249,6 +906,20 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
   city?: Maybe<String>;
   city_not?: Maybe<String>;
   city_in?: Maybe<String[] | String>;
@@ -277,20 +948,6 @@ export interface UserWhereInput {
   state_not_starts_with?: Maybe<String>;
   state_ends_with?: Maybe<String>;
   state_not_ends_with?: Maybe<String>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
   gender?: Maybe<String>;
   gender_not?: Maybe<String>;
   gender_in?: Maybe<String[] | String>;
@@ -305,48 +962,37 @@ export interface UserWhereInput {
   gender_not_starts_with?: Maybe<String>;
   gender_ends_with?: Maybe<String>;
   gender_not_ends_with?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  personal_url_not?: Maybe<String>;
-  personal_url_in?: Maybe<String[] | String>;
-  personal_url_not_in?: Maybe<String[] | String>;
-  personal_url_lt?: Maybe<String>;
-  personal_url_lte?: Maybe<String>;
-  personal_url_gt?: Maybe<String>;
-  personal_url_gte?: Maybe<String>;
-  personal_url_contains?: Maybe<String>;
-  personal_url_not_contains?: Maybe<String>;
-  personal_url_starts_with?: Maybe<String>;
-  personal_url_not_starts_with?: Maybe<String>;
-  personal_url_ends_with?: Maybe<String>;
-  personal_url_not_ends_with?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  blog_url_not?: Maybe<String>;
-  blog_url_in?: Maybe<String[] | String>;
-  blog_url_not_in?: Maybe<String[] | String>;
-  blog_url_lt?: Maybe<String>;
-  blog_url_lte?: Maybe<String>;
-  blog_url_gt?: Maybe<String>;
-  blog_url_gte?: Maybe<String>;
-  blog_url_contains?: Maybe<String>;
-  blog_url_not_contains?: Maybe<String>;
-  blog_url_starts_with?: Maybe<String>;
-  blog_url_not_starts_with?: Maybe<String>;
-  blog_url_ends_with?: Maybe<String>;
-  blog_url_not_ends_with?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  twitter_url_not?: Maybe<String>;
-  twitter_url_in?: Maybe<String[] | String>;
-  twitter_url_not_in?: Maybe<String[] | String>;
-  twitter_url_lt?: Maybe<String>;
-  twitter_url_lte?: Maybe<String>;
-  twitter_url_gt?: Maybe<String>;
-  twitter_url_gte?: Maybe<String>;
-  twitter_url_contains?: Maybe<String>;
-  twitter_url_not_contains?: Maybe<String>;
-  twitter_url_starts_with?: Maybe<String>;
-  twitter_url_not_starts_with?: Maybe<String>;
-  twitter_url_ends_with?: Maybe<String>;
-  twitter_url_not_ends_with?: Maybe<String>;
+  bio?: Maybe<String>;
+  bio_not?: Maybe<String>;
+  bio_in?: Maybe<String[] | String>;
+  bio_not_in?: Maybe<String[] | String>;
+  bio_lt?: Maybe<String>;
+  bio_lte?: Maybe<String>;
+  bio_gt?: Maybe<String>;
+  bio_gte?: Maybe<String>;
+  bio_contains?: Maybe<String>;
+  bio_not_contains?: Maybe<String>;
+  bio_starts_with?: Maybe<String>;
+  bio_not_starts_with?: Maybe<String>;
+  bio_ends_with?: Maybe<String>;
+  bio_not_ends_with?: Maybe<String>;
+  industries_every?: Maybe<IndustryWhereInput>;
+  industries_some?: Maybe<IndustryWhereInput>;
+  industries_none?: Maybe<IndustryWhereInput>;
+  image_url?: Maybe<String>;
+  image_url_not?: Maybe<String>;
+  image_url_in?: Maybe<String[] | String>;
+  image_url_not_in?: Maybe<String[] | String>;
+  image_url_lt?: Maybe<String>;
+  image_url_lte?: Maybe<String>;
+  image_url_gt?: Maybe<String>;
+  image_url_gte?: Maybe<String>;
+  image_url_contains?: Maybe<String>;
+  image_url_not_contains?: Maybe<String>;
+  image_url_starts_with?: Maybe<String>;
+  image_url_not_starts_with?: Maybe<String>;
+  image_url_ends_with?: Maybe<String>;
+  image_url_not_ends_with?: Maybe<String>;
   portfolio_url?: Maybe<String>;
   portfolio_url_not?: Maybe<String>;
   portfolio_url_in?: Maybe<String[] | String>;
@@ -389,44 +1035,56 @@ export interface UserWhereInput {
   github_url_not_starts_with?: Maybe<String>;
   github_url_ends_with?: Maybe<String>;
   github_url_not_ends_with?: Maybe<String>;
-  bio?: Maybe<String>;
-  bio_not?: Maybe<String>;
-  bio_in?: Maybe<String[] | String>;
-  bio_not_in?: Maybe<String[] | String>;
-  bio_lt?: Maybe<String>;
-  bio_lte?: Maybe<String>;
-  bio_gt?: Maybe<String>;
-  bio_gte?: Maybe<String>;
-  bio_contains?: Maybe<String>;
-  bio_not_contains?: Maybe<String>;
-  bio_starts_with?: Maybe<String>;
-  bio_not_starts_with?: Maybe<String>;
-  bio_ends_with?: Maybe<String>;
-  bio_not_ends_with?: Maybe<String>;
-  payment_info?: Maybe<Boolean>;
-  payment_info_not?: Maybe<Boolean>;
+  personal_url?: Maybe<String>;
+  personal_url_not?: Maybe<String>;
+  personal_url_in?: Maybe<String[] | String>;
+  personal_url_not_in?: Maybe<String[] | String>;
+  personal_url_lt?: Maybe<String>;
+  personal_url_lte?: Maybe<String>;
+  personal_url_gt?: Maybe<String>;
+  personal_url_gte?: Maybe<String>;
+  personal_url_contains?: Maybe<String>;
+  personal_url_not_contains?: Maybe<String>;
+  personal_url_starts_with?: Maybe<String>;
+  personal_url_not_starts_with?: Maybe<String>;
+  personal_url_ends_with?: Maybe<String>;
+  personal_url_not_ends_with?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  blog_url_not?: Maybe<String>;
+  blog_url_in?: Maybe<String[] | String>;
+  blog_url_not_in?: Maybe<String[] | String>;
+  blog_url_lt?: Maybe<String>;
+  blog_url_lte?: Maybe<String>;
+  blog_url_gt?: Maybe<String>;
+  blog_url_gte?: Maybe<String>;
+  blog_url_contains?: Maybe<String>;
+  blog_url_not_contains?: Maybe<String>;
+  blog_url_starts_with?: Maybe<String>;
+  blog_url_not_starts_with?: Maybe<String>;
+  blog_url_ends_with?: Maybe<String>;
+  blog_url_not_ends_with?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  twitter_url_not?: Maybe<String>;
+  twitter_url_in?: Maybe<String[] | String>;
+  twitter_url_not_in?: Maybe<String[] | String>;
+  twitter_url_lt?: Maybe<String>;
+  twitter_url_lte?: Maybe<String>;
+  twitter_url_gt?: Maybe<String>;
+  twitter_url_gte?: Maybe<String>;
+  twitter_url_contains?: Maybe<String>;
+  twitter_url_not_contains?: Maybe<String>;
+  twitter_url_starts_with?: Maybe<String>;
+  twitter_url_not_starts_with?: Maybe<String>;
+  twitter_url_ends_with?: Maybe<String>;
+  twitter_url_not_ends_with?: Maybe<String>;
+  resumes_every?: Maybe<ResumeWhereInput>;
+  resumes_some?: Maybe<ResumeWhereInput>;
+  resumes_none?: Maybe<ResumeWhereInput>;
+  activated_stripe?: Maybe<Boolean>;
+  activated_stripe_not?: Maybe<Boolean>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface UserUpdateManyMutationInput {
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  image?: Maybe<String>;
-  gender?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  bio?: Maybe<String>;
-  payment_info?: Maybe<Boolean>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -440,29 +1098,466 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
+export interface UserUpdateManyDataInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface UserUpdateInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  industries?: Maybe<IndustryUpdateManyWithoutUsersInput>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  resumes?: Maybe<ResumeUpdateManyWithoutUserInput>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface IndustryUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutResumesInput {
+  update: UserUpdateWithoutResumesDataInput;
+  create: UserCreateWithoutResumesInput;
+}
+
+export interface UserUpdateWithoutResumesDataInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  industries?: Maybe<IndustryUpdateManyWithoutUsersInput>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface IndustryScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<IndustryScalarWhereInput[] | IndustryScalarWhereInput>;
+  OR?: Maybe<IndustryScalarWhereInput[] | IndustryScalarWhereInput>;
+  NOT?: Maybe<IndustryScalarWhereInput[] | IndustryScalarWhereInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutResumesInput {
+  create?: Maybe<UserCreateWithoutResumesInput>;
+  update?: Maybe<UserUpdateWithoutResumesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutResumesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateManyWithoutIndustriesInput {
+  create?: Maybe<
+    UserCreateWithoutIndustriesInput[] | UserCreateWithoutIndustriesInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface ResumeCreateInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutResumesInput;
+  name: String;
+  url: String;
+}
+
+export interface IndustryUpdateInput {
+  name?: Maybe<String>;
+  users?: Maybe<UserUpdateManyWithoutIndustriesInput>;
+}
+
+export type ResumeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface IndustryCreateWithoutUsersInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface IndustryCreateManyWithoutUsersInput {
+  create?: Maybe<
+    IndustryCreateWithoutUsersInput[] | IndustryCreateWithoutUsersInput
+  >;
+  connect?: Maybe<IndustryWhereUniqueInput[] | IndustryWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutResumesInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  industries?: Maybe<IndustryCreateManyWithoutUsersInput>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+}
+
+export interface UserCreateOneWithoutResumesInput {
+  create?: Maybe<UserCreateWithoutResumesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   email?: Maybe<String>;
 }>;
 
+export interface IndustrySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<IndustryWhereInput>;
+  AND?: Maybe<
+    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
+  >;
+  OR?: Maybe<IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput>;
+  NOT?: Maybe<
+    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
+  >;
+}
+
+export interface ResumeCreateManyWithoutUserInput {
+  create?: Maybe<ResumeCreateWithoutUserInput[] | ResumeCreateWithoutUserInput>;
+  connect?: Maybe<ResumeWhereUniqueInput[] | ResumeWhereUniqueInput>;
+}
+
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface AggregateUser {
+export interface UserPreviousValues {
+  id: ID_Output;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: String;
+  bio?: String;
+  image_url?: String;
+  portfolio_url?: String;
+  linkedin_url?: String;
+  github_url?: String;
+  personal_url?: String;
+  blog_url?: String;
+  twitter_url?: String;
+  activated_stripe?: Boolean;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  gender: () => Promise<String>;
+  bio: () => Promise<String>;
+  image_url: () => Promise<String>;
+  portfolio_url: () => Promise<String>;
+  linkedin_url: () => Promise<String>;
+  github_url: () => Promise<String>;
+  personal_url: () => Promise<String>;
+  blog_url: () => Promise<String>;
+  twitter_url: () => Promise<String>;
+  activated_stripe: () => Promise<Boolean>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  image_url: () => Promise<AsyncIterator<String>>;
+  portfolio_url: () => Promise<AsyncIterator<String>>;
+  linkedin_url: () => Promise<AsyncIterator<String>>;
+  github_url: () => Promise<AsyncIterator<String>>;
+  personal_url: () => Promise<AsyncIterator<String>>;
+  blog_url: () => Promise<AsyncIterator<String>>;
+  twitter_url: () => Promise<AsyncIterator<String>>;
+  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface IndustryEdge {
+  node: Industry;
+  cursor: String;
+}
+
+export interface IndustryEdgePromise
+  extends Promise<IndustryEdge>,
+    Fragmentable {
+  node: <T = IndustryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface IndustryEdgeSubscription
+  extends Promise<AsyncIterator<IndustryEdge>>,
+    Fragmentable {
+  node: <T = IndustrySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface User {
+  id: ID_Output;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: String;
+  bio?: String;
+  image_url?: String;
+  portfolio_url?: String;
+  linkedin_url?: String;
+  github_url?: String;
+  personal_url?: String;
+  blog_url?: String;
+  twitter_url?: String;
+  activated_stripe?: Boolean;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  gender: () => Promise<String>;
+  bio: () => Promise<String>;
+  industries: <T = FragmentableArray<Industry>>(args?: {
+    where?: IndustryWhereInput;
+    orderBy?: IndustryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  image_url: () => Promise<String>;
+  portfolio_url: () => Promise<String>;
+  linkedin_url: () => Promise<String>;
+  github_url: () => Promise<String>;
+  personal_url: () => Promise<String>;
+  blog_url: () => Promise<String>;
+  twitter_url: () => Promise<String>;
+  resumes: <T = FragmentableArray<Resume>>(args?: {
+    where?: ResumeWhereInput;
+    orderBy?: ResumeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  activated_stripe: () => Promise<Boolean>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  industries: <T = Promise<AsyncIterator<IndustrySubscription>>>(args?: {
+    where?: IndustryWhereInput;
+    orderBy?: IndustryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  image_url: () => Promise<AsyncIterator<String>>;
+  portfolio_url: () => Promise<AsyncIterator<String>>;
+  linkedin_url: () => Promise<AsyncIterator<String>>;
+  github_url: () => Promise<AsyncIterator<String>>;
+  personal_url: () => Promise<AsyncIterator<String>>;
+  blog_url: () => Promise<AsyncIterator<String>>;
+  twitter_url: () => Promise<AsyncIterator<String>>;
+  resumes: <T = Promise<AsyncIterator<ResumeSubscription>>>(args?: {
+    where?: ResumeWhereInput;
+    orderBy?: ResumeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  gender: () => Promise<String>;
+  bio: () => Promise<String>;
+  industries: <T = FragmentableArray<Industry>>(args?: {
+    where?: IndustryWhereInput;
+    orderBy?: IndustryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  image_url: () => Promise<String>;
+  portfolio_url: () => Promise<String>;
+  linkedin_url: () => Promise<String>;
+  github_url: () => Promise<String>;
+  personal_url: () => Promise<String>;
+  blog_url: () => Promise<String>;
+  twitter_url: () => Promise<String>;
+  resumes: <T = FragmentableArray<Resume>>(args?: {
+    where?: ResumeWhereInput;
+    orderBy?: ResumeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  activated_stripe: () => Promise<Boolean>;
+}
+
+export interface AggregateIndustry {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateIndustryPromise
+  extends Promise<AggregateIndustry>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateIndustrySubscription
+  extends Promise<AsyncIterator<AggregateIndustry>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ResumeSubscriptionPayload {
+  mutation: MutationType;
+  node: Resume;
+  updatedFields: String[];
+  previousValues: ResumePreviousValues;
+}
+
+export interface ResumeSubscriptionPayloadPromise
+  extends Promise<ResumeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ResumePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ResumePreviousValuesPromise>() => T;
+}
+
+export interface ResumeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ResumeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ResumeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ResumePreviousValuesSubscription>() => T;
 }
 
 export interface BatchPayload {
@@ -481,68 +1576,287 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  first_name: String;
-  last_name: String;
-  password: String;
-  email: String;
-  city: String;
-  state: String;
-  image?: String;
-  gender?: String;
-  personal_url?: String;
-  blog_url?: String;
-  twitter_url?: String;
-  portfolio_url?: String;
-  linkedin_url?: String;
-  github_url?: String;
-  bio?: String;
-  payment_info?: Boolean;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ResumePreviousValues {
+  id: ID_Output;
+  name: String;
+  url: String;
+}
+
+export interface ResumePreviousValuesPromise
+  extends Promise<ResumePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  first_name: () => Promise<String>;
-  last_name: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  image: () => Promise<String>;
-  gender: () => Promise<String>;
-  personal_url: () => Promise<String>;
-  blog_url: () => Promise<String>;
-  twitter_url: () => Promise<String>;
-  portfolio_url: () => Promise<String>;
-  linkedin_url: () => Promise<String>;
-  github_url: () => Promise<String>;
-  bio: () => Promise<String>;
-  payment_info: () => Promise<Boolean>;
+  name: () => Promise<String>;
+  url: () => Promise<String>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface ResumePreviousValuesSubscription
+  extends Promise<AsyncIterator<ResumePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  first_name: () => Promise<AsyncIterator<String>>;
-  last_name: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  gender: () => Promise<AsyncIterator<String>>;
-  personal_url: () => Promise<AsyncIterator<String>>;
-  blog_url: () => Promise<AsyncIterator<String>>;
-  twitter_url: () => Promise<AsyncIterator<String>>;
-  portfolio_url: () => Promise<AsyncIterator<String>>;
-  linkedin_url: () => Promise<AsyncIterator<String>>;
-  github_url: () => Promise<AsyncIterator<String>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  payment_info: () => Promise<AsyncIterator<Boolean>>;
+  name: () => Promise<AsyncIterator<String>>;
+  url: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface IndustryConnection {
+  pageInfo: PageInfo;
+  edges: IndustryEdge[];
+}
+
+export interface IndustryConnectionPromise
+  extends Promise<IndustryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<IndustryEdge>>() => T;
+  aggregate: <T = AggregateIndustryPromise>() => T;
+}
+
+export interface IndustryConnectionSubscription
+  extends Promise<AsyncIterator<IndustryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IndustryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIndustrySubscription>() => T;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface ResumeEdge {
+  node: Resume;
+  cursor: String;
+}
+
+export interface ResumeEdgePromise extends Promise<ResumeEdge>, Fragmentable {
+  node: <T = ResumePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ResumeEdgeSubscription
+  extends Promise<AsyncIterator<ResumeEdge>>,
+    Fragmentable {
+  node: <T = ResumeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Resume {
+  id: ID_Output;
+  name: String;
+  url: String;
+}
+
+export interface ResumePromise extends Promise<Resume>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  url: () => Promise<String>;
+}
+
+export interface ResumeSubscription
+  extends Promise<AsyncIterator<Resume>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  url: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ResumeNullablePromise
+  extends Promise<Resume | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  url: () => Promise<String>;
+}
+
+export interface IndustryPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface IndustryPreviousValuesPromise
+  extends Promise<IndustryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface IndustryPreviousValuesSubscription
+  extends Promise<AsyncIterator<IndustryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface IndustrySubscriptionPayload {
+  mutation: MutationType;
+  node: Industry;
+  updatedFields: String[];
+  previousValues: IndustryPreviousValues;
+}
+
+export interface IndustrySubscriptionPayloadPromise
+  extends Promise<IndustrySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = IndustryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = IndustryPreviousValuesPromise>() => T;
+}
+
+export interface IndustrySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<IndustrySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = IndustrySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = IndustryPreviousValuesSubscription>() => T;
+}
+
+export interface Industry {
+  id: ID_Output;
+  name: String;
+}
+
+export interface IndustryPromise extends Promise<Industry>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface IndustrySubscription
+  extends Promise<AsyncIterator<Industry>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface IndustryNullablePromise
+  extends Promise<Industry | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ResumeConnection {
+  pageInfo: PageInfo;
+  edges: ResumeEdge[];
+}
+
+export interface ResumeConnectionPromise
+  extends Promise<ResumeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ResumeEdge>>() => T;
+  aggregate: <T = AggregateResumePromise>() => T;
+}
+
+export interface ResumeConnectionSubscription
+  extends Promise<AsyncIterator<ResumeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ResumeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateResumeSubscription>() => T;
+}
+
+export interface AggregateResume {
+  count: Int;
+}
+
+export interface AggregateResumePromise
+  extends Promise<AggregateResume>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateResumeSubscription
+  extends Promise<AsyncIterator<AggregateResume>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserEdge {
@@ -587,140 +1901,12 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface User {
-  id: ID_Output;
-  first_name: String;
-  last_name: String;
-  password: String;
-  email: String;
-  city: String;
-  state: String;
-  image?: String;
-  gender?: String;
-  personal_url?: String;
-  blog_url?: String;
-  twitter_url?: String;
-  portfolio_url?: String;
-  linkedin_url?: String;
-  github_url?: String;
-  bio?: String;
-  payment_info?: Boolean;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  first_name: () => Promise<String>;
-  last_name: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  image: () => Promise<String>;
-  gender: () => Promise<String>;
-  personal_url: () => Promise<String>;
-  blog_url: () => Promise<String>;
-  twitter_url: () => Promise<String>;
-  portfolio_url: () => Promise<String>;
-  linkedin_url: () => Promise<String>;
-  github_url: () => Promise<String>;
-  bio: () => Promise<String>;
-  payment_info: () => Promise<Boolean>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  first_name: () => Promise<AsyncIterator<String>>;
-  last_name: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  image: () => Promise<AsyncIterator<String>>;
-  gender: () => Promise<AsyncIterator<String>>;
-  personal_url: () => Promise<AsyncIterator<String>>;
-  blog_url: () => Promise<AsyncIterator<String>>;
-  twitter_url: () => Promise<AsyncIterator<String>>;
-  portfolio_url: () => Promise<AsyncIterator<String>>;
-  linkedin_url: () => Promise<AsyncIterator<String>>;
-  github_url: () => Promise<AsyncIterator<String>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  payment_info: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  first_name: () => Promise<String>;
-  last_name: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  image: () => Promise<String>;
-  gender: () => Promise<String>;
-  personal_url: () => Promise<String>;
-  blog_url: () => Promise<String>;
-  twitter_url: () => Promise<String>;
-  portfolio_url: () => Promise<String>;
-  linkedin_url: () => Promise<String>;
-  github_url: () => Promise<String>;
-  bio: () => Promise<String>;
-  payment_info: () => Promise<Boolean>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
+export type Long = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type String = string;
-
-export type Long = string;
+export type Int = number;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -729,14 +1915,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
 
 /**
  * Model Metadata
@@ -745,6 +1931,14 @@ export type Int = number;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Resume",
+    embedded: false
+  },
+  {
+    name: "Industry",
     embedded: false
   }
 ];
