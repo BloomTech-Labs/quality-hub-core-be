@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const JWT_SECRET = "QUAIL_LIFESTYLE"
 
 function generateToken(user) {
