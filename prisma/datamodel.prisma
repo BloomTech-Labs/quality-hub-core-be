@@ -1,0 +1,18 @@
+type User {
+  id: ID! @id
+  name: String!
+  password: String!
+  email: String!  
+  city: String!
+  state: String!
+  image: String
+  gender: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  bio: String
+  payment_info: Boolean
+}
