@@ -1,6 +1,16 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 const JWT_SECRET = "QUAIL_LIFESTYLE"
 
+function generateToken(user) {
+    const payload = {
+        id: user.id,
+        email: user.email,
+    };
+    const options = {
+        expiresIn: '12h'
+    }
+    return jwt.sign(payload, JWT_SECRET, options)
+}
 
 function getUserId(context) {
     const Authorization = context.request.get('Authorization')
@@ -13,6 +23,8 @@ function getUserId(context) {
 }
 
 module.exports = {
-    JWT_SECRET,
-    getUserId,
+  generateToken,
+  JWT_SECRET,
+  getUserId,
 }
+
