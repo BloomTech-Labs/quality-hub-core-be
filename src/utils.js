@@ -12,7 +12,19 @@ function generateToken(user) {
     return jwt.sign(payload, JWT_SECRET, options)
 }
 
-  module.exports = {
-      generateToken,
-      JWT_SECRET,
+function getUserId(context) {
+    const Authorization = context.request.get('Authorization')
+    if(Authorization) {
+        const token = Authorization.replace('Bearer', '')
+        const { userId } = jwt.verify (token, JWT_SECRET)
+        return userId
     }
+    throw new Error('Not Authenticated')
+}
+
+module.exports = {
+  generateToken,
+  JWT_SECRET,
+  getUserId,
+}
+
