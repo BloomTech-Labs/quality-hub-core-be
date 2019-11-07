@@ -4,10 +4,10 @@ type User {
   email: String!  
   city: String!
   state: String!
-  industry: [String!]
+  # industry: [String!]
   image: String
   gender: String
-  resumes: [String]
+  # resumes: [String]
   personal_url: String
   blog_url: String
   twitter_url: String
@@ -15,7 +15,7 @@ type User {
   linkedin_url: String
   github_url: String
   bio: String
-  payment_info: Boolean!
+  payment_info: Boolean
 }
 
 type Query {
@@ -23,4 +23,8 @@ type Query {
   users: [User!]!
   user(id: ID!): User!
   me: User!
+}
+
+type Mutation {
+  signup(name: String!, email: String!, city: String!, state: String!): String
 }
