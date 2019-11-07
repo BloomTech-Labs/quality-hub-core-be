@@ -1,0 +1,13 @@
+# The HTTP endpoint for your Prisma API
+#endpoint: ''
+#endpoint: ''endpoint: https://us1.prisma.sh/quail/quality-hub-core-be/dev
+
+
+
+# Points to the file that contains your datamodel
+datamodel: datamodel.prisma
+
+# Specifies language & location for the generated Prisma client
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client
