@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const { generateToken, checkFields } = require('../utils')
+const { generateToken, checkFields, getUserId } = require('../utils')
 
 async function signup(parent, args, context, info) {
   checkFields(args);
@@ -31,10 +31,11 @@ async function login(parent, args, context, info) {
 }
 
 async function update(parent, args, context, info) {
+  const id = getUserId(context);
   const updatedUser = await context.prisma.updateUser({
     data: args,
     where: {
-      email: args.email
+      id
     }
   })
 
