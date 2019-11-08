@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
 
-const { generateToken }= require('../utils')
+const { generateToken, checkFields } = require('../utils')
 
 async function signup(parent, args, context, info) {
+  checkFields(args);
   const hash = bcrypt.hashSync(args.password, 10)
   args.password = hash
   const user = await context.prisma.createUser(args)
