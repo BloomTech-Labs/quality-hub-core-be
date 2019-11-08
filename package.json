@@ -23,6 +23,8 @@
     "nodemon": "^1.19.4"
   },
   "dependencies": {
+    "@apollo/federation": "^0.10.2",
+    "apollo-server": "^2.9.7",
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",

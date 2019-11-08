@@ -3,12 +3,11 @@ const bcrypt = require('bcryptjs');
 const { generateToken }= require('../utils')
 
 async function signup(parent, args, context, info) {
-  
   const hash = bcrypt.hashSync(args.password, 10)
   args.password = hash
-  console.log(args);
   const user = await context.prisma.createUser(args)
   const token = generateToken(user)
+
   return {
     token,
     user,
@@ -16,18 +15,13 @@ async function signup(parent, args, context, info) {
 }
 
 async function login(parent, args, context, info) {
-  console.log(args);
   const user = await context.prisma.user({email: args.email})
-  if (!user) {
-    throw new Error('Invalid Login')
-  }
-
-  const passwordMatch = await bcrypt.compare(args.password, user.password)
-  if (!passwordMatch) {
-    throw new Error('Invalid Login')
-  }
-
   const token = generateToken(user)
+  const passwordMatch = await bcrypt.compare(args.password, user.password)
+
+  if (!user || !passwordMatch) {
+    throw new Error('Invalid Login')
+  }
 
   return {
     token,
@@ -35,7 +29,19 @@ async function login(parent, args, context, info) {
   }
 }
 
+async function update(parent, args, context, info) {
+  const updatedUser = await context.prisma.updateUser({
+    data: args,
+    where: {
+      email: args.email
+    }
+  })
+
+  return updatedUser
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  update
 }
