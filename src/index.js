@@ -8,6 +8,9 @@ const Mutation = require('./resolvers/Mutation');
 const resolvers = {
   Query: {
     info: () => `Welcome to Quaility Hub!`,
+    users: (parent, args, context, info) => 
+      context.prisma.users()
+    ,
   },
   Mutation,
 };
