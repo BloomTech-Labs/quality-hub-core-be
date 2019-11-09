@@ -38,7 +38,7 @@ const typeDefs = gql`
       password: String!
       city: String!
       state: String!
-      industries: Industry
+      # industries: Industry
       image_url: String
       gender: String
       personal_url: String
