@@ -8,7 +8,7 @@ type User {
   state: String!
   gender: String
   bio: String
-  industries: [Industry!]
+  industries: [Industry!] @relation(name: "IndustriesOnPerson", onDelete: SET_NULL)
   image_url: String
   portfolio_url: String
   linkedin_url: String
@@ -29,6 +29,6 @@ type Resume {
 
 type Industry {
   id: ID! @id
-  name: String!
-  users: [User!]
+  name: String! @unique
+  users: [User!] @relation(name: "IndustriesOnPerson", onDelete: CASCADE)
 }
