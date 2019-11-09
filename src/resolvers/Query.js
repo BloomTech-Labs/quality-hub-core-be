@@ -15,9 +15,15 @@ async function me (parents, args, context, info) {
   return await context.prisma.user({ id: getUserId(context)})
 }
 
+async function industries(parents, args, context, info) {
+  return await context.prisma.industries()
+}
+
+
 module.exports = {
   user,
   users,
   info,
   me,
+  industries
 }

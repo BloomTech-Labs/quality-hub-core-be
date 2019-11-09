@@ -8,7 +8,7 @@ const typeDefs = gql`
     email: String!
     city: String!
     state: String!
-    # industry: [String!]
+    industries: [Industry!]!
     image_url: String
     gender: String
     # resumes: [String]
@@ -27,6 +27,7 @@ const typeDefs = gql`
     users: [User!]!
     user(id: ID!): User!
     me: User!
+    industries: [Industry!]!
   }
 
   type Mutation {
@@ -45,7 +46,7 @@ const typeDefs = gql`
       email: String
       city: String
       state: String
-      # industry: [String]
+      # industry: [String]!
       image_url: String
       gender: String
       # resumes: [String]
@@ -58,11 +59,21 @@ const typeDefs = gql`
       bio: String
       payment_info: Boolean
     ): User!
+    postIndustry(name: String!): Industry!
+    postIndustryToUser(industry_id: ID!): Industry!
+    deleteIndustryFromUser(industry_id: ID!): Industry!
+    deleteUser: User!
   }
 
   type AuthPayload {
     token: String!
     user: User!
+  }
+
+  type Industry {
+    id: ID!
+    name: String!
+    users: [User!]!
   }
 `;
 
