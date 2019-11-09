@@ -38,11 +38,23 @@ const typeDefs = gql`
       password: String!
       city: String!
       state: String!
+      industries: Industry
+      image_url: String
+      gender: String
+      personal_url: String
+      blog_url: String
+      twitter_url: String
+      portfolio_url: String
+      linkedin_url: String
+      github_url: String
+      bio: String
+      payment_info: Boolean
     ): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
     update(
       first_name: String
       last_name: String
+      password: String
       email: String
       city: String
       state: String
