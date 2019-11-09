@@ -6,7 +6,8 @@ async function signup(parent, args, context, info) {
   checkFields(args);
   const hash = bcrypt.hashSync(args.password, 10)
   args.password = hash
-  const user = await context.prisma.createUser(args)
+  const {industry, ...rest} = args;
+  const user = await context.prisma.createUser({...rest, industries: {connect: {id: industry}}})
   const token = generateToken(user)
 
   return {
