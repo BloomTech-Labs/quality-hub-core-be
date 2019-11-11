@@ -1,7 +1,12 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  # hi 
   type User {
+    # The ID of the user
+    """
+    ID: jsdkl;fasjdf;lkadjf
+    """
     id: ID!
     first_name: String!
     last_name: String!
@@ -32,6 +37,9 @@ const typeDefs = gql`
 
   type Mutation {
     signup(
+      """
+      FIRST NAME
+      """
       first_name: String!
       last_name: String!
       email: String!
