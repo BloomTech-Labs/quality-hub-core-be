@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/quality-hub-core-be#readme",
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "easygraphql-tester": "^5.1.6",
+    "fs": "0.0.1-security",
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7"
   },
   "dependencies": {
     "@apollo/federation": "^0.10.2",
