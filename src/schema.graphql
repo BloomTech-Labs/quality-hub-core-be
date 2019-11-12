@@ -1,7 +1,6 @@
   type User {
     
     # Unique ID of user.
-    
     id: ID!
     first_name: String!
     last_name: String!
@@ -9,15 +8,15 @@
     city: String!
     
     # Chosen from a list of States and Regions on Front end
-    
     state: String!
     
     # Industry is an object with ID and String
-    
     industries: [Industry!]!
     image_url: String
     gender: String
+
     # resumes: [String]
+
     personal_url: String
     blog_url: String
     twitter_url: String
@@ -31,55 +30,36 @@
   type Query {
     
     # A test query to show that the backend works
-    
-
     info: String!
 
     
-    # Gets all registered users
-    
-    
+    # Gets all registered users. Only accesible by admins
     users: [User!]!
     
     
     # Gets user by ID
-    
-
     user(
 
-      
       # Unique ID
-      
-      
       id: ID!
     ): User!
 
      
     # Gets user info based on credentials stored in token
-    
-
     me: User!
 
     
     # Gets a list of industries and users within that industry
-    
-
     industries: [Industry!]!
   }
 
   type Industry {
     id: ID!
 
-    
-    # Industry name. Unique
-    
-
+    # Industry name. Unique    
     name: String!
 
-    
     # Users signed up for that industry
-    
-
     users: [User!]!
   }
 
@@ -87,8 +67,6 @@
 
     
     # Register user. Requires unique email. No empty strings cannot be passed in.
-    
-
     signup(
       first_name: String!
       last_name: String!
@@ -99,8 +77,6 @@
 
       
       # Industry's ID
-      
-
       industry: ID
       image_url: String
       gender: String
@@ -116,7 +92,6 @@
     
     
     # Logins in user and returns a token and user info if successful.
-    
     login(
       email: String!
       password: String!
@@ -124,7 +99,6 @@
     
     
     # Updates user info. No empty strings cannot be passed in
-    
     update(
       first_name: String
       last_name: String
@@ -132,10 +106,14 @@
       email: String
       city: String
       state: String
+
       # industry: [String]!
+
       image_url: String
       gender: String
+
       # resumes: [String]
+      
       personal_url: String
       blog_url: String
       twitter_url: String
@@ -147,48 +125,37 @@
     ): User!
 
     
-    # Should be deprecated
-    
-
+    # Adds an industry. Name is unique. Only accesible by admin
     postIndustry(name: String!): Industry!
 
     
     # Connects user with industry
-    
-
     postIndustryToUser(
 
       
       # Industry ID
-      
-
       industry_id: ID!
     ): Industry!
 
     
     # Removes connection
-    
-
     deleteIndustryFromUser(
 
       
       # Industry ID
-      
-
       industry_id: ID!
     ): Industry!
 
     
     # Delete user info
-    
-
     deleteUser: User!
   }
 
-  
-  # Used for log in and sign up. Returns token and user info
-  
+
   type AuthPayload {
+
+    # Used for log in and sign up. Returns token and user info
     token: String!
     user: User!
+    
   }
