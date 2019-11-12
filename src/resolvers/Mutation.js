@@ -70,8 +70,6 @@ async function login(parent, args, context, info) {
 */
 async function update(parent, args, context, info) {
   const id = getUserId(context);
-  const {first_name, last_name, password, email, city, state} = args;
-  checkFields({first_name, last_name, password, email, city, state});
   const updatedUser = await context.prisma.updateUser({
     data: args,
     where: {
