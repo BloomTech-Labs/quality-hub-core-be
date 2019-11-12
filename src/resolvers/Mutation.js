@@ -27,17 +27,13 @@ const { generateToken, checkFields, getUserId, checkAdmin } = require('../utils'
   @return {Object} - user: type User for newly created account
 */
 async function signup(parent, args, context, info) {
-  checkFields(args);
+  const {first_name, last_name, password, email, city, state, industry: industrycheck} = args;
+  checkFields({first_name, last_name, password, email, city, state, industrycheck});
   const hash = bcrypt.hashSync(args.password, 10)
-  args.password = hash
+  args.password = hash;
   const {industry, ...rest} = args;
-  let user;
-  if (!industry) {
-    user = await context.prisma.createUser({...rest})
-  } else {
-    user = await context.prisma.createUser({...rest, industries: {connect: {id: industry}}})
-  }
-  const token = generateToken(user)
+  const user = await context.prisma.createUser({...rest, industries: {connect: {id: industry}}})
+  const token = generateToken(user);
 
   return {
     token,
@@ -74,7 +70,8 @@ async function login(parent, args, context, info) {
 */
 async function update(parent, args, context, info) {
   const id = getUserId(context);
-  checkFields(args);
+  const {first_name, last_name, password, email, city, state} = args;
+  checkFields({first_name, last_name, password, email, city, state});
   const updatedUser = await context.prisma.updateUser({
     data: args,
     where: {
