@@ -51,9 +51,17 @@ function getUserId(context) {
   throw new Error('Not Authenticated')
 }
 
+async function checkAdmin(context) {
+  const user = await context.prisma.user({id: getUserId(context)})
+  if (user.email !== process.env.ADMIN_EMAIL) {
+    throw new Error('You are unauthorized to perform this action.')
+  }
+}
+
 module.exports = {
+  checkFields,
   generateToken,
   getUserId,
-  checkFields
+  checkAdmin
 }
 
