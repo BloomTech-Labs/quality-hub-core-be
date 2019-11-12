@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const { generateToken, checkFields, getUserId } = require('../utils')
+const { generateToken, checkFields, getUserId, checkAdmin } = require('../utils')
 
 /*
   @param {String!} - first_name
@@ -27,12 +27,13 @@ const { generateToken, checkFields, getUserId } = require('../utils')
   @return {Object} - user: type User for newly created account
 */
 async function signup(parent, args, context, info) {
-  checkFields(args);
+  const {first_name, last_name, password, email, city, state, industry: industrycheck} = args;
+  checkFields({first_name, last_name, password, email, city, state, industrycheck});
   const hash = bcrypt.hashSync(args.password, 10)
-  args.password = hash
+  args.password = hash;
   const {industry, ...rest} = args;
   const user = await context.prisma.createUser({...rest, industries: {connect: {id: industry}}})
-  const token = generateToken(user)
+  const token = generateToken(user);
 
   return {
     token,
@@ -53,11 +54,9 @@ async function login(parent, args, context, info) {
   const user = await context.prisma.user({email: args.email})
   const token = generateToken(user)
   const passwordMatch = await bcrypt.compare(args.password, user.password)
-
   if (!user || !passwordMatch) {
     throw new Error('Invalid Login')
   }
-
   return {
     token,
     user,
@@ -71,19 +70,18 @@ async function login(parent, args, context, info) {
 */
 async function update(parent, args, context, info) {
   const id = getUserId(context);
-  checkFields(args);
   const updatedUser = await context.prisma.updateUser({
     data: args,
     where: {
       id
     }
   })
-
   return updatedUser
 }
 
 // Delete soon
 async function postIndustry (parents, args, context, info) {
+  await checkAdmin(context);
   return await context.prisma.createIndustry({name: args.name})
 }
 

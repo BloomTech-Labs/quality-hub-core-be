@@ -4,7 +4,7 @@
   "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "server": "nodemon src/index.js",
     "start": "node src/index.js"
   },
@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/quality-hub-core-be#readme",
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "@apollo/federation": "^0.10.2",
