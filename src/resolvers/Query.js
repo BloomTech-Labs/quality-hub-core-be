@@ -1,4 +1,4 @@
-const { getUserId } = require('../utils')
+const { getUserId, checkAdmin } = require('../utils')
 
 /*
   Test query
@@ -26,6 +26,7 @@ async function user (parents, args, context, info) {
   @return {[Object]}  - All users
 */
 async function users (parent, args, context, info) {
+  await checkAdmin(context);
   return await context.prisma.users()
 }
 
