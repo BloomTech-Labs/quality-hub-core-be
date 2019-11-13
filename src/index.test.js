@@ -2,7 +2,7 @@ require('dotenv').config();
 const request = require('supertest');
 const app = require('./server');
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnc3bTc2dTAwNncwNzYydGZvb3J2OHgiLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3MzY3MjY0MSwiZXhwIjoxNTczNzE1ODQxfQ.CiFseiFqBajQR8g_Q7n2Q_BaJqKX5amUZLHKFpJ1W94';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh3ZG5vbzAwemswNzcyaTF1OXBnbTQiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1NzM2ODY2MTYsImV4cCI6MTU3MzcyOTgxNn0.7emjjYvcO09wwx30hrW-ORX_gaXoOjsRTAEZcE0xTlM';
 
 // describe('me', () => {
 //     it('returns the test string for quality hub core backend', async () => {
@@ -83,8 +83,8 @@ const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnc3bTc2dTAwNncw
 //                     } `
 //               });
 //               console.log(response.body); 
-
 //     })
+
 //   });
 
 //   describe('signup', () => {
@@ -107,21 +107,45 @@ const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnc3bTc2dTAwNncw
 //         });
 
 
-  describe('update', () => {
-          it('should return an error if the user is not logged in', async () => {
-            const server = app.createHttpServer({});
-            const response = await request(server)
-                    .post('/')
-                    .set({Authorization:token})
-                    .send({
-                      query: `
-                      mutation { 
-                        update(first_name: "nicccck", last_name: "quail", password:"quail", email:"qqquail@mail.com", city:"quail",state: "fl", industry:"ck2rzrd8m00270773ptf4j9oe"){
-                            user
-                        }
-                      } 
-                      `
-                    });
-                    console.log(response.body);
-                })
-        });
+  // describe('update', () => {
+  //         it('should return an error if the user is not logged in', async () => {
+  //           const server = app.createHttpServer({});
+  //           const response = await request(server)
+  //                   .post('/')
+  //                   .set({Authorization:token})
+  //                   .send({
+  //                     query: `
+  //                     mutation { 
+  //                       update(first_name: "nicccck"){
+  //                           id
+  //                       }
+  //                     } 
+  //                     `
+  //                   });
+  //                   console.log(response.body);
+  //               })
+  //       });
+
+  //  describe('delete', () => {
+  //         it('should return a deleted user if succesful', async () => {
+  //           const server = app.createHttpServer({});
+  //           const response = await request(server)
+  //           .post('/')
+  //           .set({Authorization:token})
+  //           .send({
+  //             query: `
+  //             mutation { 
+  //               deleteUser {
+  //                 first_name
+  //                 last_name
+  //                 id 
+  //               }
+  //             } 
+  //             `
+  //           });
+  //           console.log(response.body);
+  //           console.log(typeof response.body);
+
+  //           expect(response.body.data).toBeTruthy()
+  //         })
+  //       });
