@@ -1,12 +1,11 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
 🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
 
 🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
 
 # API Documentation
 
-[Core deployment](https://quality-hub-core-staging.herokuapp.com/) [Documentation](https://quality-hub-core-staging.herokuapp.com/doc)
+[Core deployment](https://quality-hub-core-staging.herokuapp.com/)   
+[Documentation](https://quality-hub-core-staging.herokuapp.com/doc)
 
 ## 1️⃣ Getting started
 
@@ -22,13 +21,17 @@ To get the server running locally:
 ### Backend framework goes here
 
 🚫 Why did you choose this framework?
-
--    Point One
--    Point Two
+ # GraphQL-Yoga and Prisma
+ 
+- Scalability
+  - Unlike RESTful APIs, GraphQL has one endpoint for all resources. The endpoints we define are under Queries and Mutations
+  - This makes it easier to track our API by looking at schemas.
+- Open ended back end
+  - The client is able to grab whatever information they need when querying. For example, when querying for users, they can choose from whatever fields are available. This prevents the server from oversending/undersending data to the client.
 -    Point Three
 -    Point Four
 
-## 2️⃣ Endpoints
+## 2️⃣ Endpoints / Schemas
 
 🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
