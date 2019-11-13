@@ -6,7 +6,7 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+[Core deployment](https://quality-hub-core-staging.herokuapp.com/) [Documentation](https://quality-hub-core-staging.herokuapp.com/doc)
 
 ## 1️⃣ Getting started
 
