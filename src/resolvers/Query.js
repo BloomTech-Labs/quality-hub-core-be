@@ -39,15 +39,6 @@ async function me (parents, args, context, info) {
   return await context.prisma.user({ id: getUserId(context)})
 }
 
-/*
-  Get list of Industries, including users connected to industry
-
-  @return {[Object]}  - Type Industry
-*/
-async function industries(parents, args, context, info) {
-  return await context.prisma.industries()
-}
-
 module.exports = {
   user,
   users,
