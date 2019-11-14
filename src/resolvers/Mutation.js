@@ -9,7 +9,6 @@ const { generateToken, checkFields, getUserId, checkAdmin } = require('../utils'
   @param {String!} - password
   @param {String!} - city
   @param {String!} - state
-  @param {ID}      - industry
   @param {String}  - image_url
   @param {String}  - gender
   @param {String}  - personal_url
@@ -78,47 +77,6 @@ async function update(parent, args, context, info) {
   return updatedUser
 }
 
-// Delete soon
-async function postIndustry (parents, args, context, info) {
-  await checkAdmin(context);
-  return await context.prisma.createIndustry({name: args.name})
-}
-
-/*
-  @param {ID} - industry_id
-
-  Connects user with specified Industry
-
-  @return {Object} - type Industry
-*/
-async function postIndustryToUser (parents, args, context, info) {
-  const userId = getUserId(context);
-  return await context.prisma.updateIndustry({
-    data: {users: {connect: { id: userId }
-    }},
-    where: {
-      id: args.industry_id
-    }
-  })
-} 
-
-/*
-  @param {ID} - industry_id
-
-  Removes connection of user from specified Industry
-  
-  @return {Object} - type Industry
-*/
-async function deleteIndustryFromUser (parents, args, context, info) {
-  const userId = getUserId(context)
-  return await context.prisma.updateIndustry({
-    data: {users: {delete: { id: userId }
-    }},
-    where: {
-      id: args.industry_id
-    }
-  })
-}
 /*
   Deletes own user
 
@@ -133,8 +91,5 @@ module.exports = {
   signup,
   login,
   update,
-  postIndustry,
-  postIndustryToUser,
-  deleteIndustryFromUser,
   deleteUser
 }
