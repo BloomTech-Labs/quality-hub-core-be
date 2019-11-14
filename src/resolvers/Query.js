@@ -44,5 +44,4 @@ module.exports = {
   users,
   info,
   me,
-  industries
 }
