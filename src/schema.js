@@ -104,7 +104,7 @@ const typeDefs = gql`
       Industry's ID
       """
 
-      industry: ID!
+      industry: ID
       image_url: String
       gender: String
       personal_url: String
