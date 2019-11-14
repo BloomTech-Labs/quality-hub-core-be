@@ -200,6 +200,7 @@ input IndustryWhereInput {
 
 input IndustryWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar Long
