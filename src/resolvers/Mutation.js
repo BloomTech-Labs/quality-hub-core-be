@@ -87,9 +87,19 @@ async function deleteUser (parent, args, context, info) {
   return await context.prisma.deleteUser({id})
 }
 
+async function checkEmail (parent, args, context, info) {
+  const user = await context.prisma.user({email: args.email});
+  if (user) {
+    throw new Error("Email has been taken.")
+  } else {
+    return "This email is available!"
+  }
+}
+
 module.exports = {
   signup,
   login,
   update,
-  deleteUser
+  deleteUser,
+  checkEmail
 }

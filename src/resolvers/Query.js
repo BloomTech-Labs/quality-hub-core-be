@@ -39,7 +39,6 @@ async function me (parents, args, context, info) {
   return await context.prisma.user({ id: getUserId(context)})
 }
 
-
 module.exports = {
   user,
   users,
