@@ -14,13 +14,8 @@ const typeDefs = gql`
     Chosen from a list of States and Regions on Front end
     """
     state: String!
-    """
-    Industry is an object with ID and String
-    """
-    industries: [Industry!]!
     image_url: String
     gender: String
-    # resumes: [String]
     personal_url: String
     blog_url: String
     twitter_url: String
@@ -62,28 +57,6 @@ const typeDefs = gql`
     """
 
     me: User!
-
-    """
-    Gets a list of industries and users within that industry
-    """
-
-    industries: [Industry!]!
-  }
-
-  type Industry {
-    id: ID!
-
-    """
-    Industry name. Unique
-    """
-
-    name: String!
-
-    """
-    Users signed up for that industry
-    """
-
-    users: [User!]!
   }
 
   type Mutation {
@@ -99,12 +72,6 @@ const typeDefs = gql`
       password: String!
       city: String!
       state: String!
-
-      """
-      Industry's ID
-      """
-
-      industry: ID
       image_url: String
       gender: String
       personal_url: String
@@ -135,10 +102,8 @@ const typeDefs = gql`
       email: String
       city: String
       state: String
-      # industry: [String]!
       image_url: String
       gender: String
-      # resumes: [String]
       personal_url: String
       blog_url: String
       twitter_url: String
@@ -148,46 +113,10 @@ const typeDefs = gql`
       bio: String
       payment_info: Boolean
     ): User!
-
-    """
-    Should be deprecated
-    """
-
-    postIndustry(name: String!): Industry!
-
-    """
-    Connects user with industry
-    """
-
-    postIndustryToUser(
-
-      """
-      Industry ID
-      """
-
-      industry_id: ID!
-    ): Industry!
-
-    """
-    Removes connection
-    """
-
-    deleteIndustryFromUser(
-
-      """
-      Industry ID
-      """
-
-      industry_id: ID!
-    ): Industry!
-
-    """
-    Delete user info
-    """
-
-    deleteUser: User!
+    checkEmail(
+      email: String!
+    ): String!
   }
-
   """
   Used for log in and sign up. Returns token and user info
   """
