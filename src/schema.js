@@ -113,6 +113,9 @@ const typeDefs = gql`
       bio: String
       payment_info: Boolean
     ): User!
+    checkEmail(
+      email: String!
+    ): String!
   }
   """
   Used for log in and sign up. Returns token and user info
