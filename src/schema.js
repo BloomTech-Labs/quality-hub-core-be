@@ -116,6 +116,8 @@ const typeDefs = gql`
     checkEmail(
       email: String!
     ): String!
+
+    deleteUser: User!
   }
   """
   Used for log in and sign up. Returns token and user info
