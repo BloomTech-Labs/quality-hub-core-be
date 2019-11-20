@@ -51,6 +51,9 @@ function getUserId(context) {
   throw new Error('Not Authenticated')
 }
 
+/*
+  Checks the email stored in the token against the saved admin email in an .env file.
+*/
 async function checkAdmin(context) {
   const user = await context.prisma.user({id: getUserId(context)})
   if (user.email !== process.env.ADMIN_EMAIL) {
