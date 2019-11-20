@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type User {
+  type User @key(fields: "email") {
     """
     Unique ID of user.
     """
