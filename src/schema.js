@@ -26,7 +26,7 @@ const typeDefs = gql`
 		payment_info: Boolean
 	}
 
-	type Query {
+	extend type Query {
 		"""
 		A test query to show that the backend works
 		"""
