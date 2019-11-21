@@ -1,36 +1,35 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-	type User @key(fields: "id") {
-		"""
-		Unique ID of user.
-		"""
-		id: ID!
-		first_name: String!
-		last_name: String!
-		email: String!
-		city: String!
-		"""
-		Chosen from a list of States and Regions on Front end
-		"""
-		state: String!
-		image_url: String
-		gender: String
-		personal_url: String
-		blog_url: String
-		twitter_url: String
-		portfolio_url: String
-		linkedin_url: String
-		github_url: String
-		bio: String
-		payment_info: Boolean
-	}
+  type User @key(fields: "id") {
+    """
+    Unique ID of user.
+    """
+    id: ID!
+    first_name: String!
+    last_name: String!
+    email: String!
+    city: String!
+    """
+    Chosen from a list of States and Regions on Front end
+    """
+    state: String!
+    image_url: String
+    gender: String
+    personal_url: String
+    blog_url: String
+    twitter_url: String
+    portfolio_url: String
+    linkedin_url: String
+    github_url: String
+    bio: String
+    payment_info: Boolean
+  }
 
-	extend type Query {
-		"""
-		A test query to show that the backend works
-		"""
-		info: String!
+  extend type Query {
+    """
+    A test query to show that the backend works
+    """
 
 		"""
 		Gets all registered users

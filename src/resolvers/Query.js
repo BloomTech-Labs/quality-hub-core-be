@@ -35,7 +35,7 @@ async function users (parent, args, context, info) {
 
   @return {Object}  - Type User 
 */
-async function me (parents, args, context, info) {
+async function me (parent, args, context, info) {
   return await context.prisma.user({ id: getUserId(context)})
 }
 

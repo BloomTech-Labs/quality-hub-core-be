@@ -4,4 +4,8 @@ const server = require('./server');
 
 server.express.use('/doc', express.static("doc/schema"));
 
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+const options = { PORT: process.env.PORT || 4000 };
+
+server.start(options, ({ PORT }) => {
+	console.log(`Running on ${PORT}`);
+});
