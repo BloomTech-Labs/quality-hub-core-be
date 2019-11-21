@@ -1,5 +1,6 @@
 function __resolveReference(user, context) {
-  return context.prisma.user({email: user.email})
+  console.log(user);
+  return context.prisma.user({id: user.id})
 }
 
 module.exports = {

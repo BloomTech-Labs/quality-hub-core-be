@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || "QUAIL_LIFESTYLE";
+const JWT_SECRET = process.env.JWT_SECRET
 
 /*
   @param {Object} args - arguments sent into mutation such as fields for signup
