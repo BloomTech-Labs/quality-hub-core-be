@@ -1,4 +1,4 @@
-type User @key(fields: "id") {
+type User @key(fields: "email") {
   id: ID! @id
   first_name: String!
   last_name: String!

@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type User @key(fields: "email") {
+  type User @key(fields: "id") {
     """
     Unique ID of user.
     """
@@ -26,7 +26,7 @@ const typeDefs = gql`
     payment_info: Boolean
   }
 
-  type Query {
+  extend type Query {
     """
     A test query to show that the backend works
     """
