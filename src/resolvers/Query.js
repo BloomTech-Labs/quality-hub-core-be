@@ -46,6 +46,8 @@ async function me (parent, args, context, info) {
 */
 async function availabilities (parents, args, context, info) {
   console.log(getUserId(context));
+  console.log(context.prisma.availabilities());
+
   return await context.prisma.availabilities();
   // return await context.prisma.availability({ where: {
   //   user: {
