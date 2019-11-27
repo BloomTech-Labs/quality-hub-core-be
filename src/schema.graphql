@@ -22,6 +22,20 @@
     github_url: String
     bio: String
     payment_info: Boolean
+    availability: [Availability]
+  }
+
+    type Availability {
+    """
+    Availability slot by user
+    """
+    id: ID!
+    dayOfWeek: String!
+    start_hour: Int!
+    start_minute: Int!
+    end_hour: Int!
+    end_minute: Int!
+    user: User!
   }
 
   type Query {

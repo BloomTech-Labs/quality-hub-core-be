@@ -96,6 +96,10 @@ async function checkEmail (parent, args, context, info) {
   }
 }
 
+// async function createAvailability (parent, args, context, info) {
+//   const availability = 
+// }
+
 module.exports = {
   signup,
   login,

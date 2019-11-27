@@ -24,7 +24,41 @@ const typeDefs = gql`
     github_url: String
     bio: String
     payment_info: Boolean
+    # coach_bookings: [Booking]
+    # seeker_booking: [Booking]
+    availability: [Availability]
   }
+
+  type Availability {
+    """
+    Availability slot by user
+    """
+    id: ID!
+    dayOfWeek: String!
+    start_hour: Int!
+    start_minute: Int!
+    end_hour: Int!
+    end_minute: Int!
+    user: User!
+  }
+
+  # enum ApptType {
+  #   INTERVIEW
+  #   RESUME
+  # }
+
+  # type Booking {
+  #   id: ID!
+  #   type: ApptType!
+  #   year: Int!
+  #   month: Int!
+  #   day: Int!
+  #   hour: Int!
+  #   minute: Int!
+  #   coach: User!
+  #   seeker: User!
+  # }
+  
 
   type Query {
     """
@@ -57,6 +91,21 @@ const typeDefs = gql`
     """
 
     me: User!
+
+    """
+    Gets availabilities based on user
+
+    Gets bookings by coach id
+
+    Gets bookings by seeker id
+    coachBookings: [Booking]
+    seekerBookings: [Booking]
+    """
+    
+    availabilities: [Availability]
+
+
+    
   }
 
   type Mutation {

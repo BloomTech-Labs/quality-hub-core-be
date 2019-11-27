@@ -16,6 +16,8 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  availability: (where?: AvailabilityWhereInput) => Promise<boolean>;
+  booking: (where?: BookingWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +40,46 @@ export interface Prisma {
    * Queries
    */
 
+  availability: (
+    where: AvailabilityWhereUniqueInput
+  ) => AvailabilityNullablePromise;
+  availabilities: (args?: {
+    where?: AvailabilityWhereInput;
+    orderBy?: AvailabilityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Availability>;
+  availabilitiesConnection: (args?: {
+    where?: AvailabilityWhereInput;
+    orderBy?: AvailabilityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AvailabilityConnectionPromise;
+  booking: (where: BookingWhereUniqueInput) => BookingNullablePromise;
+  bookings: (args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Booking>;
+  bookingsConnection: (args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => BookingConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +105,42 @@ export interface Prisma {
    * Mutations
    */
 
+  createAvailability: (data: AvailabilityCreateInput) => AvailabilityPromise;
+  updateAvailability: (args: {
+    data: AvailabilityUpdateInput;
+    where: AvailabilityWhereUniqueInput;
+  }) => AvailabilityPromise;
+  updateManyAvailabilities: (args: {
+    data: AvailabilityUpdateManyMutationInput;
+    where?: AvailabilityWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAvailability: (args: {
+    where: AvailabilityWhereUniqueInput;
+    create: AvailabilityCreateInput;
+    update: AvailabilityUpdateInput;
+  }) => AvailabilityPromise;
+  deleteAvailability: (
+    where: AvailabilityWhereUniqueInput
+  ) => AvailabilityPromise;
+  deleteManyAvailabilities: (
+    where?: AvailabilityWhereInput
+  ) => BatchPayloadPromise;
+  createBooking: (data: BookingCreateInput) => BookingPromise;
+  updateBooking: (args: {
+    data: BookingUpdateInput;
+    where: BookingWhereUniqueInput;
+  }) => BookingPromise;
+  updateManyBookings: (args: {
+    data: BookingUpdateManyMutationInput;
+    where?: BookingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertBooking: (args: {
+    where: BookingWhereUniqueInput;
+    create: BookingCreateInput;
+    update: BookingUpdateInput;
+  }) => BookingPromise;
+  deleteBooking: (where: BookingWhereUniqueInput) => BookingPromise;
+  deleteManyBookings: (where?: BookingWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +166,12 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  availability: (
+    where?: AvailabilitySubscriptionWhereInput
+  ) => AvailabilitySubscriptionPayloadSubscription;
+  booking: (
+    where?: BookingSubscriptionWhereInput
+  ) => BookingSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -100,6 +184,38 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type ApptType = "INTERVIEW" | "RESUME";
+
+export type BookingOrderByInput =
+  | "type_ASC"
+  | "type_DESC"
+  | "id_ASC"
+  | "id_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "day_ASC"
+  | "day_DESC"
+  | "hour_ASC"
+  | "hour_DESC"
+  | "minute_ASC"
+  | "minute_DESC";
+
+export type AvailabilityOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "dayOfWeek_ASC"
+  | "dayOfWeek_DESC"
+  | "start_hour_ASC"
+  | "start_hour_DESC"
+  | "start_minute_ASC"
+  | "start_minute_DESC"
+  | "end_hour_ASC"
+  | "end_hour_DESC"
+  | "end_minute_ASC"
+  | "end_minute_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -139,27 +255,107 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
+export interface BookingUpdateManyWithoutCoachInput {
+  create?: Maybe<
+    BookingCreateWithoutCoachInput[] | BookingCreateWithoutCoachInput
+  >;
+  delete?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  set?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  disconnect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  update?: Maybe<
+    | BookingUpdateWithWhereUniqueWithoutCoachInput[]
+    | BookingUpdateWithWhereUniqueWithoutCoachInput
+  >;
+  upsert?: Maybe<
+    | BookingUpsertWithWhereUniqueWithoutCoachInput[]
+    | BookingUpsertWithWhereUniqueWithoutCoachInput
+  >;
+  deleteMany?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  updateMany?: Maybe<
+    | BookingUpdateManyWithWhereNestedInput[]
+    | BookingUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface UserUpdateInput {
+export type AvailabilityWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateOneRequiredWithoutSeeker_bookingsInput {
+  create?: Maybe<UserCreateWithoutSeeker_bookingsInput>;
+  update?: Maybe<UserUpdateWithoutSeeker_bookingsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutSeeker_bookingsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface BookingWhereInput {
+  type?: Maybe<ApptType>;
+  type_not?: Maybe<ApptType>;
+  type_in?: Maybe<ApptType[] | ApptType>;
+  type_not_in?: Maybe<ApptType[] | ApptType>;
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  year?: Maybe<Int>;
+  year_not?: Maybe<Int>;
+  year_in?: Maybe<Int[] | Int>;
+  year_not_in?: Maybe<Int[] | Int>;
+  year_lt?: Maybe<Int>;
+  year_lte?: Maybe<Int>;
+  year_gt?: Maybe<Int>;
+  year_gte?: Maybe<Int>;
+  month?: Maybe<Int>;
+  month_not?: Maybe<Int>;
+  month_in?: Maybe<Int[] | Int>;
+  month_not_in?: Maybe<Int[] | Int>;
+  month_lt?: Maybe<Int>;
+  month_lte?: Maybe<Int>;
+  month_gt?: Maybe<Int>;
+  month_gte?: Maybe<Int>;
+  day?: Maybe<Int>;
+  day_not?: Maybe<Int>;
+  day_in?: Maybe<Int[] | Int>;
+  day_not_in?: Maybe<Int[] | Int>;
+  day_lt?: Maybe<Int>;
+  day_lte?: Maybe<Int>;
+  day_gt?: Maybe<Int>;
+  day_gte?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  hour_not?: Maybe<Int>;
+  hour_in?: Maybe<Int[] | Int>;
+  hour_not_in?: Maybe<Int[] | Int>;
+  hour_lt?: Maybe<Int>;
+  hour_lte?: Maybe<Int>;
+  hour_gt?: Maybe<Int>;
+  hour_gte?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  minute_not?: Maybe<Int>;
+  minute_in?: Maybe<Int[] | Int>;
+  minute_not_in?: Maybe<Int[] | Int>;
+  minute_lt?: Maybe<Int>;
+  minute_lte?: Maybe<Int>;
+  minute_gt?: Maybe<Int>;
+  minute_gte?: Maybe<Int>;
+  coach?: Maybe<UserWhereInput>;
+  seeker?: Maybe<UserWhereInput>;
+  AND?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+  OR?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+  NOT?: Maybe<BookingWhereInput[] | BookingWhereInput>;
+}
+
+export interface UserUpdateWithoutSeeker_bookingsDataInput {
   first_name?: Maybe<String>;
   last_name?: Maybe<String>;
   email?: Maybe<String>;
@@ -176,6 +372,8 @@ export interface UserUpdateInput {
   blog_url?: Maybe<String>;
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingUpdateManyWithoutCoachInput>;
+  availability?: Maybe<AvailabilityUpdateManyWithoutUserInput>;
 }
 
 export interface UserWhereInput {
@@ -405,9 +603,115 @@ export interface UserWhereInput {
   twitter_url_not_ends_with?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
   activated_stripe_not?: Maybe<Boolean>;
+  coach_bookings_every?: Maybe<BookingWhereInput>;
+  coach_bookings_some?: Maybe<BookingWhereInput>;
+  coach_bookings_none?: Maybe<BookingWhereInput>;
+  seeker_bookings_every?: Maybe<BookingWhereInput>;
+  seeker_bookings_some?: Maybe<BookingWhereInput>;
+  seeker_bookings_none?: Maybe<BookingWhereInput>;
+  availability_every?: Maybe<AvailabilityWhereInput>;
+  availability_some?: Maybe<AvailabilityWhereInput>;
+  availability_none?: Maybe<AvailabilityWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface BookingCreateWithoutSeekerInput {
+  type: ApptType;
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  coach: UserCreateOneWithoutCoach_bookingsInput;
+}
+
+export interface BookingUpdateWithoutSeekerDataInput {
+  type?: Maybe<ApptType>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<UserUpdateOneRequiredWithoutCoach_bookingsInput>;
+}
+
+export interface UserCreateOneWithoutCoach_bookingsInput {
+  create?: Maybe<UserCreateWithoutCoach_bookingsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface AvailabilityUpdateManyWithoutUserInput {
+  create?: Maybe<
+    AvailabilityCreateWithoutUserInput[] | AvailabilityCreateWithoutUserInput
+  >;
+  delete?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
+  connect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+  set?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
+  disconnect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+  update?: Maybe<
+    | AvailabilityUpdateWithWhereUniqueWithoutUserInput[]
+    | AvailabilityUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | AvailabilityUpsertWithWhereUniqueWithoutUserInput[]
+    | AvailabilityUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | AvailabilityUpdateManyWithWhereNestedInput[]
+    | AvailabilityUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserCreateWithoutCoach_bookingsInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  seeker_bookings?: Maybe<BookingCreateManyWithoutSeekerInput>;
+  availability?: Maybe<AvailabilityCreateManyWithoutUserInput>;
+}
+
+export interface BookingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BookingWhereInput>;
+  AND?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  OR?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  NOT?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+}
+
+export interface AvailabilityUpdateInput {
+  dayOfWeek?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+  user?: Maybe<UserUpdateOneRequiredWithoutAvailabilityInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -429,6 +733,274 @@ export interface UserUpdateManyMutationInput {
   activated_stripe?: Maybe<Boolean>;
 }
 
+export interface UserUpdateOneRequiredWithoutAvailabilityInput {
+  create?: Maybe<UserCreateWithoutAvailabilityInput>;
+  update?: Maybe<UserUpdateWithoutAvailabilityDataInput>;
+  upsert?: Maybe<UserUpsertWithoutAvailabilityInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type BookingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateWithoutAvailabilityDataInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingUpdateManyWithoutCoachInput>;
+  seeker_bookings?: Maybe<BookingUpdateManyWithoutSeekerInput>;
+}
+
+export interface BookingUpdateManyMutationInput {
+  type?: Maybe<ApptType>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+}
+
+export interface UserUpsertWithoutCoach_bookingsInput {
+  update: UserUpdateWithoutCoach_bookingsDataInput;
+  create: UserCreateWithoutCoach_bookingsInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface BookingUpdateWithWhereUniqueWithoutCoachInput {
+  where: BookingWhereUniqueInput;
+  data: BookingUpdateWithoutCoachDataInput;
+}
+
+export interface AvailabilityUpdateManyMutationInput {
+  dayOfWeek?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+}
+
+export interface BookingUpdateWithoutCoachDataInput {
+  type?: Maybe<ApptType>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  seeker?: Maybe<UserUpdateOneRequiredWithoutSeeker_bookingsInput>;
+}
+
+export interface BookingUpsertWithWhereUniqueWithoutSeekerInput {
+  where: BookingWhereUniqueInput;
+  update: BookingUpdateWithoutSeekerDataInput;
+  create: BookingCreateWithoutSeekerInput;
+}
+
+export interface UserUpdateWithoutCoach_bookingsDataInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  seeker_bookings?: Maybe<BookingUpdateManyWithoutSeekerInput>;
+  availability?: Maybe<AvailabilityUpdateManyWithoutUserInput>;
+}
+
+export interface AvailabilityCreateInput {
+  id?: Maybe<ID_Input>;
+  dayOfWeek: String;
+  start_hour: Int;
+  start_minute: Int;
+  end_hour: Int;
+  end_minute: Int;
+  user: UserCreateOneWithoutAvailabilityInput;
+}
+
+export interface AvailabilityWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  dayOfWeek?: Maybe<String>;
+  dayOfWeek_not?: Maybe<String>;
+  dayOfWeek_in?: Maybe<String[] | String>;
+  dayOfWeek_not_in?: Maybe<String[] | String>;
+  dayOfWeek_lt?: Maybe<String>;
+  dayOfWeek_lte?: Maybe<String>;
+  dayOfWeek_gt?: Maybe<String>;
+  dayOfWeek_gte?: Maybe<String>;
+  dayOfWeek_contains?: Maybe<String>;
+  dayOfWeek_not_contains?: Maybe<String>;
+  dayOfWeek_starts_with?: Maybe<String>;
+  dayOfWeek_not_starts_with?: Maybe<String>;
+  dayOfWeek_ends_with?: Maybe<String>;
+  dayOfWeek_not_ends_with?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_hour_not?: Maybe<Int>;
+  start_hour_in?: Maybe<Int[] | Int>;
+  start_hour_not_in?: Maybe<Int[] | Int>;
+  start_hour_lt?: Maybe<Int>;
+  start_hour_lte?: Maybe<Int>;
+  start_hour_gt?: Maybe<Int>;
+  start_hour_gte?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  start_minute_not?: Maybe<Int>;
+  start_minute_in?: Maybe<Int[] | Int>;
+  start_minute_not_in?: Maybe<Int[] | Int>;
+  start_minute_lt?: Maybe<Int>;
+  start_minute_lte?: Maybe<Int>;
+  start_minute_gt?: Maybe<Int>;
+  start_minute_gte?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_hour_not?: Maybe<Int>;
+  end_hour_in?: Maybe<Int[] | Int>;
+  end_hour_not_in?: Maybe<Int[] | Int>;
+  end_hour_lt?: Maybe<Int>;
+  end_hour_lte?: Maybe<Int>;
+  end_hour_gt?: Maybe<Int>;
+  end_hour_gte?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+  end_minute_not?: Maybe<Int>;
+  end_minute_in?: Maybe<Int[] | Int>;
+  end_minute_not_in?: Maybe<Int[] | Int>;
+  end_minute_lt?: Maybe<Int>;
+  end_minute_lte?: Maybe<Int>;
+  end_minute_gt?: Maybe<Int>;
+  end_minute_gte?: Maybe<Int>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<AvailabilityWhereInput[] | AvailabilityWhereInput>;
+  OR?: Maybe<AvailabilityWhereInput[] | AvailabilityWhereInput>;
+  NOT?: Maybe<AvailabilityWhereInput[] | AvailabilityWhereInput>;
+}
+
+export interface UserCreateWithoutAvailabilityInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingCreateManyWithoutCoachInput>;
+  seeker_bookings?: Maybe<BookingCreateManyWithoutSeekerInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutCoach_bookingsInput {
+  create?: Maybe<UserCreateWithoutCoach_bookingsInput>;
+  update?: Maybe<UserUpdateWithoutCoach_bookingsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCoach_bookingsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface BookingCreateWithoutCoachInput {
+  type: ApptType;
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  seeker: UserCreateOneWithoutSeeker_bookingsInput;
+}
+
+export interface AvailabilityUpdateWithWhereUniqueWithoutUserInput {
+  where: AvailabilityWhereUniqueInput;
+  data: AvailabilityUpdateWithoutUserDataInput;
+}
+
+export interface UserCreateWithoutSeeker_bookingsInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingCreateManyWithoutCoachInput>;
+  availability?: Maybe<AvailabilityCreateManyWithoutUserInput>;
+}
+
+export interface AvailabilityUpdateWithoutUserDataInput {
+  dayOfWeek?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+}
+
+export interface AvailabilityCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  dayOfWeek: String;
+  start_hour: Int;
+  start_minute: Int;
+  end_hour: Int;
+  end_minute: Int;
+}
+
+export interface AvailabilityUpsertWithWhereUniqueWithoutUserInput {
+  where: AvailabilityWhereUniqueInput;
+  update: AvailabilityUpdateWithoutUserDataInput;
+  create: AvailabilityCreateWithoutUserInput;
+}
+
 export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -440,45 +1012,327 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
+export interface AvailabilityScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  dayOfWeek?: Maybe<String>;
+  dayOfWeek_not?: Maybe<String>;
+  dayOfWeek_in?: Maybe<String[] | String>;
+  dayOfWeek_not_in?: Maybe<String[] | String>;
+  dayOfWeek_lt?: Maybe<String>;
+  dayOfWeek_lte?: Maybe<String>;
+  dayOfWeek_gt?: Maybe<String>;
+  dayOfWeek_gte?: Maybe<String>;
+  dayOfWeek_contains?: Maybe<String>;
+  dayOfWeek_not_contains?: Maybe<String>;
+  dayOfWeek_starts_with?: Maybe<String>;
+  dayOfWeek_not_starts_with?: Maybe<String>;
+  dayOfWeek_ends_with?: Maybe<String>;
+  dayOfWeek_not_ends_with?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_hour_not?: Maybe<Int>;
+  start_hour_in?: Maybe<Int[] | Int>;
+  start_hour_not_in?: Maybe<Int[] | Int>;
+  start_hour_lt?: Maybe<Int>;
+  start_hour_lte?: Maybe<Int>;
+  start_hour_gt?: Maybe<Int>;
+  start_hour_gte?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  start_minute_not?: Maybe<Int>;
+  start_minute_in?: Maybe<Int[] | Int>;
+  start_minute_not_in?: Maybe<Int[] | Int>;
+  start_minute_lt?: Maybe<Int>;
+  start_minute_lte?: Maybe<Int>;
+  start_minute_gt?: Maybe<Int>;
+  start_minute_gte?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_hour_not?: Maybe<Int>;
+  end_hour_in?: Maybe<Int[] | Int>;
+  end_hour_not_in?: Maybe<Int[] | Int>;
+  end_hour_lt?: Maybe<Int>;
+  end_hour_lte?: Maybe<Int>;
+  end_hour_gt?: Maybe<Int>;
+  end_hour_gte?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+  end_minute_not?: Maybe<Int>;
+  end_minute_in?: Maybe<Int[] | Int>;
+  end_minute_not_in?: Maybe<Int[] | Int>;
+  end_minute_lt?: Maybe<Int>;
+  end_minute_lte?: Maybe<Int>;
+  end_minute_gt?: Maybe<Int>;
+  end_minute_gte?: Maybe<Int>;
+  AND?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+  OR?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+  NOT?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+}
+
+export interface UserUpdateInput {
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
   email?: Maybe<String>;
-}>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingUpdateManyWithoutCoachInput>;
+  seeker_bookings?: Maybe<BookingUpdateManyWithoutSeekerInput>;
+  availability?: Maybe<AvailabilityUpdateManyWithoutUserInput>;
+}
+
+export interface AvailabilityUpdateManyWithWhereNestedInput {
+  where: AvailabilityScalarWhereInput;
+  data: AvailabilityUpdateManyDataInput;
+}
+
+export interface BookingUpdateInput {
+  type?: Maybe<ApptType>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<UserUpdateOneRequiredWithoutCoach_bookingsInput>;
+  seeker?: Maybe<UserUpdateOneRequiredWithoutSeeker_bookingsInput>;
+}
+
+export interface AvailabilityUpdateManyDataInput {
+  dayOfWeek?: Maybe<String>;
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  end_hour?: Maybe<Int>;
+  end_minute?: Maybe<Int>;
+}
+
+export interface UserUpsertWithoutAvailabilityInput {
+  update: UserUpdateWithoutAvailabilityDataInput;
+  create: UserCreateWithoutAvailabilityInput;
+}
+
+export interface UserUpsertWithoutSeeker_bookingsInput {
+  update: UserUpdateWithoutSeeker_bookingsDataInput;
+  create: UserCreateWithoutSeeker_bookingsInput;
+}
+
+export interface UserCreateOneWithoutAvailabilityInput {
+  create?: Maybe<UserCreateWithoutAvailabilityInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface BookingUpsertWithWhereUniqueWithoutCoachInput {
+  where: BookingWhereUniqueInput;
+  update: BookingUpdateWithoutCoachDataInput;
+  create: BookingCreateWithoutCoachInput;
+}
+
+export interface UserCreateOneWithoutSeeker_bookingsInput {
+  create?: Maybe<UserCreateWithoutSeeker_bookingsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface BookingScalarWhereInput {
+  type?: Maybe<ApptType>;
+  type_not?: Maybe<ApptType>;
+  type_in?: Maybe<ApptType[] | ApptType>;
+  type_not_in?: Maybe<ApptType[] | ApptType>;
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  year?: Maybe<Int>;
+  year_not?: Maybe<Int>;
+  year_in?: Maybe<Int[] | Int>;
+  year_not_in?: Maybe<Int[] | Int>;
+  year_lt?: Maybe<Int>;
+  year_lte?: Maybe<Int>;
+  year_gt?: Maybe<Int>;
+  year_gte?: Maybe<Int>;
+  month?: Maybe<Int>;
+  month_not?: Maybe<Int>;
+  month_in?: Maybe<Int[] | Int>;
+  month_not_in?: Maybe<Int[] | Int>;
+  month_lt?: Maybe<Int>;
+  month_lte?: Maybe<Int>;
+  month_gt?: Maybe<Int>;
+  month_gte?: Maybe<Int>;
+  day?: Maybe<Int>;
+  day_not?: Maybe<Int>;
+  day_in?: Maybe<Int[] | Int>;
+  day_not_in?: Maybe<Int[] | Int>;
+  day_lt?: Maybe<Int>;
+  day_lte?: Maybe<Int>;
+  day_gt?: Maybe<Int>;
+  day_gte?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  hour_not?: Maybe<Int>;
+  hour_in?: Maybe<Int[] | Int>;
+  hour_not_in?: Maybe<Int[] | Int>;
+  hour_lt?: Maybe<Int>;
+  hour_lte?: Maybe<Int>;
+  hour_gt?: Maybe<Int>;
+  hour_gte?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  minute_not?: Maybe<Int>;
+  minute_in?: Maybe<Int[] | Int>;
+  minute_not_in?: Maybe<Int[] | Int>;
+  minute_lt?: Maybe<Int>;
+  minute_lte?: Maybe<Int>;
+  minute_gt?: Maybe<Int>;
+  minute_gte?: Maybe<Int>;
+  AND?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  OR?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  NOT?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+}
+
+export interface BookingCreateManyWithoutSeekerInput {
+  create?: Maybe<
+    BookingCreateWithoutSeekerInput[] | BookingCreateWithoutSeekerInput
+  >;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  coach_bookings?: Maybe<BookingCreateManyWithoutCoachInput>;
+  seeker_bookings?: Maybe<BookingCreateManyWithoutSeekerInput>;
+  availability?: Maybe<AvailabilityCreateManyWithoutUserInput>;
+}
+
+export interface BookingUpdateWithWhereUniqueWithoutSeekerInput {
+  where: BookingWhereUniqueInput;
+  data: BookingUpdateWithoutSeekerDataInput;
+}
+
+export interface BookingUpdateManyWithoutSeekerInput {
+  create?: Maybe<
+    BookingCreateWithoutSeekerInput[] | BookingCreateWithoutSeekerInput
+  >;
+  delete?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  set?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  disconnect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+  update?: Maybe<
+    | BookingUpdateWithWhereUniqueWithoutSeekerInput[]
+    | BookingUpdateWithWhereUniqueWithoutSeekerInput
+  >;
+  upsert?: Maybe<
+    | BookingUpsertWithWhereUniqueWithoutSeekerInput[]
+    | BookingUpsertWithWhereUniqueWithoutSeekerInput
+  >;
+  deleteMany?: Maybe<BookingScalarWhereInput[] | BookingScalarWhereInput>;
+  updateMany?: Maybe<
+    | BookingUpdateManyWithWhereNestedInput[]
+    | BookingUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface BookingUpdateManyDataInput {
+  type?: Maybe<ApptType>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+}
+
+export interface BookingUpdateManyWithWhereNestedInput {
+  where: BookingScalarWhereInput;
+  data: BookingUpdateManyDataInput;
+}
+
+export interface BookingCreateInput {
+  type: ApptType;
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  coach: UserCreateOneWithoutCoach_bookingsInput;
+  seeker: UserCreateOneWithoutSeeker_bookingsInput;
+}
+
+export interface AvailabilitySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AvailabilityWhereInput>;
+  AND?: Maybe<
+    AvailabilitySubscriptionWhereInput[] | AvailabilitySubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    AvailabilitySubscriptionWhereInput[] | AvailabilitySubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    AvailabilitySubscriptionWhereInput[] | AvailabilitySubscriptionWhereInput
+  >;
+}
+
+export interface AvailabilityCreateManyWithoutUserInput {
+  create?: Maybe<
+    AvailabilityCreateWithoutUserInput[] | AvailabilityCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+}
+
+export interface BookingCreateManyWithoutCoachInput {
+  create?: Maybe<
+    BookingCreateWithoutCoachInput[] | BookingCreateWithoutCoachInput
+  >;
+  connect?: Maybe<BookingWhereUniqueInput[] | BookingWhereUniqueInput>;
+}
 
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserPreviousValues {
@@ -545,46 +1399,20 @@ export interface UserPreviousValuesSubscription
   activated_stripe: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface AggregateAvailability {
+  count: Int;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface AggregateAvailabilityPromise
+  extends Promise<AggregateAvailability>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface AggregateAvailabilitySubscription
+  extends Promise<AsyncIterator<AggregateAvailability>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface User {
@@ -625,6 +1453,33 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   blog_url: () => Promise<String>;
   twitter_url: () => Promise<String>;
   activated_stripe: () => Promise<Boolean>;
+  coach_bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  seeker_bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  availability: <T = FragmentableArray<Availability>>(args?: {
+    where?: AvailabilityWhereInput;
+    orderBy?: AvailabilityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -647,6 +1502,33 @@ export interface UserSubscription
   blog_url: () => Promise<AsyncIterator<String>>;
   twitter_url: () => Promise<AsyncIterator<String>>;
   activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+  coach_bookings: <T = Promise<AsyncIterator<BookingSubscription>>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  seeker_bookings: <T = Promise<AsyncIterator<BookingSubscription>>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  availability: <T = Promise<AsyncIterator<AvailabilitySubscription>>>(args?: {
+    where?: AvailabilityWhereInput;
+    orderBy?: AvailabilityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserNullablePromise
@@ -669,27 +1551,102 @@ export interface UserNullablePromise
   blog_url: () => Promise<String>;
   twitter_url: () => Promise<String>;
   activated_stripe: () => Promise<Boolean>;
+  coach_bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  seeker_bookings: <T = FragmentableArray<Booking>>(args?: {
+    where?: BookingWhereInput;
+    orderBy?: BookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  availability: <T = FragmentableArray<Availability>>(args?: {
+    where?: AvailabilityWhereInput;
+    orderBy?: AvailabilityOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface AvailabilityEdge {
+  node: Availability;
+  cursor: String;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface AvailabilityEdgePromise
+  extends Promise<AvailabilityEdge>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  node: <T = AvailabilityPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface AvailabilityEdgeSubscription
+  extends Promise<AsyncIterator<AvailabilityEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  node: <T = AvailabilitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Booking {
+  type: ApptType;
+  id: ID_Output;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+}
+
+export interface BookingPromise extends Promise<Booking>, Fragmentable {
+  type: () => Promise<ApptType>;
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  coach: <T = UserPromise>() => T;
+  seeker: <T = UserPromise>() => T;
+}
+
+export interface BookingSubscription
+  extends Promise<AsyncIterator<Booking>>,
+    Fragmentable {
+  type: () => Promise<AsyncIterator<ApptType>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
+  coach: <T = UserSubscription>() => T;
+  seeker: <T = UserSubscription>() => T;
+}
+
+export interface BookingNullablePromise
+  extends Promise<Booking | null>,
+    Fragmentable {
+  type: () => Promise<ApptType>;
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  coach: <T = UserPromise>() => T;
+  seeker: <T = UserPromise>() => T;
 }
 
 export interface PageInfo {
@@ -715,18 +1672,346 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
 
-export type Long = string;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Availability {
+  id: ID_Output;
+  dayOfWeek: String;
+  start_hour: Int;
+  start_minute: Int;
+  end_hour: Int;
+  end_minute: Int;
+}
+
+export interface AvailabilityPromise
+  extends Promise<Availability>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  dayOfWeek: () => Promise<String>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  end_hour: () => Promise<Int>;
+  end_minute: () => Promise<Int>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface AvailabilitySubscription
+  extends Promise<AsyncIterator<Availability>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  dayOfWeek: () => Promise<AsyncIterator<String>>;
+  start_hour: () => Promise<AsyncIterator<Int>>;
+  start_minute: () => Promise<AsyncIterator<Int>>;
+  end_hour: () => Promise<AsyncIterator<Int>>;
+  end_minute: () => Promise<AsyncIterator<Int>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface AvailabilityNullablePromise
+  extends Promise<Availability | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  dayOfWeek: () => Promise<String>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  end_hour: () => Promise<Int>;
+  end_minute: () => Promise<Int>;
+  user: <T = UserPromise>() => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface BookingSubscriptionPayload {
+  mutation: MutationType;
+  node: Booking;
+  updatedFields: String[];
+  previousValues: BookingPreviousValues;
+}
+
+export interface BookingSubscriptionPayloadPromise
+  extends Promise<BookingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BookingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BookingPreviousValuesPromise>() => T;
+}
+
+export interface BookingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BookingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+}
+
+export interface AvailabilitySubscriptionPayload {
+  mutation: MutationType;
+  node: Availability;
+  updatedFields: String[];
+  previousValues: AvailabilityPreviousValues;
+}
+
+export interface AvailabilitySubscriptionPayloadPromise
+  extends Promise<AvailabilitySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AvailabilityPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AvailabilityPreviousValuesPromise>() => T;
+}
+
+export interface AvailabilitySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AvailabilitySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AvailabilitySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AvailabilityPreviousValuesSubscription>() => T;
+}
+
+export interface AvailabilityConnection {
+  pageInfo: PageInfo;
+  edges: AvailabilityEdge[];
+}
+
+export interface AvailabilityConnectionPromise
+  extends Promise<AvailabilityConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AvailabilityEdge>>() => T;
+  aggregate: <T = AggregateAvailabilityPromise>() => T;
+}
+
+export interface AvailabilityConnectionSubscription
+  extends Promise<AsyncIterator<AvailabilityConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AvailabilityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAvailabilitySubscription>() => T;
+}
+
+export interface AvailabilityPreviousValues {
+  id: ID_Output;
+  dayOfWeek: String;
+  start_hour: Int;
+  start_minute: Int;
+  end_hour: Int;
+  end_minute: Int;
+}
+
+export interface AvailabilityPreviousValuesPromise
+  extends Promise<AvailabilityPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  dayOfWeek: () => Promise<String>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  end_hour: () => Promise<Int>;
+  end_minute: () => Promise<Int>;
+}
+
+export interface AvailabilityPreviousValuesSubscription
+  extends Promise<AsyncIterator<AvailabilityPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  dayOfWeek: () => Promise<AsyncIterator<String>>;
+  start_hour: () => Promise<AsyncIterator<Int>>;
+  start_minute: () => Promise<AsyncIterator<Int>>;
+  end_hour: () => Promise<AsyncIterator<Int>>;
+  end_minute: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateBooking {
+  count: Int;
+}
+
+export interface AggregateBookingPromise
+  extends Promise<AggregateBooking>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBookingSubscription
+  extends Promise<AsyncIterator<AggregateBooking>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BookingPreviousValues {
+  type: ApptType;
+  id: ID_Output;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+}
+
+export interface BookingPreviousValuesPromise
+  extends Promise<BookingPreviousValues>,
+    Fragmentable {
+  type: () => Promise<ApptType>;
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+}
+
+export interface BookingPreviousValuesSubscription
+  extends Promise<AsyncIterator<BookingPreviousValues>>,
+    Fragmentable {
+  type: () => Promise<AsyncIterator<ApptType>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BookingEdge {
+  node: Booking;
+  cursor: String;
+}
+
+export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
+  node: <T = BookingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BookingEdgeSubscription
+  extends Promise<AsyncIterator<BookingEdge>>,
+    Fragmentable {
+  node: <T = BookingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface BookingConnection {
+  pageInfo: PageInfo;
+  edges: BookingEdge[];
+}
+
+export interface BookingConnectionPromise
+  extends Promise<BookingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BookingEdge>>() => T;
+  aggregate: <T = AggregateBookingPromise>() => T;
+}
+
+export interface BookingConnectionSubscription
+  extends Promise<AsyncIterator<BookingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBookingSubscription>() => T;
+}
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -738,6 +2023,8 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
+export type Long = string;
+
 /**
  * Model Metadata
  */
@@ -745,6 +2032,18 @@ export type Int = number;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Availability",
+    embedded: false
+  },
+  {
+    name: "Booking",
+    embedded: false
+  },
+  {
+    name: "ApptType",
     embedded: false
   }
 ];

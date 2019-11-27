@@ -16,5 +16,35 @@ type User {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  # coach_bookings: [Booking] @relation(name: "CoachBookings", onDelete: CASCADE)
+  # seeker_bookings: [Booking] @relation(name: "SeekerBookings", onDelete: CASCADE)
+  availability: [Availability]
 }
+
+type Availability {
+  id: ID! @id
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  user: User!
+}
+
+#type Booking {
+#  type: ApptType!
+#  id: ID! @id
+#  year: Int!
+#  month: Int!
+#  day: Int!
+#  hour: Int!
+#  minute: Int!
+#  coach: User! @relation(name: "CoachBookings")
+#  seeker: User! @relation(name: "SeekerBookings")
+#}
+
+#enum ApptType {
+#  INTERVIEW
+#  RESUME
+#}
 

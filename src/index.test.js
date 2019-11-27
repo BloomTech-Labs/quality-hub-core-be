@@ -2,129 +2,132 @@ require('dotenv').config();
 const request = require('supertest');
 const app = require('./server');
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh3ZG5vbzAwemswNzcyaTF1OXBnbTQiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE1NzM2ODY2MTYsImV4cCI6MTU3MzcyOTgxNn0.7emjjYvcO09wwx30hrW-ORX_gaXoOjsRTAEZcE0xTlM';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3MzgzNjM5NCwiZXhwIjoxNTczODc5NTk0fQ.ljiD_6cMwZDMZiy3xlEYC6swt4Ea_1-GIxZGrdT_PV4';
 
-// describe('me', () => {
-//     it('returns the test string for quality hub core backend', async () => {
-//       const server = app.createHttpServer({});
-//       const response = await request(server)
-//               .post('/')
-//               .set({Authorization: token})
-//               .send({
-//                 query: 'query { me { first_name last_name } } '
-//               });
-//               console.log(response.body); 
-//     //   expect(JSON.parse(response.text).data.me).toBe()
-//     })
-//   });
+describe('me', () => {
+    it('returns a truthy response for the me query', async () => {
+      const server = app.createHttpServer({});
+      const response = await request(server)
+              .post('/')
+              .set({Authorization: token})
+              .send({
+                query: 'query { me { first_name last_name } } '
+              });
+              console.log(response.body); 
+      expect(JSON.parse(response.text).data.me).toBeTruthy()
+    })
+  });
   
-//   describe('login', () => {
-//       it('should return an error if the user is not logged in', async () => {
-//         const server = app.createHttpServer({});
-//         const response = await request(server)
-//                 .post('/')
-//                 .send({
-//                   query: `
-//                   mutation { 
-//                     login(email:"labs18.qualityhub@gmail.com", password: "welovequails18") 
-//                     {
-//                       token
-//                     } 
-//                   } 
-//                   `
-//                 });
-//                 console.log(response.body.data.login);
-//             })
-//     });
+  describe('login', () => {
+      it('should return an error if the log in is not successful', async () => {
+        const server = app.createHttpServer({});
+        const response = await request(server)
+                .post('/')
+                .send({
+                  query: `
+                  mutation { 
+                    login(email:"labs18.qualityhub@gmail.com", password: "welovequails18") 
+                    {
+                      token
+                    } 
+                  } 
+                  `
+                });
+                console.log(response.body.data.login);
+                expect(response.body.data).toBeTruthy()
+            })
+    });
 
-// describe('user', () => {
-//     it('returns the test string for quality hub core backend', async () => {
-//       const server = app.createHttpServer({});
-//       const response = await request(server)
-//               .post('/')
-//               .set({Authorization: token})
-//               .send({
-//                 query: 'query { users { first_name last_name } } '
-//               });
-//               console.log(response.body); 
-
-
-//     //   expect(JSON.parse(response.text).data.me).toBe()
-//     })
-//   });
+describe('user', () => {
+    it('returns data when the user is queried', async () => {
+      const server = app.createHttpServer({});
+      const response = await request(server)
+              .post('/')
+              .set({Authorization: token})
+              .send({
+                query: 'query { user(id: "ck2vf69l000880706ae5n4ze0") { first_name last_name } } '
+              });
+              console.log(response.body); 
 
 
-// describe('industries', () => {
-//     it('returns the test string for quality hub core backend', async () => {
-//       const server = app.createHttpServer({});
-//       const response = await request(server)
-//               .post('/')
-//               .set({Authorization: token})
-//               .send({
-//                 query: 'query { industries{ name } } '
-//               });
-//               console.log(response.body); 
-
-//     })
-//   });
+      expect(response.body.data).toBeTruthy()
+    })
+  });
 
 
-// describe('user', () => {
-//     it('returns the test string for quality hub core backend', async () => {
-//       const server = app.createHttpServer({});
-//       const response = await request(server)
-//               .post('/')
-//               .set({Authorization: token})
-//               .send({
-//                 query: `query {
-//                      user(id:"ck2pddqr100030766fg7560s8"){
-//                          first_name 
-//                      }
-//                     } `
-//               });
-//               console.log(response.body); 
-//     })
+describe('industries', () => {
+    it('returns data when the industries is queried', async () => {
+      const server = app.createHttpServer({});
+      const response = await request(server)
+              .post('/')
+              .set({Authorization: token})
+              .send({
+                query: 'query { industries{ name } } '
+              });
+              console.log(response.body); 
+              expect(response.body).toBeTruthy()
 
-//   });
-
-//   describe('signup', () => {
-//           it('should return an error if the user is not logged in', async () => {
-//             const server = app.createHttpServer({});
-//             const response = await request(server)
-//                     .post('/')
-//                     // .set({Authorization:token})
-//                     .send({
-//                       query: `
-//                       mutation { 
-//                         signup(first_name: "nick", last_name: "quail", password:"quail", email:"qqquail@mail.com", city:"quail",state: "fl", industry:"ck2rzrd8m00270773ptf4j9oe"){
-//                             token
-//                         }
-//                       } 
-//                       `
-//                     });
-//                     console.log(response.body);
-//                 })
-//         });
+    })
+  });
 
 
-  // describe('update', () => {
-  //         it('should return an error if the user is not logged in', async () => {
-  //           const server = app.createHttpServer({});
-  //           const response = await request(server)
-  //                   .post('/')
-  //                   .set({Authorization:token})
-  //                   .send({
-  //                     query: `
-  //                     mutation { 
-  //                       update(first_name: "nicccck"){
-  //                           id
-  //                       }
-  //                     } 
-  //                     `
-  //                   });
-  //                   console.log(response.body);
-  //               })
-  //       });
+describe('users', () => {
+    it('returns array when users is queried', async () => {
+      const server = app.createHttpServer({});
+      const response = await request(server)
+              .post('/')
+              .set({Authorization: token})
+              .send({
+                query: `query {
+                     users{
+                         first_name 
+                     }
+                    } `
+              });
+              console.log(response.body); 
+              expect(response.body).toBeTruthy()
+    })
+
+  });
+
+  describe('signup', () => {
+          it('should return an error if the user is not logged in', async () => {
+            const server = app.createHttpServer({});
+            const response = await request(server)
+                    .post('/')
+                    // .set({Authorization:token})
+                    .send({
+                      query: `
+                      mutation { 
+                        signup(first_name: "nick", last_name: "quail", password:"quail", email:"qqquail1@mail.com", city:"quail",state: "fl", industry:"ck2rzrd8m00270773ptf4j9oe"){
+                            token
+                        }
+                      } 
+                      `
+                    });
+                    console.log(response.body);
+                })
+        });
+
+
+  describe('update', () => {
+          it('should return an error if the user is not logged in', async () => {
+            const server = app.createHttpServer({});
+            const response = await request(server)
+                    .post('/')
+                    .set({Authorization:token})
+                    .send({
+                      query: `
+                      mutation { 
+                        update(first_name: "nicccck"){
+                            id
+                        }
+                      } 
+                      `
+                    });
+                    console.log(response.body);
+                })
+        });
 
   //  describe('delete', () => {
   //         it('should return a deleted user if succesful', async () => {
