@@ -7,17 +7,8 @@ module.exports = {
   count: Int!
 }
 
-type AggregateBooking {
-  count: Int!
-}
-
 type AggregateUser {
   count: Int!
-}
-
-enum ApptType {
-  INTERVIEW
-  RESUME
 }
 
 type Availability {
@@ -309,352 +300,6 @@ type BatchPayload {
   count: Long!
 }
 
-type Booking {
-  type: ApptType!
-  id: ID!
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  coach: User!
-  seeker: User!
-}
-
-type BookingConnection {
-  pageInfo: PageInfo!
-  edges: [BookingEdge]!
-  aggregate: AggregateBooking!
-}
-
-input BookingCreateInput {
-  type: ApptType!
-  id: ID
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  coach: UserCreateOneWithoutCoach_bookingsInput!
-  seeker: UserCreateOneWithoutSeeker_bookingsInput!
-}
-
-input BookingCreateManyWithoutCoachInput {
-  create: [BookingCreateWithoutCoachInput!]
-  connect: [BookingWhereUniqueInput!]
-}
-
-input BookingCreateManyWithoutSeekerInput {
-  create: [BookingCreateWithoutSeekerInput!]
-  connect: [BookingWhereUniqueInput!]
-}
-
-input BookingCreateWithoutCoachInput {
-  type: ApptType!
-  id: ID
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  seeker: UserCreateOneWithoutSeeker_bookingsInput!
-}
-
-input BookingCreateWithoutSeekerInput {
-  type: ApptType!
-  id: ID
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  coach: UserCreateOneWithoutCoach_bookingsInput!
-}
-
-type BookingEdge {
-  node: Booking!
-  cursor: String!
-}
-
-enum BookingOrderByInput {
-  type_ASC
-  type_DESC
-  id_ASC
-  id_DESC
-  year_ASC
-  year_DESC
-  month_ASC
-  month_DESC
-  day_ASC
-  day_DESC
-  hour_ASC
-  hour_DESC
-  minute_ASC
-  minute_DESC
-}
-
-type BookingPreviousValues {
-  type: ApptType!
-  id: ID!
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-}
-
-input BookingScalarWhereInput {
-  type: ApptType
-  type_not: ApptType
-  type_in: [ApptType!]
-  type_not_in: [ApptType!]
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  year: Int
-  year_not: Int
-  year_in: [Int!]
-  year_not_in: [Int!]
-  year_lt: Int
-  year_lte: Int
-  year_gt: Int
-  year_gte: Int
-  month: Int
-  month_not: Int
-  month_in: [Int!]
-  month_not_in: [Int!]
-  month_lt: Int
-  month_lte: Int
-  month_gt: Int
-  month_gte: Int
-  day: Int
-  day_not: Int
-  day_in: [Int!]
-  day_not_in: [Int!]
-  day_lt: Int
-  day_lte: Int
-  day_gt: Int
-  day_gte: Int
-  hour: Int
-  hour_not: Int
-  hour_in: [Int!]
-  hour_not_in: [Int!]
-  hour_lt: Int
-  hour_lte: Int
-  hour_gt: Int
-  hour_gte: Int
-  minute: Int
-  minute_not: Int
-  minute_in: [Int!]
-  minute_not_in: [Int!]
-  minute_lt: Int
-  minute_lte: Int
-  minute_gt: Int
-  minute_gte: Int
-  AND: [BookingScalarWhereInput!]
-  OR: [BookingScalarWhereInput!]
-  NOT: [BookingScalarWhereInput!]
-}
-
-type BookingSubscriptionPayload {
-  mutation: MutationType!
-  node: Booking
-  updatedFields: [String!]
-  previousValues: BookingPreviousValues
-}
-
-input BookingSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: BookingWhereInput
-  AND: [BookingSubscriptionWhereInput!]
-  OR: [BookingSubscriptionWhereInput!]
-  NOT: [BookingSubscriptionWhereInput!]
-}
-
-input BookingUpdateInput {
-  type: ApptType
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  coach: UserUpdateOneRequiredWithoutCoach_bookingsInput
-  seeker: UserUpdateOneRequiredWithoutSeeker_bookingsInput
-}
-
-input BookingUpdateManyDataInput {
-  type: ApptType
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-}
-
-input BookingUpdateManyMutationInput {
-  type: ApptType
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-}
-
-input BookingUpdateManyWithoutCoachInput {
-  create: [BookingCreateWithoutCoachInput!]
-  delete: [BookingWhereUniqueInput!]
-  connect: [BookingWhereUniqueInput!]
-  set: [BookingWhereUniqueInput!]
-  disconnect: [BookingWhereUniqueInput!]
-  update: [BookingUpdateWithWhereUniqueWithoutCoachInput!]
-  upsert: [BookingUpsertWithWhereUniqueWithoutCoachInput!]
-  deleteMany: [BookingScalarWhereInput!]
-  updateMany: [BookingUpdateManyWithWhereNestedInput!]
-}
-
-input BookingUpdateManyWithoutSeekerInput {
-  create: [BookingCreateWithoutSeekerInput!]
-  delete: [BookingWhereUniqueInput!]
-  connect: [BookingWhereUniqueInput!]
-  set: [BookingWhereUniqueInput!]
-  disconnect: [BookingWhereUniqueInput!]
-  update: [BookingUpdateWithWhereUniqueWithoutSeekerInput!]
-  upsert: [BookingUpsertWithWhereUniqueWithoutSeekerInput!]
-  deleteMany: [BookingScalarWhereInput!]
-  updateMany: [BookingUpdateManyWithWhereNestedInput!]
-}
-
-input BookingUpdateManyWithWhereNestedInput {
-  where: BookingScalarWhereInput!
-  data: BookingUpdateManyDataInput!
-}
-
-input BookingUpdateWithoutCoachDataInput {
-  type: ApptType
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  seeker: UserUpdateOneRequiredWithoutSeeker_bookingsInput
-}
-
-input BookingUpdateWithoutSeekerDataInput {
-  type: ApptType
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  coach: UserUpdateOneRequiredWithoutCoach_bookingsInput
-}
-
-input BookingUpdateWithWhereUniqueWithoutCoachInput {
-  where: BookingWhereUniqueInput!
-  data: BookingUpdateWithoutCoachDataInput!
-}
-
-input BookingUpdateWithWhereUniqueWithoutSeekerInput {
-  where: BookingWhereUniqueInput!
-  data: BookingUpdateWithoutSeekerDataInput!
-}
-
-input BookingUpsertWithWhereUniqueWithoutCoachInput {
-  where: BookingWhereUniqueInput!
-  update: BookingUpdateWithoutCoachDataInput!
-  create: BookingCreateWithoutCoachInput!
-}
-
-input BookingUpsertWithWhereUniqueWithoutSeekerInput {
-  where: BookingWhereUniqueInput!
-  update: BookingUpdateWithoutSeekerDataInput!
-  create: BookingCreateWithoutSeekerInput!
-}
-
-input BookingWhereInput {
-  type: ApptType
-  type_not: ApptType
-  type_in: [ApptType!]
-  type_not_in: [ApptType!]
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  year: Int
-  year_not: Int
-  year_in: [Int!]
-  year_not_in: [Int!]
-  year_lt: Int
-  year_lte: Int
-  year_gt: Int
-  year_gte: Int
-  month: Int
-  month_not: Int
-  month_in: [Int!]
-  month_not_in: [Int!]
-  month_lt: Int
-  month_lte: Int
-  month_gt: Int
-  month_gte: Int
-  day: Int
-  day_not: Int
-  day_in: [Int!]
-  day_not_in: [Int!]
-  day_lt: Int
-  day_lte: Int
-  day_gt: Int
-  day_gte: Int
-  hour: Int
-  hour_not: Int
-  hour_in: [Int!]
-  hour_not_in: [Int!]
-  hour_lt: Int
-  hour_lte: Int
-  hour_gt: Int
-  hour_gte: Int
-  minute: Int
-  minute_not: Int
-  minute_in: [Int!]
-  minute_not_in: [Int!]
-  minute_lt: Int
-  minute_lte: Int
-  minute_gt: Int
-  minute_gte: Int
-  coach: UserWhereInput
-  seeker: UserWhereInput
-  AND: [BookingWhereInput!]
-  OR: [BookingWhereInput!]
-  NOT: [BookingWhereInput!]
-}
-
-input BookingWhereUniqueInput {
-  id: ID
-}
-
 scalar Long
 
 type Mutation {
@@ -664,12 +309,6 @@ type Mutation {
   upsertAvailability(where: AvailabilityWhereUniqueInput!, create: AvailabilityCreateInput!, update: AvailabilityUpdateInput!): Availability!
   deleteAvailability(where: AvailabilityWhereUniqueInput!): Availability
   deleteManyAvailabilities(where: AvailabilityWhereInput): BatchPayload!
-  createBooking(data: BookingCreateInput!): Booking!
-  updateBooking(data: BookingUpdateInput!, where: BookingWhereUniqueInput!): Booking
-  updateManyBookings(data: BookingUpdateManyMutationInput!, where: BookingWhereInput): BatchPayload!
-  upsertBooking(where: BookingWhereUniqueInput!, create: BookingCreateInput!, update: BookingUpdateInput!): Booking!
-  deleteBooking(where: BookingWhereUniqueInput!): Booking
-  deleteManyBookings(where: BookingWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -699,9 +338,6 @@ type Query {
   availability(where: AvailabilityWhereUniqueInput!): Availability
   availabilities(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability]!
   availabilitiesConnection(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AvailabilityConnection!
-  booking(where: BookingWhereUniqueInput!): Booking
-  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
-  bookingsConnection(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookingConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -710,7 +346,6 @@ type Query {
 
 type Subscription {
   availability(where: AvailabilitySubscriptionWhereInput): AvailabilitySubscriptionPayload
-  booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -732,8 +367,6 @@ type User {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  coach_bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
-  seeker_bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
   availability(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability!]
 }
 
@@ -761,23 +394,11 @@ input UserCreateInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  coach_bookings: BookingCreateManyWithoutCoachInput
-  seeker_bookings: BookingCreateManyWithoutSeekerInput
   availability: AvailabilityCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutAvailabilityInput {
   create: UserCreateWithoutAvailabilityInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutCoach_bookingsInput {
-  create: UserCreateWithoutCoach_bookingsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateOneWithoutSeeker_bookingsInput {
-  create: UserCreateWithoutSeeker_bookingsInput
   connect: UserWhereUniqueInput
 }
 
@@ -799,52 +420,6 @@ input UserCreateWithoutAvailabilityInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  coach_bookings: BookingCreateManyWithoutCoachInput
-  seeker_bookings: BookingCreateManyWithoutSeekerInput
-}
-
-input UserCreateWithoutCoach_bookingsInput {
-  id: ID
-  first_name: String!
-  last_name: String!
-  email: String!
-  password: String!
-  city: String!
-  state: String!
-  gender: String
-  bio: String
-  image_url: String
-  portfolio_url: String
-  linkedin_url: String
-  github_url: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
-  activated_stripe: Boolean
-  seeker_bookings: BookingCreateManyWithoutSeekerInput
-  availability: AvailabilityCreateManyWithoutUserInput
-}
-
-input UserCreateWithoutSeeker_bookingsInput {
-  id: ID
-  first_name: String!
-  last_name: String!
-  email: String!
-  password: String!
-  city: String!
-  state: String!
-  gender: String
-  bio: String
-  image_url: String
-  portfolio_url: String
-  linkedin_url: String
-  github_url: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
-  activated_stripe: Boolean
-  coach_bookings: BookingCreateManyWithoutCoachInput
-  availability: AvailabilityCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -944,8 +519,6 @@ input UserUpdateInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  coach_bookings: BookingUpdateManyWithoutCoachInput
-  seeker_bookings: BookingUpdateManyWithoutSeekerInput
   availability: AvailabilityUpdateManyWithoutUserInput
 }
 
@@ -975,20 +548,6 @@ input UserUpdateOneRequiredWithoutAvailabilityInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutCoach_bookingsInput {
-  create: UserCreateWithoutCoach_bookingsInput
-  update: UserUpdateWithoutCoach_bookingsDataInput
-  upsert: UserUpsertWithoutCoach_bookingsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateOneRequiredWithoutSeeker_bookingsInput {
-  create: UserCreateWithoutSeeker_bookingsInput
-  update: UserUpdateWithoutSeeker_bookingsDataInput
-  upsert: UserUpsertWithoutSeeker_bookingsInput
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateWithoutAvailabilityDataInput {
   first_name: String
   last_name: String
@@ -1006,65 +565,11 @@ input UserUpdateWithoutAvailabilityDataInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  coach_bookings: BookingUpdateManyWithoutCoachInput
-  seeker_bookings: BookingUpdateManyWithoutSeekerInput
-}
-
-input UserUpdateWithoutCoach_bookingsDataInput {
-  first_name: String
-  last_name: String
-  email: String
-  password: String
-  city: String
-  state: String
-  gender: String
-  bio: String
-  image_url: String
-  portfolio_url: String
-  linkedin_url: String
-  github_url: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
-  activated_stripe: Boolean
-  seeker_bookings: BookingUpdateManyWithoutSeekerInput
-  availability: AvailabilityUpdateManyWithoutUserInput
-}
-
-input UserUpdateWithoutSeeker_bookingsDataInput {
-  first_name: String
-  last_name: String
-  email: String
-  password: String
-  city: String
-  state: String
-  gender: String
-  bio: String
-  image_url: String
-  portfolio_url: String
-  linkedin_url: String
-  github_url: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
-  activated_stripe: Boolean
-  coach_bookings: BookingUpdateManyWithoutCoachInput
-  availability: AvailabilityUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutAvailabilityInput {
   update: UserUpdateWithoutAvailabilityDataInput!
   create: UserCreateWithoutAvailabilityInput!
-}
-
-input UserUpsertWithoutCoach_bookingsInput {
-  update: UserUpdateWithoutCoach_bookingsDataInput!
-  create: UserCreateWithoutCoach_bookingsInput!
-}
-
-input UserUpsertWithoutSeeker_bookingsInput {
-  update: UserUpdateWithoutSeeker_bookingsDataInput!
-  create: UserCreateWithoutSeeker_bookingsInput!
 }
 
 input UserWhereInput {
@@ -1294,12 +799,6 @@ input UserWhereInput {
   twitter_url_not_ends_with: String
   activated_stripe: Boolean
   activated_stripe_not: Boolean
-  coach_bookings_every: BookingWhereInput
-  coach_bookings_some: BookingWhereInput
-  coach_bookings_none: BookingWhereInput
-  seeker_bookings_every: BookingWhereInput
-  seeker_bookings_some: BookingWhereInput
-  seeker_bookings_none: BookingWhereInput
   availability_every: AvailabilityWhereInput
   availability_some: AvailabilityWhereInput
   availability_none: AvailabilityWhereInput

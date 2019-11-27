@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type User {
+  type User @key(fields: "id") {
     """
     Unique ID of user.
     """
@@ -59,8 +59,7 @@ const typeDefs = gql`
   #   seeker: User!
   # }
   
-
-  type Query {
+  extend type Query {
     """
     A test query to show that the backend works
     """
@@ -165,6 +164,8 @@ const typeDefs = gql`
     checkEmail(
       email: String!
     ): String!
+
+    deleteUser: User!
   }
   """
   Used for log in and sign up. Returns token and user info

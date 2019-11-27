@@ -11,14 +11,6 @@ var models = [
   {
     name: "Availability",
     embedded: false
-  },
-  {
-    name: "Booking",
-    embedded: false
-  },
-  {
-    name: "ApptType",
-    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
