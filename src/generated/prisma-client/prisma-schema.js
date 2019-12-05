@@ -68,6 +68,10 @@ type User {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String!
+  ln_lc: String!
+  city_lc: String!
+  state_lc: String!
 }
 
 type UserConnection {
@@ -94,6 +98,10 @@ input UserCreateInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String!
+  ln_lc: String!
+  city_lc: String!
+  state_lc: String!
 }
 
 type UserEdge {
@@ -136,6 +144,14 @@ enum UserOrderByInput {
   twitter_url_DESC
   activated_stripe_ASC
   activated_stripe_DESC
+  fn_lc_ASC
+  fn_lc_DESC
+  ln_lc_ASC
+  ln_lc_DESC
+  city_lc_ASC
+  city_lc_DESC
+  state_lc_ASC
+  state_lc_DESC
 }
 
 type UserPreviousValues {
@@ -156,6 +172,10 @@ type UserPreviousValues {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String!
+  ln_lc: String!
+  city_lc: String!
+  state_lc: String!
 }
 
 type UserSubscriptionPayload {
@@ -193,6 +213,10 @@ input UserUpdateInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
 }
 
 input UserUpdateManyMutationInput {
@@ -212,6 +236,10 @@ input UserUpdateManyMutationInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
 }
 
 input UserWhereInput {
@@ -441,6 +469,62 @@ input UserWhereInput {
   twitter_url_not_ends_with: String
   activated_stripe: Boolean
   activated_stripe_not: Boolean
+  fn_lc: String
+  fn_lc_not: String
+  fn_lc_in: [String!]
+  fn_lc_not_in: [String!]
+  fn_lc_lt: String
+  fn_lc_lte: String
+  fn_lc_gt: String
+  fn_lc_gte: String
+  fn_lc_contains: String
+  fn_lc_not_contains: String
+  fn_lc_starts_with: String
+  fn_lc_not_starts_with: String
+  fn_lc_ends_with: String
+  fn_lc_not_ends_with: String
+  ln_lc: String
+  ln_lc_not: String
+  ln_lc_in: [String!]
+  ln_lc_not_in: [String!]
+  ln_lc_lt: String
+  ln_lc_lte: String
+  ln_lc_gt: String
+  ln_lc_gte: String
+  ln_lc_contains: String
+  ln_lc_not_contains: String
+  ln_lc_starts_with: String
+  ln_lc_not_starts_with: String
+  ln_lc_ends_with: String
+  ln_lc_not_ends_with: String
+  city_lc: String
+  city_lc_not: String
+  city_lc_in: [String!]
+  city_lc_not_in: [String!]
+  city_lc_lt: String
+  city_lc_lte: String
+  city_lc_gt: String
+  city_lc_gte: String
+  city_lc_contains: String
+  city_lc_not_contains: String
+  city_lc_starts_with: String
+  city_lc_not_starts_with: String
+  city_lc_ends_with: String
+  city_lc_not_ends_with: String
+  state_lc: String
+  state_lc_not: String
+  state_lc_in: [String!]
+  state_lc_not_in: [String!]
+  state_lc_lt: String
+  state_lc_lte: String
+  state_lc_gt: String
+  state_lc_gte: String
+  state_lc_contains: String
+  state_lc_not_contains: String
+  state_lc_starts_with: String
+  state_lc_not_starts_with: String
+  state_lc_ends_with: String
+  state_lc_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

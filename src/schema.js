@@ -37,7 +37,7 @@ const typeDefs = gql`
     Gets all registered users
     """
     
-    users: [User!]!
+    users(keywords: String): [User!]!
     
     """
     Gets user by ID
