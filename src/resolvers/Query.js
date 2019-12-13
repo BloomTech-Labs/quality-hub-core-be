@@ -1,4 +1,11 @@
-const { getUserId, checkAdmin } = require('../utils')
+module.exports = {
+	user,
+	users,
+	info,
+	me,
+};
+
+const { getUserId, checkAdmin } = require('../utils');
 
 /*
   Test query
@@ -6,7 +13,7 @@ const { getUserId, checkAdmin } = require('../utils')
   @return {String} 
 */
 function info() {
-  return 'Welcome to Quality Hub'
+	return 'Welcome to Quality Hub';
 }
 
 /*
@@ -16,8 +23,8 @@ function info() {
 
   @return {Object}  - Type User with specified ID
 */
-async function user (parents, args, context, info) {
-  return await context.prisma.user({id: args.id})
+function user(_parents, args, context) {
+	return context.prisma.user({ id: args.id });
 }
 
 /*
@@ -25,9 +32,9 @@ async function user (parents, args, context, info) {
 
   @return {[Object]}  - All users
 */
-async function users (parent, args, context, info) {
-  await checkAdmin(context);
-  return await context.prisma.users()
+async function users(_parent, _args, context) {
+	await checkAdmin(context);
+	return await context.prisma.users();
 }
 
 /*
@@ -35,13 +42,6 @@ async function users (parent, args, context, info) {
 
   @return {Object}  - Type User 
 */
-async function me (parent, args, context, info) {
-  return await context.prisma.user({ id: getUserId(context)})
-}
-
-module.exports = {
-  user,
-  users,
-  info,
-  me,
+function me(_parent, _args, context) {
+	return context.prisma.user({ id: getUserId(context) });
 }
