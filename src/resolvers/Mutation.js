@@ -38,7 +38,13 @@ async function signup(_parent, args, context) {
 	checkFields({ first_name, last_name, password, email, city, state });
 	const hash = bcrypt.hashSync(args.password, 10);
 	args.password = hash;
-	const user = await context.prisma.createUser(args);
+	const user = await context.prisma.createUser({
+		...args,
+		fn_lc: first_name.toLowerCase(),
+		ln_lc: last_name.toLowerCase(),
+		city_lc: city.toLowerCase(),
+		state_lc: state.toLowerCase(),
+	});
 	const token = generateToken(user);
 
 	return {
@@ -76,15 +82,46 @@ async function login(_parent, args, context) {
 
   @return {Object} - Type user with updated information
 */
-function update(_parent, args, context) {
+async function update(_parent, args, context) {
 	const id = getUserId(context);
+	const { first_name, last_name, city, state } = args;
 
-	return context.prisma.updateUser({
-		data: args,
-		where: {
-			id,
-		},
-	});
+	if (first_name) {
+		return await context.prisma.updateUser({
+			data: { ...args, fn_lc: first_name.toLowerCase() },
+			where: {
+				id,
+			},
+		});
+	} else if (last_name) {
+		return await context.prisma.updateUser({
+			data: { ...args, ln_lc: last_name.toLowerCase() },
+			where: {
+				id,
+			},
+		});
+	} else if (city) {
+		return await context.prisma.updateUser({
+			data: { ...args, city_lc: city.toLowerCase() },
+			where: {
+				id,
+			},
+		});
+	} else if (state) {
+		return await context.prisma.updateUser({
+			data: { ...args, state_lc: state.toLowerCase() },
+			where: {
+				id,
+			},
+		});
+	} else {
+		return await context.prisma.updateUser({
+			data: args,
+			where: {
+				id,
+			},
+		});
+	}
 }
 
 /*

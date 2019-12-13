@@ -36,15 +36,15 @@ const typeDefs = gql`
 		"""
 		users: [User!]!
 
-		"""
-		Gets user by ID
-		"""
-		user(
-			"""
-			Unique ID
-			"""
-			id: ID!
-		): User!
+    """
+    Gets all registered users
+    """
+    
+    users(keywords: String): [User!]!
+    
+    """
+    Gets user by ID
+    """
 
 		"""
 		Gets user info based on credentials stored in token

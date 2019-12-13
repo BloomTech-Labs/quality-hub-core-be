@@ -135,7 +135,15 @@ export type UserOrderByInput =
   | "twitter_url_ASC"
   | "twitter_url_DESC"
   | "activated_stripe_ASC"
-  | "activated_stripe_DESC";
+  | "activated_stripe_DESC"
+  | "fn_lc_ASC"
+  | "fn_lc_DESC"
+  | "ln_lc_ASC"
+  | "ln_lc_DESC"
+  | "city_lc_ASC"
+  | "city_lc_DESC"
+  | "state_lc_ASC"
+  | "state_lc_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -157,6 +165,10 @@ export interface UserCreateInput {
   blog_url?: Maybe<String>;
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
+  fn_lc: String;
+  ln_lc: String;
+  city_lc: String;
+  state_lc: String;
 }
 
 export interface UserUpdateInput {
@@ -176,6 +188,10 @@ export interface UserUpdateInput {
   blog_url?: Maybe<String>;
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
 }
 
 export interface UserWhereInput {
@@ -405,6 +421,62 @@ export interface UserWhereInput {
   twitter_url_not_ends_with?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
   activated_stripe_not?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  fn_lc_not?: Maybe<String>;
+  fn_lc_in?: Maybe<String[] | String>;
+  fn_lc_not_in?: Maybe<String[] | String>;
+  fn_lc_lt?: Maybe<String>;
+  fn_lc_lte?: Maybe<String>;
+  fn_lc_gt?: Maybe<String>;
+  fn_lc_gte?: Maybe<String>;
+  fn_lc_contains?: Maybe<String>;
+  fn_lc_not_contains?: Maybe<String>;
+  fn_lc_starts_with?: Maybe<String>;
+  fn_lc_not_starts_with?: Maybe<String>;
+  fn_lc_ends_with?: Maybe<String>;
+  fn_lc_not_ends_with?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  ln_lc_not?: Maybe<String>;
+  ln_lc_in?: Maybe<String[] | String>;
+  ln_lc_not_in?: Maybe<String[] | String>;
+  ln_lc_lt?: Maybe<String>;
+  ln_lc_lte?: Maybe<String>;
+  ln_lc_gt?: Maybe<String>;
+  ln_lc_gte?: Maybe<String>;
+  ln_lc_contains?: Maybe<String>;
+  ln_lc_not_contains?: Maybe<String>;
+  ln_lc_starts_with?: Maybe<String>;
+  ln_lc_not_starts_with?: Maybe<String>;
+  ln_lc_ends_with?: Maybe<String>;
+  ln_lc_not_ends_with?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  city_lc_not?: Maybe<String>;
+  city_lc_in?: Maybe<String[] | String>;
+  city_lc_not_in?: Maybe<String[] | String>;
+  city_lc_lt?: Maybe<String>;
+  city_lc_lte?: Maybe<String>;
+  city_lc_gt?: Maybe<String>;
+  city_lc_gte?: Maybe<String>;
+  city_lc_contains?: Maybe<String>;
+  city_lc_not_contains?: Maybe<String>;
+  city_lc_starts_with?: Maybe<String>;
+  city_lc_not_starts_with?: Maybe<String>;
+  city_lc_ends_with?: Maybe<String>;
+  city_lc_not_ends_with?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  state_lc_not?: Maybe<String>;
+  state_lc_in?: Maybe<String[] | String>;
+  state_lc_not_in?: Maybe<String[] | String>;
+  state_lc_lt?: Maybe<String>;
+  state_lc_lte?: Maybe<String>;
+  state_lc_gt?: Maybe<String>;
+  state_lc_gte?: Maybe<String>;
+  state_lc_contains?: Maybe<String>;
+  state_lc_not_contains?: Maybe<String>;
+  state_lc_starts_with?: Maybe<String>;
+  state_lc_not_starts_with?: Maybe<String>;
+  state_lc_ends_with?: Maybe<String>;
+  state_lc_not_ends_with?: Maybe<String>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -427,6 +499,10 @@ export interface UserUpdateManyMutationInput {
   blog_url?: Maybe<String>;
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -499,6 +575,10 @@ export interface UserPreviousValues {
   blog_url?: String;
   twitter_url?: String;
   activated_stripe?: Boolean;
+  fn_lc: String;
+  ln_lc: String;
+  city_lc: String;
+  state_lc: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -521,6 +601,10 @@ export interface UserPreviousValuesPromise
   blog_url: () => Promise<String>;
   twitter_url: () => Promise<String>;
   activated_stripe: () => Promise<Boolean>;
+  fn_lc: () => Promise<String>;
+  ln_lc: () => Promise<String>;
+  city_lc: () => Promise<String>;
+  state_lc: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -543,6 +627,10 @@ export interface UserPreviousValuesSubscription
   blog_url: () => Promise<AsyncIterator<String>>;
   twitter_url: () => Promise<AsyncIterator<String>>;
   activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+  fn_lc: () => Promise<AsyncIterator<String>>;
+  ln_lc: () => Promise<AsyncIterator<String>>;
+  city_lc: () => Promise<AsyncIterator<String>>;
+  state_lc: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserEdge {
@@ -605,6 +693,10 @@ export interface User {
   blog_url?: String;
   twitter_url?: String;
   activated_stripe?: Boolean;
+  fn_lc: String;
+  ln_lc: String;
+  city_lc: String;
+  state_lc: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -625,6 +717,10 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   blog_url: () => Promise<String>;
   twitter_url: () => Promise<String>;
   activated_stripe: () => Promise<Boolean>;
+  fn_lc: () => Promise<String>;
+  ln_lc: () => Promise<String>;
+  city_lc: () => Promise<String>;
+  state_lc: () => Promise<String>;
 }
 
 export interface UserSubscription
@@ -647,6 +743,10 @@ export interface UserSubscription
   blog_url: () => Promise<AsyncIterator<String>>;
   twitter_url: () => Promise<AsyncIterator<String>>;
   activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+  fn_lc: () => Promise<AsyncIterator<String>>;
+  ln_lc: () => Promise<AsyncIterator<String>>;
+  city_lc: () => Promise<AsyncIterator<String>>;
+  state_lc: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserNullablePromise
@@ -669,6 +769,10 @@ export interface UserNullablePromise
   blog_url: () => Promise<String>;
   twitter_url: () => Promise<String>;
   activated_stripe: () => Promise<Boolean>;
+  fn_lc: () => Promise<String>;
+  ln_lc: () => Promise<String>;
+  city_lc: () => Promise<String>;
+  state_lc: () => Promise<String>;
 }
 
 export interface UserConnection {

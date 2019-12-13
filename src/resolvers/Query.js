@@ -32,9 +32,24 @@ function user(_parents, args, context) {
 
   @return {[Object]}  - All users
 */
-async function users(_parent, _args, context) {
-	await checkAdmin(context);
-	return await context.prisma.users();
+async function users(_parent, args, context) {
+	// await checkAdmin(context);
+	let { keywords } = args;
+	let where;
+
+	if (keywords) {
+		where = { OR: [] };
+		keywords = keywords.toLowerCase();
+		let split = splitAndTrimTags(keywords);
+		split.forEach(word => {
+			where.OR.push({ fn_lc_starts_with: word.name });
+			where.OR.push({ ln_lc_starts_with: word.name });
+			where.OR.push({ city_lc_starts_with: word.name });
+			where.OR.push({ state_lc_starts_with: word.name });
+		});
+	}
+
+	return await context.prisma.users({ where });
 }
 
 /*
@@ -45,3 +60,18 @@ async function users(_parent, _args, context) {
 function me(_parent, _args, context) {
 	return context.prisma.user({ id: getUserId(context) });
 }
+
+function splitAndTrimTags(tagString) {
+	const tagArray = tagString.split(',');
+
+	return tagArray.map(tag => {
+		return { name: tag.trim() };
+	});
+}
+
+module.exports = {
+	user,
+	users,
+	info,
+	me,
+};
