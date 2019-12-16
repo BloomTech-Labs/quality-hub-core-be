@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type User {
+  type User @key(fields: "id") {
     """
     Unique ID of user.
     """
@@ -26,7 +26,7 @@ const typeDefs = gql`
     payment_info: Boolean
   }
 
-  type Query {
+  extend type Query {
     """
     A test query to show that the backend works
     """
@@ -37,7 +37,7 @@ const typeDefs = gql`
     Gets all registered users
     """
     
-    users: [User!]!
+    users(keywords: String): [User!]!
     
     """
     Gets user by ID

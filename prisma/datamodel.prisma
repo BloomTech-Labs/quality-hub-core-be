@@ -1,4 +1,4 @@
-type User {
+type User @key(fields: "email") {
   id: ID! @id
   first_name: String!
   last_name: String!
@@ -16,5 +16,9 @@ type User {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
+  fn_lc: String!
+  ln_lc: String!
+  city_lc: String!
+  state_lc: String!
 }
 
