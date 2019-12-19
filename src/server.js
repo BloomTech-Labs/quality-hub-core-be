@@ -8,12 +8,15 @@ const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
 const User = require('./resolvers/User');
 const Availability = require('./resolvers/Availability')
+const StripeOprs = require('./resolvers/StripeOprs');
+// const stripe = require('./stripe')
 
 const resolvers = {
   Query,
   Mutation,
   User,
-  Availability
+  Availability,
+  StripeOprs
 };
 
 const server = new GraphQLServer({
