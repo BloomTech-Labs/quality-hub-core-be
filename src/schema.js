@@ -123,7 +123,10 @@ const typeDefs = gql`
 
     deleteUser: User!
 
-    createCharge(source: String!): User
+    createCharge(
+      source: String!
+      email: String!
+    ): User
   }
   """
   Used for log in and sign up. Returns token and user info

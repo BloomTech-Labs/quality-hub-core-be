@@ -1,30 +1,33 @@
-const stripe = require('../stripe')
+// const stripe = require('../stripe')
 
-async function createCharge (_, args, { req }) {
-    const user = await context.prisma.user({ email: args.email });
-    if (!user) {
-      throw new Error("not authenticated")
-    }
+// async function createCharge (_, args, { req }) {
+//   console.log('turkey bacon', args)
 
-    // This creates the "customer"
-    const customer = await stripe.customers.create({
-        email: user.email,
-        source: args.source,
-    })
+//     const user = await context.prisma.user({ email: args.email });
+//     if (!user) {
+//       throw new Error("not authenticated")
+//     }
 
-    user.stripeId = (await customer).id
+//     // This creates the "customer"
+//     const customer = await stripe.customers.create({
+//         email: user.email,
+//         source: args.source,
+//     })
 
-    const updatedUser = await context.prisma.updateUser({
-        data: {...args, stripeId: user.stripeId},
-        where: {
-          email: user.email
-        }
-      })
+//     user.stripeId = (await customer).id
 
-    return updatedUser
-}
+//     const updatedUser = await context.prisma.updateUser({
+//         data: {...args, stripeId: user.stripeId},
+//         where: {
+//           email: user.email
+//         }
+//       })
+
+//       console.log(args)
+//     return updatedUser
+// }
   
   
-module.exports = {
-    createCharge,
-}
+// module.exports = {
+//   createCharge,
+// }

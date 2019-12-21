@@ -1,4 +1,7 @@
 const bcrypt = require('bcryptjs');
+const stripe = require('../stripe');
+
+
 
 const { generateToken, checkFields, getUserId, checkAdmin } = require('../utils')
 
@@ -127,10 +130,40 @@ async function checkEmail (parent, args, context, info) {
   }
 }
 
+async function createCharge (_, args, context, info) {
+  console.log('turkey bacon', args)
+    console.log(info)
+    const id = getUserId(context)
+    const user = await context.prisma.user({ id });
+
+    if (!user) {
+      throw new Error("not authenticated")
+    }
+
+    // This creates the "customer"
+    const customer = await stripe.customers.create({
+        email: user.email,
+        source: args.source,
+    })
+
+    user.stripeId = (await customer).id
+
+    const updatedUser = await context.prisma.updateUser({
+        data: {...args, stripeId: user.stripeId},
+        where: {
+          email: user.email
+        }
+      })
+
+      console.log(args)
+    return updatedUser
+}
+
 module.exports = {
   signup,
   login,
   update,
   deleteUser,
-  checkEmail
+  checkEmail,
+  createCharge,
 }
