@@ -52,6 +52,7 @@ type Subscription {
 
 type User {
   id: ID!
+  stripeId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -82,6 +83,7 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
+  stripeId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -112,6 +114,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  stripeId_ASC
+  stripeId_DESC
   first_name_ASC
   first_name_DESC
   last_name_ASC
@@ -156,6 +160,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
+  stripeId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -197,6 +202,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
+  stripeId: String
   first_name: String
   last_name: String
   email: String
@@ -220,6 +226,7 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyMutationInput {
+  stripeId: String
   first_name: String
   last_name: String
   email: String
@@ -257,6 +264,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  stripeId: String
+  stripeId_not: String
+  stripeId_in: [String!]
+  stripeId_not_in: [String!]
+  stripeId_lt: String
+  stripeId_lte: String
+  stripeId_gt: String
+  stripeId_gte: String
+  stripeId_contains: String
+  stripeId_not_contains: String
+  stripeId_starts_with: String
+  stripeId_not_starts_with: String
+  stripeId_ends_with: String
+  stripeId_not_ends_with: String
   first_name: String
   first_name_not: String
   first_name_in: [String!]
