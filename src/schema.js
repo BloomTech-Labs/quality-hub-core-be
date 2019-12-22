@@ -97,6 +97,7 @@ const typeDefs = gql`
     Updates user info. No empty strings cannot be passed in
     """
     update(
+      stripeId: String
       first_name: String
       last_name: String
       password: String
