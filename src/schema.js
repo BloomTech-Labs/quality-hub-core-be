@@ -100,6 +100,7 @@ const typeDefs = gql`
     Updates user info. No empty strings cannot be passed in
     """
     update(
+      stripeId: String
       first_name: String
       last_name: String
       password: String
@@ -126,7 +127,7 @@ const typeDefs = gql`
     createCharge(
       source: String!
       email: String!
-    ): User
+    ): User!
   }
   """
   Used for log in and sign up. Returns token and user info
