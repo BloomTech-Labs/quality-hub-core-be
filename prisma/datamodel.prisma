@@ -1,6 +1,5 @@
 type User @key(fields: "email") {
   id: ID! @id
-  stripeId: String
   first_name: String!
   last_name: String!
   email: String! @unique
@@ -22,3 +21,4 @@ type User @key(fields: "email") {
   city_lc: String!
   state_lc: String!
 }
+
