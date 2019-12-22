@@ -7,6 +7,8 @@ const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
 const User = require('./resolvers/User');
 
+
+
 const resolvers = {
 	Query,
 	Mutation,
