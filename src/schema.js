@@ -6,6 +6,7 @@ const typeDefs = gql`
     Unique ID of user.
     """
     id: ID!
+    stripeId: String
     first_name: String!
     last_name: String!
     email: String!
@@ -118,6 +119,11 @@ const typeDefs = gql`
     ): String!
 
     deleteUser: User!
+
+    createCharge(
+      source: String!
+      email: String!
+    ): User!
   }
   """
   Used for log in and sign up. Returns token and user info
