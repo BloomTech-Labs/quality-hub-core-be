@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs');
 const stripe = require('../stripe');
 
-
-
-const { generateToken, checkFields, getUserId } = require('../utils');
+const {
+	generateToken,
+	checkFields,
+	getUserId,
+	checkAdmin,
+} = require('../utils');
 
 module.exports = {
 	signup,
@@ -11,6 +14,8 @@ module.exports = {
 	update,
 	deleteUser,
 	checkEmail,
+	createCharge,
+	addCoachStripeID,
 };
 
 /*
@@ -69,11 +74,9 @@ async function login(_parent, args, context) {
 	const user = await context.prisma.user({ email: args.email });
 	const token = generateToken(user);
 	const passwordMatch = await bcrypt.compare(args.password, user.password);
-
 	if (!user || !passwordMatch) {
 		throw new Error('Invalid Login');
 	}
-
 	return {
 		token,
 		user,
@@ -132,44 +135,13 @@ async function update(_parent, args, context) {
 
   @return {Object} type User of deleted user
 */
-function deleteUser(_parent, _args, context) {
+async function deleteUser(_parent, _args, context) {
 	const id = getUserId(context);
-
-	return context.prisma.deleteUser({ id });
-}
-
-async function createCharge (parent, args, context, info) {
-  console.log('turkey bacon', args)
-    console.log(info)
-    const userid = getUserId(context)
-    const user = await context.prisma.user({ id: userid });
-    // console.log(user);
-    if (!user) {
-      throw new Error("not authenticated")
-    }
-
-    // This creates the "customer" in stripe database
-    const customer = await stripe.customers.create({
-        email: user.email,
-        source: args.source,
-    })
-
-    user.stripeId = await customer.id
-
-    const updatedUser = await context.prisma.updateUser({
-        data: { stripeId: args.source},
-        where: {
-          email: user.email
-        }
-      })
-
-      console.log(args)
-    return updatedUser
+	return await context.prisma.deleteUser({ id });
 }
 
 async function checkEmail(_parent, args, context) {
 	const user = await context.prisma.user({ email: args.email });
-
 	if (user) {
 		throw new Error('Email has been taken.');
 	} else {
@@ -177,13 +149,55 @@ async function checkEmail(_parent, args, context) {
 	}
 }
 
-module.exports = {
-  signup,
-  login,
-  update,
-  deleteUser,
-  checkEmail,
-  createCharge,
+async function createCharge(_parent, args, context) {
+	console.log('turkey bacon', args);
+	// console.log(info)
+	const userid = getUserId(context);
+	const user = await context.prisma.user({ id: userid });
+	// console.log(user);
+	if (!user) {
+		throw new Error('not authenticated');
+	}
 
+	// This creates the "customer" in stripe database
+	const customer = await stripe.customers.create({
+		email: user.email,
+		source: args.source,
+	});
+
+	user.stripeId = await customer.id;
+
+	const updatedUser = await context.prisma.updateUser({
+		data: { stripeId: args.source },
+		where: {
+			email: user.email,
+		},
+	});
+
+	return updatedUser;
 }
 
+function addCoachStripeID(_parent, args, context) {
+	console.log('addCoachStripeId args: ', args);
+
+	const id = getUserId(context);
+	const { code } = args;
+
+	const stripeId = '';
+
+	stripe.oauth
+		.token({
+			grant_type: 'authorization_code',
+			code,
+		})
+		.then(function(response) {
+			stripeId = response.stripe_user_id;
+		});
+
+	console.log('stripeId: ', stripeId);
+
+	return context.prisma.updateUser({
+		data: { stripeId },
+		where: { id },
+	});
+}
