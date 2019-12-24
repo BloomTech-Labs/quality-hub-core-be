@@ -6,7 +6,7 @@ const typeDefs = gql`
     Unique ID of user.
     """
     id: ID!
-    stripeid: String
+    stripeId: String
     first_name: String!
     last_name: String!
     email: String!
@@ -97,7 +97,7 @@ const typeDefs = gql`
     Updates user info. No empty strings cannot be passed in
     """
     update(
-      stripeid: String
+      stripeId: String
       first_name: String
       last_name: String
       password: String
@@ -125,7 +125,7 @@ const typeDefs = gql`
     source: String!
     email: String!
   ): User!
-  
+
   }
   """
   Used for log in and sign up. Returns token and user info
