@@ -73,6 +73,7 @@ type User {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
+  stripeCoachCode: String
 }
 
 type UserConnection {
@@ -104,6 +105,7 @@ input UserCreateInput {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
+  stripeCoachCode: String
 }
 
 type UserEdge {
@@ -156,6 +158,8 @@ enum UserOrderByInput {
   city_lc_DESC
   state_lc_ASC
   state_lc_DESC
+  stripeCoachCode_ASC
+  stripeCoachCode_DESC
 }
 
 type UserPreviousValues {
@@ -181,6 +185,7 @@ type UserPreviousValues {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
+  stripeCoachCode: String
 }
 
 type UserSubscriptionPayload {
@@ -223,6 +228,7 @@ input UserUpdateInput {
   ln_lc: String
   city_lc: String
   state_lc: String
+  stripeCoachCode: String
 }
 
 input UserUpdateManyMutationInput {
@@ -247,6 +253,7 @@ input UserUpdateManyMutationInput {
   ln_lc: String
   city_lc: String
   state_lc: String
+  stripeCoachCode: String
 }
 
 input UserWhereInput {
@@ -546,6 +553,20 @@ input UserWhereInput {
   state_lc_not_starts_with: String
   state_lc_ends_with: String
   state_lc_not_ends_with: String
+  stripeCoachCode: String
+  stripeCoachCode_not: String
+  stripeCoachCode_in: [String!]
+  stripeCoachCode_not_in: [String!]
+  stripeCoachCode_lt: String
+  stripeCoachCode_lte: String
+  stripeCoachCode_gt: String
+  stripeCoachCode_gte: String
+  stripeCoachCode_contains: String
+  stripeCoachCode_not_contains: String
+  stripeCoachCode_starts_with: String
+  stripeCoachCode_not_starts_with: String
+  stripeCoachCode_ends_with: String
+  stripeCoachCode_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -554,6 +575,7 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   email: String
+  stripeCoachCode: String
 }
 `
       }
