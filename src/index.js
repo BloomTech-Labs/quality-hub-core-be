@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express');
 const server = require('./server');
 
-server.express.use('/doc', express.static('doc/schema'));
+server.express.use('/doc', express.static("doc/schema"));
 
 const options = { PORT: process.env.PORT || 4000 };
 

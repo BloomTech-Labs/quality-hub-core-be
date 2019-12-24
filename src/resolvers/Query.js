@@ -1,11 +1,4 @@
-module.exports = {
-	user,
-	users,
-	info,
-	me,
-};
-
-const { getUserId, checkAdmin } = require('../utils');
+const { getUserId, checkAdmin } = require('../utils')
 
 /*
   Test query
@@ -13,7 +6,7 @@ const { getUserId, checkAdmin } = require('../utils');
   @return {String} 
 */
 function info() {
-	return 'Welcome to Quality Hub';
+  return 'Welcome to Quality Hub'
 }
 
 /*
@@ -23,8 +16,8 @@ function info() {
 
   @return {Object}  - Type User with specified ID
 */
-function user(_parents, args, context) {
-	return context.prisma.user({ id: args.id });
+async function user (parents, args, context, info) {
+  return await context.prisma.user({id: args.id})
 }
 
 /*
@@ -32,24 +25,22 @@ function user(_parents, args, context) {
 
   @return {[Object]}  - All users
 */
-async function users(_parent, args, context) {
-	// await checkAdmin(context);
-	let { keywords } = args;
-	let where;
-
-	if (keywords) {
-		where = { OR: [] };
-		keywords = keywords.toLowerCase();
-		let split = splitAndTrimTags(keywords);
-		split.forEach(word => {
-			where.OR.push({ fn_lc_starts_with: word.name });
-			where.OR.push({ ln_lc_starts_with: word.name });
-			where.OR.push({ city_lc_starts_with: word.name });
-			where.OR.push({ state_lc_starts_with: word.name });
-		});
-	}
-
-	return await context.prisma.users({ where });
+async function users (parent, args, context, info) {
+  // await checkAdmin(context);
+  let { keywords } = args;
+  let where;
+  if (keywords) {
+    where = { OR : []};
+    keywords = keywords.toLowerCase();
+    let split = splitAndTrimTags(keywords)
+    split.forEach(word => {
+      where.OR.push({ fn_lc_starts_with: word.name})
+      where.OR.push({ ln_lc_starts_with: word.name})
+      where.OR.push( {city_lc_starts_with: word.name})
+      where.OR.push({ state_lc_starts_with: word.name})
+    })
+  }
+  return await context.prisma.users({where})
 }
 
 /*
@@ -57,21 +48,20 @@ async function users(_parent, args, context) {
 
   @return {Object}  - Type User 
 */
-function me(_parent, _args, context) {
-	return context.prisma.user({ id: getUserId(context) });
+async function me (parent, args, context, info) {
+  return await context.prisma.user({ id: getUserId(context)})
 }
 
 function splitAndTrimTags(tagString) {
 	const tagArray = tagString.split(',');
-
 	return tagArray.map(tag => {
 		return { name: tag.trim() };
 	});
 }
 
 module.exports = {
-	user,
-	users,
-	info,
-	me,
-};
+  user,
+  users,
+  info,
+  me,
+}

@@ -1,14 +1,12 @@
 const bcrypt = require('bcryptjs');
+const stripe = require('../stripe');
 
-const { generateToken, checkFields, getUserId } = require('../utils');
-
-module.exports = {
-	signup,
-	login,
-	update,
-	deleteUser,
-	checkEmail,
-};
+const {
+	generateToken,
+	checkFields,
+	getUserId,
+	checkAdmin,
+} = require('../utils');
 
 /*
   @param {String!} - first_name
@@ -33,7 +31,7 @@ module.exports = {
   @return {String} - token: required for authorization
   @return {Object} - user: type User for newly created account
 */
-async function signup(_parent, args, context) {
+async function signup(parent, args, context, info) {
 	const { first_name, last_name, password, email, city, state } = args;
 	checkFields({ first_name, last_name, password, email, city, state });
 	const hash = bcrypt.hashSync(args.password, 10);
@@ -62,15 +60,13 @@ async function signup(_parent, args, context) {
   @return {String} - token: required for authorization
   @return {Object} - user: type User for logged in user
 */
-async function login(_parent, args, context) {
+async function login(parent, args, context, info) {
 	const user = await context.prisma.user({ email: args.email });
 	const token = generateToken(user);
 	const passwordMatch = await bcrypt.compare(args.password, user.password);
-
 	if (!user || !passwordMatch) {
 		throw new Error('Invalid Login');
 	}
-
 	return {
 		token,
 		user,
@@ -82,7 +78,7 @@ async function login(_parent, args, context) {
 
   @return {Object} - Type user with updated information
 */
-async function update(_parent, args, context) {
+async function update(parent, args, context, info) {
 	const id = getUserId(context);
 	const { first_name, last_name, city, state } = args;
 
@@ -129,18 +125,54 @@ async function update(_parent, args, context) {
 
   @return {Object} type User of deleted user
 */
-function deleteUser(_parent, _args, context) {
+async function deleteUser(parent, args, context, info) {
 	const id = getUserId(context);
-
-	return context.prisma.deleteUser({ id });
+	return await context.prisma.deleteUser({ id });
 }
 
-async function checkEmail(_parent, args, context) {
+async function checkEmail(parent, args, context, info) {
 	const user = await context.prisma.user({ email: args.email });
-
 	if (user) {
 		throw new Error('Email has been taken.');
 	} else {
 		return 'This email is available!';
 	}
 }
+
+async function createCharge(parent, args, context, info) {
+	console.log('turkey bacon', args);
+	console.log(info);
+	const userid = getUserId(context);
+	const user = await context.prisma.user({ id: userid });
+	// console.log(user);
+	if (!user) {
+		throw new Error('not authenticated');
+	}
+
+	// This creates the "customer" in stripe database
+	const customer = await stripe.customers.create({
+		email: user.email,
+		source: args.source,
+	});
+
+	user.stripeId = await customer.id;
+
+	const updatedUser = await context.prisma.updateUser({
+		data: { stripeId: args.source },
+		where: {
+			email: user.email,
+		},
+	});
+
+	console.log(args);
+	return updatedUser;
+}
+
+module.exports = {
+	signup,
+	login,
+	update,
+	deleteUser,
+	checkEmail,
+	createCharge,
+};
