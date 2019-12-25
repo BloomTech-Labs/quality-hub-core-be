@@ -8,6 +8,16 @@ const {
 	checkAdmin,
 } = require('../utils');
 
+module.exports = {
+	signup,
+	login,
+	update,
+	deleteUser,
+	checkEmail,
+	createCharge,
+	addCoachStripeID,
+};
+
 /*
   @param {String!} - first_name
   @param {String!} - last_name
@@ -164,15 +174,30 @@ async function createCharge(_parent, args, context) {
 		},
 	});
 
-	console.log(args);
 	return updatedUser;
 }
 
-module.exports = {
-	signup,
-	login,
-	update,
-	deleteUser,
-	checkEmail,
-	createCharge,
-};
+function addCoachStripeID(_parent, args, context) {
+	console.log('addCoachStripeId args: ', args);
+
+	const id = getUserId(context);
+	const { code } = args;
+
+	const stripeId = '';
+
+	stripe.oauth
+		.token({
+			grant_type: 'authorization_code',
+			code,
+		})
+		.then(function(response) {
+			stripeId = response.stripe_user_id;
+		});
+
+	console.log('stripeId: ', stripeId);
+
+	return context.prisma.updateUser({
+		data: { stripeId },
+		where: { id },
+	});
+}
