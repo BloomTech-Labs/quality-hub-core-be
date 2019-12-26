@@ -15,7 +15,8 @@ module.exports = {
 	deleteUser,
 	checkEmail,
 	createCharge,
-	addCoachStripeID,
+  addCoachStripeID,
+  createChat
 };
 
 /*
@@ -200,4 +201,14 @@ function addCoachStripeID(_parent, args, context) {
 		data: { stripeId },
 		where: { id },
 	});
+}
+
+async function createChat (parent, args, ctx, info) {
+  const userId = getUserId(ctx)
+  args.data.author = {
+    connect: {
+      id: userId
+    }
+  }
+  return forwardTo('db')(parent, args, ctx, info)
 }

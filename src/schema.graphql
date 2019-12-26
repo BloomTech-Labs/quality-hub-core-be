@@ -1,3 +1,6 @@
+# import Subscription.chat from "./generated/prisma.graphql"
+# import Mutation.createChat, Query.chatsConnection from "./generated/prisma.graphql"
+  
   type User {
     
     # Unique ID of user.

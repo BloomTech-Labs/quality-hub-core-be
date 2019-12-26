@@ -1,5 +1,8 @@
-// module.exports = { fromUser, toUser, content }
+const {forwardTo} = require('prisma-binding')
 
-// function __resolveReference(chat, context) {
-//   return context.prisma.chats
-// }
+
+const Query = {
+  chatsConnection: forwardTo('prisma'),
+}
+
+module.exports = { Query }

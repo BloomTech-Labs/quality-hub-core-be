@@ -26,12 +26,12 @@ const typeDefs = gql`
 		twitter_url: String
 		# payment_info: Boolean
     stripeCoachCode: String
-    chats: [Chat]
+    chats: [Chat!]!
   }
   
   type Chat{
-    id: ID! @id
-    toUser: User! @relation(name: "toUser")
+    id: ID!
+    author: User
     content: String!
     createdAt: String! 
   }
@@ -62,7 +62,7 @@ const typeDefs = gql`
 		"""
     me: User!
     
-    chats(userId: String): [Chat]
+    chatsConnection: forwardTo('prisma'),
 	}
 
 	type Mutation {

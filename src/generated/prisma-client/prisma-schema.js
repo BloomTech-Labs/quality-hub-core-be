@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateChat {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,9 +15,218 @@ type BatchPayload {
   count: Long!
 }
 
+type Chat {
+  id: ID!
+  author: User
+  content: String!
+  createdAt: DateTime!
+}
+
+type ChatConnection {
+  pageInfo: PageInfo!
+  edges: [ChatEdge]!
+  aggregate: AggregateChat!
+}
+
+input ChatCreateInput {
+  id: ID
+  author: UserCreateOneWithoutChatsInput
+  content: String!
+}
+
+input ChatCreateManyWithoutAuthorInput {
+  create: [ChatCreateWithoutAuthorInput!]
+  connect: [ChatWhereUniqueInput!]
+}
+
+input ChatCreateWithoutAuthorInput {
+  id: ID
+  content: String!
+}
+
+type ChatEdge {
+  node: Chat!
+  cursor: String!
+}
+
+enum ChatOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ChatPreviousValues {
+  id: ID!
+  content: String!
+  createdAt: DateTime!
+}
+
+input ChatScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [ChatScalarWhereInput!]
+  OR: [ChatScalarWhereInput!]
+  NOT: [ChatScalarWhereInput!]
+}
+
+type ChatSubscriptionPayload {
+  mutation: MutationType!
+  node: Chat
+  updatedFields: [String!]
+  previousValues: ChatPreviousValues
+}
+
+input ChatSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChatWhereInput
+  AND: [ChatSubscriptionWhereInput!]
+  OR: [ChatSubscriptionWhereInput!]
+  NOT: [ChatSubscriptionWhereInput!]
+}
+
+input ChatUpdateInput {
+  author: UserUpdateOneWithoutChatsInput
+  content: String
+}
+
+input ChatUpdateManyDataInput {
+  content: String
+}
+
+input ChatUpdateManyMutationInput {
+  content: String
+}
+
+input ChatUpdateManyWithoutAuthorInput {
+  create: [ChatCreateWithoutAuthorInput!]
+  delete: [ChatWhereUniqueInput!]
+  connect: [ChatWhereUniqueInput!]
+  set: [ChatWhereUniqueInput!]
+  disconnect: [ChatWhereUniqueInput!]
+  update: [ChatUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [ChatUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [ChatScalarWhereInput!]
+  updateMany: [ChatUpdateManyWithWhereNestedInput!]
+}
+
+input ChatUpdateManyWithWhereNestedInput {
+  where: ChatScalarWhereInput!
+  data: ChatUpdateManyDataInput!
+}
+
+input ChatUpdateWithoutAuthorDataInput {
+  content: String
+}
+
+input ChatUpdateWithWhereUniqueWithoutAuthorInput {
+  where: ChatWhereUniqueInput!
+  data: ChatUpdateWithoutAuthorDataInput!
+}
+
+input ChatUpsertWithWhereUniqueWithoutAuthorInput {
+  where: ChatWhereUniqueInput!
+  update: ChatUpdateWithoutAuthorDataInput!
+  create: ChatCreateWithoutAuthorInput!
+}
+
+input ChatWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  author: UserWhereInput
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [ChatWhereInput!]
+  OR: [ChatWhereInput!]
+  NOT: [ChatWhereInput!]
+}
+
+input ChatWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
 scalar Long
 
 type Mutation {
+  createChat(data: ChatCreateInput!): Chat!
+  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+  updateManyChats(data: ChatUpdateManyMutationInput!, where: ChatWhereInput): BatchPayload!
+  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
+  deleteChat(where: ChatWhereUniqueInput!): Chat
+  deleteManyChats(where: ChatWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,6 +253,9 @@ type PageInfo {
 }
 
 type Query {
+  chat(where: ChatWhereUniqueInput!): Chat
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
+  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -47,6 +263,7 @@ type Query {
 }
 
 type Subscription {
+  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -74,6 +291,7 @@ type User {
   city_lc: String!
   state_lc: String!
   stripeCoachCode: String
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat!]
 }
 
 type UserConnection {
@@ -83,6 +301,38 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
+  stripeId: String
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  city: String!
+  state: String!
+  gender: String
+  bio: String
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
+  fn_lc: String!
+  ln_lc: String!
+  city_lc: String!
+  state_lc: String!
+  stripeCoachCode: String
+  chats: ChatCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutChatsInput {
+  create: UserCreateWithoutChatsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutChatsInput {
   id: ID
   stripeId: String
   first_name: String!
@@ -229,6 +479,7 @@ input UserUpdateInput {
   city_lc: String
   state_lc: String
   stripeCoachCode: String
+  chats: ChatUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
@@ -254,6 +505,45 @@ input UserUpdateManyMutationInput {
   city_lc: String
   state_lc: String
   stripeCoachCode: String
+}
+
+input UserUpdateOneWithoutChatsInput {
+  create: UserCreateWithoutChatsInput
+  update: UserUpdateWithoutChatsDataInput
+  upsert: UserUpsertWithoutChatsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutChatsDataInput {
+  stripeId: String
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  city: String
+  state: String
+  gender: String
+  bio: String
+  image_url: String
+  portfolio_url: String
+  linkedin_url: String
+  github_url: String
+  personal_url: String
+  blog_url: String
+  twitter_url: String
+  activated_stripe: Boolean
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
+  stripeCoachCode: String
+}
+
+input UserUpsertWithoutChatsInput {
+  update: UserUpdateWithoutChatsDataInput!
+  create: UserCreateWithoutChatsInput!
 }
 
 input UserWhereInput {
@@ -567,6 +857,9 @@ input UserWhereInput {
   stripeCoachCode_not_starts_with: String
   stripeCoachCode_ends_with: String
   stripeCoachCode_not_ends_with: String
+  chats_every: ChatWhereInput
+  chats_some: ChatWhereInput
+  chats_none: ChatWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
