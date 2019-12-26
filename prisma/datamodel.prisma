@@ -22,4 +22,12 @@ type User @key(fields: "email") {
   city_lc: String!
   state_lc: String!
   stripeCoachCode: String @unique
+  chats: [Chat]
 }
+
+  type Chat{
+    id: ID! @id
+    toUser: User! @relation(name: "toUser")
+    content: String!
+    createdAt: String! 
+  }

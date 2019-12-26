@@ -25,8 +25,16 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		# payment_info: Boolean
-		stripeCoachCode: String
-	}
+    stripeCoachCode: String
+    chats: [Chat]
+  }
+  
+  type Chat{
+    id: ID! @id
+    toUser: User! @relation(name: "toUser")
+    content: String!
+    createdAt: String! 
+  }
 
 	extend type Query {
 		"""
@@ -52,7 +60,9 @@ const typeDefs = gql`
 		"""
 		Gets user info based on credentials stored in token
 		"""
-		me: User!
+    me: User!
+    
+    chats(userId: String): [Chat]
 	}
 
 	type Mutation {
@@ -111,7 +121,9 @@ const typeDefs = gql`
 
 		createCharge(source: String!, email: String): User!
 
-		addCoachStripeID(code: String!): User!
+    addCoachStripeID(code: String!): User!
+    
+    createChat(userId: String!) : Chat!
 	}
 	"""
 	Used for log in and sign up. Returns token and user info
