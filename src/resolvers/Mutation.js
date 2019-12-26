@@ -188,9 +188,10 @@ function addCoachStripeID(_parent, args, context) {
 	stripe.oauth
 		.token({
 			grant_type: 'authorization_code',
-			code,
+			code:code,
 		})
 		.then(function(response) {
+			publicKey: process.env.STRIPE_SECRET_PK,
 			stripeId = response.stripe_user_id;
 		});
 
