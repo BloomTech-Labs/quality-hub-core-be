@@ -24,7 +24,6 @@ const typeDefs = gql`
 		personal_url: String
 		blog_url: String
 		twitter_url: String
-		# payment_info: Boolean
 		stripeCoachCode: String
 	}
 
@@ -74,7 +73,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-			bio: String # payment_info: Boolean
+      bio: String 
 		): AuthPayload!
 
 		"""
@@ -101,7 +100,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-			bio: String # payment_info: Boolean
+      bio: String
 			stripeCoachCode: String
 		): User!
 

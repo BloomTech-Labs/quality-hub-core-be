@@ -177,10 +177,11 @@ async function createCharge(_parent, args, context) {
 	return updatedUser;
 }
 
-function addCoachStripeID(_parent, args, context) {
+ async function addCoachStripeID(_parent, args, context) {
 	console.log('addCoachStripeId args: ', args);
 
 	const id = getUserId(context);
+
 	const { code } = args;
 
 	const stripeId = '';
@@ -188,17 +189,21 @@ function addCoachStripeID(_parent, args, context) {
 	stripe.oauth
 		.token({
 			grant_type: 'authorization_code',
-			code:code,
+			code,
 		})
 		.then(function(response) {
-			publicKey: process.env.STRIPE_SECRET_PK,
+			console.log('nope', response)
 			stripeId = response.stripe_user_id;
+			console.log('yes??', stripeId);
+		
 		});
 
-	console.log('stripeId: ', stripeId);
+
+	// console.log('stripeId: ', stripeId);
 
 	return context.prisma.updateUser({
-		data: { stripeId },
+		data: { stripeCoachCode: stripeId},
 		where: { id },
 	});
+
 }
