@@ -73,7 +73,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-      		bio: String 
+			bio: String
 		): AuthPayload!
 
 		"""
@@ -100,7 +100,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-      bio: String
+			bio: String
 			stripeCoachCode: String
 		): User!
 
@@ -110,15 +110,15 @@ const typeDefs = gql`
 
 		createCharge(source: String!, email: String): User!
 
-    addCoachStripeID(code: String!): User!
-    
-	coachStripeLogin(stripeId: String!): User!
-	
-	stripeDirectCharge(amount: Int, currency: String, source: String): User!
+		addCoachStripeID(code: String!): User!
 
-	stripePayIntent(amount: Int): User!
+		createStripeLogin(stripeId: String!): User!
 
-	StripeCreateToken(customer: String): User!
+		stripeDirectCharge(amount: Int!, currency: String, source: String): User!
+
+		stripePayIntent(amount: Int!, currency: String): User!
+
+		stripeCreateToken(customer: String!): User!
 	}
 
 	"""
