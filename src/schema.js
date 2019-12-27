@@ -112,8 +112,15 @@ const typeDefs = gql`
 
 		addCoachStripeID(code: String!): User!
 
-		coachStripeLogin(stripeId: String!): User!
+		createStripeLogin(stripeId: String!): User!
+
+		stripeDirectCharge(amount: Int!, currency: String, source: String): User!
+
+		stripePayIntent(amount: Int!, currency: String): User!
+
+		stripeCreateToken(customer: String!): User!
 	}
+
 	"""
 	Used for log in and sign up. Returns token and user info
 	"""
