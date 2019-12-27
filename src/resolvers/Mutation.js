@@ -8,6 +8,16 @@ const {
 	checkAdmin,
 } = require('../utils');
 
+module.exports = {
+	signup,
+	login,
+	update,
+	deleteUser,
+	checkEmail,
+	createCharge,
+	addCoachStripeID,
+};
+
 /*
   @param {String!} - first_name
   @param {String!} - last_name
@@ -31,7 +41,7 @@ const {
   @return {String} - token: required for authorization
   @return {Object} - user: type User for newly created account
 */
-async function signup(parent, args, context, info) {
+async function signup(_parent, args, context) {
 	const { first_name, last_name, password, email, city, state } = args;
 	checkFields({ first_name, last_name, password, email, city, state });
 	const hash = bcrypt.hashSync(args.password, 10);
@@ -60,7 +70,7 @@ async function signup(parent, args, context, info) {
   @return {String} - token: required for authorization
   @return {Object} - user: type User for logged in user
 */
-async function login(parent, args, context, info) {
+async function login(_parent, args, context) {
 	const user = await context.prisma.user({ email: args.email });
 	const token = generateToken(user);
 	const passwordMatch = await bcrypt.compare(args.password, user.password);
@@ -78,7 +88,7 @@ async function login(parent, args, context, info) {
 
   @return {Object} - Type user with updated information
 */
-async function update(parent, args, context, info) {
+async function update(_parent, args, context) {
 	const id = getUserId(context);
 	const { first_name, last_name, city, state } = args;
 
@@ -125,12 +135,12 @@ async function update(parent, args, context, info) {
 
   @return {Object} type User of deleted user
 */
-async function deleteUser(parent, args, context, info) {
+async function deleteUser(_parent, _args, context) {
 	const id = getUserId(context);
 	return await context.prisma.deleteUser({ id });
 }
 
-async function checkEmail(parent, args, context, info) {
+async function checkEmail(_parent, args, context) {
 	const user = await context.prisma.user({ email: args.email });
 	if (user) {
 		throw new Error('Email has been taken.');
@@ -139,9 +149,9 @@ async function checkEmail(parent, args, context, info) {
 	}
 }
 
-async function createCharge(parent, args, context, info) {
+async function createCharge(_parent, args, context) {
 	console.log('turkey bacon', args);
-	console.log(info);
+	// console.log(info)
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
 	// console.log(user);
@@ -164,15 +174,30 @@ async function createCharge(parent, args, context, info) {
 		},
 	});
 
-	console.log(args);
 	return updatedUser;
 }
 
-module.exports = {
-	signup,
-	login,
-	update,
-	deleteUser,
-	checkEmail,
-	createCharge,
-};
+function addCoachStripeID(_parent, args, context) {
+	console.log('addCoachStripeId args: ', args);
+
+	const id = getUserId(context);
+	const { code } = args;
+
+	const stripeId = '';
+
+	stripe.oauth
+		.token({
+			grant_type: 'authorization_code',
+			code,
+		})
+		.then(function(response) {
+			stripeId = response.stripe_user_id;
+		});
+
+	console.log('stripeId: ', stripeId);
+
+	return context.prisma.updateUser({
+		data: { stripeId },
+		where: { id },
+	});
+}

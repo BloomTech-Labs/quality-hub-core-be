@@ -20,5 +20,5 @@ type User @key(fields: "email") {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
+  stripeCoachCode: String @unique
 }
-
