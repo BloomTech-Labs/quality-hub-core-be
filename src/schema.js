@@ -24,7 +24,6 @@ const typeDefs = gql`
 		personal_url: String
 		blog_url: String
 		twitter_url: String
-		# payment_info: Boolean
 		stripeCoachCode: String
 	}
 
@@ -37,11 +36,7 @@ const typeDefs = gql`
 		"""
 		Gets all registered users
 		"""
-<<<<<<< HEAD
-		users: [User!]!
-=======
 		users(keywords: String): [User!]!
->>>>>>> 854458d2d57ed6d75b3bdd3c65e371d48af3d7e0
 
 		"""
 		Gets user by ID
@@ -78,17 +73,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-<<<<<<< HEAD
 			bio: String
-			payment_info: Boolean
-		): AuthPayload!
-
-		"""
-		Logins in user and returns a token and user info if successful.
-		"""
-		login(email: String!, password: String!): AuthPayload!
-=======
-			bio: String # payment_info: Boolean
 		): AuthPayload!
 
 		"""
@@ -115,18 +100,19 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-			bio: String # payment_info: Boolean
+			bio: String
 			stripeCoachCode: String
 		): User!
 
 		checkEmail(email: String!): String!
->>>>>>> 854458d2d57ed6d75b3bdd3c65e371d48af3d7e0
 
 		deleteUser: User!
 
 		createCharge(source: String!, email: String): User!
 
 		addCoachStripeID(code: String!): User!
+
+		coachStripeLogin(stripeId: String!): User!
 	}
 	"""
 	Used for log in and sign up. Returns token and user info
