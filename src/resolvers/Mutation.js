@@ -16,6 +16,7 @@ module.exports = {
 	checkEmail,
 	createCharge,
 	addCoachStripeID,
+	createStripeLogin,
 };
 
 /*
@@ -177,33 +178,38 @@ async function createCharge(_parent, args, context) {
 	return updatedUser;
 }
 
+
  async function addCoachStripeID(_parent, args, context) {
 	console.log('addCoachStripeId args: ', args);
 
 	const id = getUserId(context);
-
 	const { code } = args;
-
-	const stripeId = '';
-
-	stripe.oauth
+	// Connects to stripes API and creates an  active connected account with the authorization_code sent to stripe from the user onbaording 
+	const response = await stripe.oauth
 		.token({
 			grant_type: 'authorization_code',
 			code,
 		})
-		.then(function(response) {
-			console.log('nope', response)
-			stripeId = response.stripe_user_id;
-			console.log('yes??', stripeId);
-		
-		});
+
+		console.log('response',response);
+		return context.prisma.updateUser({
+					data: { stripeId: response.stripe_user_id},
+					where: { id },
+				});
+}
 
 
-	// console.log('stripeId: ', stripeId);
+function createStripeLogin(_parent, args, context) {
+	// console.log('yo', args);
+	const stripeUser = context.prisma.user({ stripeId: args.stripeId})
 
-	return context.prisma.updateUser({
-		data: { stripeCoachCode: stripeId},
-		where: { id },
-	});
+	console.log(stripeUser);
 
+	// stripe.accounts.createLoginLink(
+	// 	stripeUser,
+	// 	function(err, link) {
+	// 	  // asynchronously called
+	// 	  console.log(link);
+	// 	}
+	//   );
 }

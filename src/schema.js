@@ -110,7 +110,9 @@ const typeDefs = gql`
 
 		createCharge(source: String!, email: String): User!
 
-		addCoachStripeID(code: String!): User!
+    addCoachStripeID(code: String!): User!
+    
+    coachStripeLogin(stripeId: String!): User!
 	}
 	"""
 	Used for log in and sign up. Returns token and user info
