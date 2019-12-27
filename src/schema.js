@@ -73,7 +73,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-      bio: String 
+      		bio: String 
 		): AuthPayload!
 
 		"""
@@ -112,8 +112,15 @@ const typeDefs = gql`
 
     addCoachStripeID(code: String!): User!
     
-    coachStripeLogin(stripeId: String!): User!
+	coachStripeLogin(stripeId: String!): User!
+	
+	stripeDirectCharge(amount: Int, currency: String, source: String): User!
+
+	stripePayIntent(amount: Int): User!
+
+	StripeCreateToken(customer: String): User!
 	}
+
 	"""
 	Used for log in and sign up. Returns token and user info
 	"""
