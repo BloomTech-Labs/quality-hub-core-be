@@ -15,7 +15,7 @@ module.exports = {
 	deleteUser,
 	checkEmail,
 	createCharge,
-	addCoachStripeID,
+	addCoachStripeId,
 	createStripeLogin,
 	stripeDirectCharge,
 	stripePayIntent,
@@ -181,7 +181,8 @@ async function createCharge(_parent, args, context) {
 	return updatedUser;
 }
 
-async function addCoachStripeID(_parent, args, context) {
+
+async function addCoachStripeId(_parent, args, context) {
 	console.log('addCoachStripeId args: ', args);
 
 	const id = getUserId(context);
@@ -199,20 +200,22 @@ async function addCoachStripeID(_parent, args, context) {
 	});
 }
 
-function createStripeLogin(_parent, args, context) {
-	// console.log('yo', args);
-	const stripeUser = context.prisma.user({ stripeId: args.stripeId });
+async function createStripeLogin(_parent, args, context) {
+	// console.log('args:', args.stripeId);
 
-	console.log(stripeUser);
+	const userid = getUserId(context);
+	const user = await context.prisma.user({ id: userid });
 
-	// stripe.accounts.createLoginLink(
-	// 	stripeUser,
-	// 	function(err, link) {
-	// 	  // asynchronously called
-	// 	  console.log(link);
-	// 	}
-	//   );
+	stripe.accounts.createLoginLink(
+		user.stripeId,
+		function (err, link) {
+		  // asynchronously called
+			console.log(link);
+		});
+
+	return user;
 }
+
 
 async function stripeDirectCharge(_parent, args, context) {
 	const { amount, currency, source } = args;
@@ -222,17 +225,20 @@ async function stripeDirectCharge(_parent, args, context) {
 
 	console.log(user.stripeId);
 
-	const charge = await stripe.charges.create(
-		{
+	stripe.charges.create({
 			amount,
 			currency,
 			source,
-			application_fee_amount: 0,
-		},
-		{ stripe_account: user.stripeId },
-	);
-
-	console.log(charge);
+			// application_fee_amount: 0,
+			// payment_method_types: ['card'],
+		},{ 
+			stripe_account: user.stripeId,
+		}).then(function(charge){
+			console.log(charge);
+		})
+		.catch(function(err){
+			console.log(err);
+		});
 
 	return user;
 }
@@ -245,17 +251,22 @@ async function stripePayIntent(_parent, args, context) {
 
 	console.log(user.stripeId);
 
-	const paymentIntent = stripe.paymentIntents.create(
+		stripe.paymentIntents.create(
 		{
-			payment_method_types: ['card'],
 			amount,
 			currency,
-			application_fee_amount: 0,
+			payment_method_types: ['card'],
+			// application_fee_amount: 0,
 		},
 		{ stripe_account: user.stripeId },
+
+		function(err, paymentIntent) {
+			// asynchronously called
+			console.log(paymentIntent);
+		  }	
 	);
 
-	console.log(paymentIntent);
+	// console.log(paymentIntent);
 
 	return user;
 }

@@ -110,13 +110,13 @@ const typeDefs = gql`
 
 		createCharge(source: String!, email: String): User!
 
-		addCoachStripeID(code: String!): User!
+		addCoachStripeId(code: String!): User!
 
 		createStripeLogin(stripeId: String!): User!
 
-		stripeDirectCharge(amount: Int!, currency: String, source: String): User!
+		stripeDirectCharge(amount: Int!, currency: String, source: String, stripe_account: String!): User!
 
-		stripePayIntent(amount: Int!, currency: String): User!
+		stripePayIntent(amount: Int!, currency: String, payment_method_types: String): User!
 
 		stripeCreateToken(customer: String!): User!
 	}
