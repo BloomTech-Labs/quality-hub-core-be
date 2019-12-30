@@ -7,6 +7,7 @@ const typeDefs = gql`
 		"""
 		id: ID!
 		stripeId: String
+		stripeCusId: String
 		first_name: String!
 		last_name: String!
 		email: String!
@@ -24,8 +25,7 @@ const typeDefs = gql`
 		personal_url: String
 		blog_url: String
 		twitter_url: String
-		# payment_info: Boolean
-		stripeCoachCode: String
+		chatActive: Boolean
 	}
 
 	extend type Query {
@@ -74,7 +74,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-			bio: String # payment_info: Boolean
+			bio: String
 		): AuthPayload!
 
 		"""
@@ -101,7 +101,7 @@ const typeDefs = gql`
 			portfolio_url: String
 			linkedin_url: String
 			github_url: String
-			bio: String # payment_info: Boolean
+			bio: String
 			stripeCoachCode: String
 		): User!
 
@@ -111,8 +111,17 @@ const typeDefs = gql`
 
 		createCharge(source: String!, email: String): User!
 
-		addCoachStripeID(code: String!): User!
+		addCoachStripeId(code: String!): User!
+
+		createStripeLogin(stripeId: String!): User!
+
+		stripeDirectCharge(amount: Int!, currency: String, source: String, on_behalf_of: String): User!
+
+		stripePayIntent(amount: Int!, currency: String, on_behalf_of: String): User!
+
+		stripeCreateToken(customer: String!): User!
 	}
+
 	"""
 	Used for log in and sign up. Returns token and user info
 	"""

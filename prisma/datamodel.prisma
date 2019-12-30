@@ -1,6 +1,7 @@
 type User @key(fields: "email") {
   id: ID! @id
-  stripeId: String
+  stripeId: String @unique
+  stripeCusId: String @unique
   first_name: String!
   last_name: String!
   email: String! @unique
@@ -21,5 +22,5 @@ type User @key(fields: "email") {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
-  stripeCoachCode: String @unique
+  chatActive: Boolean @default(value: false)
 }
