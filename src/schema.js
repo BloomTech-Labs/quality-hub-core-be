@@ -87,6 +87,7 @@ const typeDefs = gql`
 		"""
 		update(
 			stripeId: String
+			stripeCusId: String
 			first_name: String
 			last_name: String
 			password: String
@@ -102,7 +103,6 @@ const typeDefs = gql`
 			linkedin_url: String
 			github_url: String
 			bio: String
-			stripeCoachCode: String
 		): User!
 
 		checkEmail(email: String!): String!
