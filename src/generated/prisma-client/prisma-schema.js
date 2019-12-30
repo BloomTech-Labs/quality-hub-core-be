@@ -53,6 +53,7 @@ type Subscription {
 type User {
   id: ID!
   stripeId: String
+  stripeCusId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -73,7 +74,7 @@ type User {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
-  stripeCoachCode: String
+  chatActive: Boolean
 }
 
 type UserConnection {
@@ -85,6 +86,7 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   stripeId: String
+  stripeCusId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -105,7 +107,7 @@ input UserCreateInput {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
-  stripeCoachCode: String
+  chatActive: Boolean
 }
 
 type UserEdge {
@@ -118,6 +120,8 @@ enum UserOrderByInput {
   id_DESC
   stripeId_ASC
   stripeId_DESC
+  stripeCusId_ASC
+  stripeCusId_DESC
   first_name_ASC
   first_name_DESC
   last_name_ASC
@@ -158,13 +162,14 @@ enum UserOrderByInput {
   city_lc_DESC
   state_lc_ASC
   state_lc_DESC
-  stripeCoachCode_ASC
-  stripeCoachCode_DESC
+  chatActive_ASC
+  chatActive_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   stripeId: String
+  stripeCusId: String
   first_name: String!
   last_name: String!
   email: String!
@@ -185,7 +190,7 @@ type UserPreviousValues {
   ln_lc: String!
   city_lc: String!
   state_lc: String!
-  stripeCoachCode: String
+  chatActive: Boolean
 }
 
 type UserSubscriptionPayload {
@@ -208,6 +213,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   stripeId: String
+  stripeCusId: String
   first_name: String
   last_name: String
   email: String
@@ -228,11 +234,12 @@ input UserUpdateInput {
   ln_lc: String
   city_lc: String
   state_lc: String
-  stripeCoachCode: String
+  chatActive: Boolean
 }
 
 input UserUpdateManyMutationInput {
   stripeId: String
+  stripeCusId: String
   first_name: String
   last_name: String
   email: String
@@ -253,7 +260,7 @@ input UserUpdateManyMutationInput {
   ln_lc: String
   city_lc: String
   state_lc: String
-  stripeCoachCode: String
+  chatActive: Boolean
 }
 
 input UserWhereInput {
@@ -285,6 +292,20 @@ input UserWhereInput {
   stripeId_not_starts_with: String
   stripeId_ends_with: String
   stripeId_not_ends_with: String
+  stripeCusId: String
+  stripeCusId_not: String
+  stripeCusId_in: [String!]
+  stripeCusId_not_in: [String!]
+  stripeCusId_lt: String
+  stripeCusId_lte: String
+  stripeCusId_gt: String
+  stripeCusId_gte: String
+  stripeCusId_contains: String
+  stripeCusId_not_contains: String
+  stripeCusId_starts_with: String
+  stripeCusId_not_starts_with: String
+  stripeCusId_ends_with: String
+  stripeCusId_not_ends_with: String
   first_name: String
   first_name_not: String
   first_name_in: [String!]
@@ -553,20 +574,8 @@ input UserWhereInput {
   state_lc_not_starts_with: String
   state_lc_ends_with: String
   state_lc_not_ends_with: String
-  stripeCoachCode: String
-  stripeCoachCode_not: String
-  stripeCoachCode_in: [String!]
-  stripeCoachCode_not_in: [String!]
-  stripeCoachCode_lt: String
-  stripeCoachCode_lte: String
-  stripeCoachCode_gt: String
-  stripeCoachCode_gte: String
-  stripeCoachCode_contains: String
-  stripeCoachCode_not_contains: String
-  stripeCoachCode_starts_with: String
-  stripeCoachCode_not_starts_with: String
-  stripeCoachCode_ends_with: String
-  stripeCoachCode_not_ends_with: String
+  chatActive: Boolean
+  chatActive_not: Boolean
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -574,8 +583,9 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  stripeId: String
+  stripeCusId: String
   email: String
-  stripeCoachCode: String
 }
 `
       }

@@ -106,6 +106,8 @@ export type UserOrderByInput =
   | "id_DESC"
   | "stripeId_ASC"
   | "stripeId_DESC"
+  | "stripeCusId_ASC"
+  | "stripeCusId_DESC"
   | "first_name_ASC"
   | "first_name_DESC"
   | "last_name_ASC"
@@ -146,14 +148,15 @@ export type UserOrderByInput =
   | "city_lc_DESC"
   | "state_lc_ASC"
   | "state_lc_DESC"
-  | "stripeCoachCode_ASC"
-  | "stripeCoachCode_DESC";
+  | "chatActive_ASC"
+  | "chatActive_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
   first_name: String;
   last_name: String;
   email: String;
@@ -174,11 +177,12 @@ export interface UserCreateInput {
   ln_lc: String;
   city_lc: String;
   state_lc: String;
-  stripeCoachCode?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
 }
 
 export interface UserUpdateInput {
   stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
   last_name?: Maybe<String>;
   email?: Maybe<String>;
@@ -199,7 +203,7 @@ export interface UserUpdateInput {
   ln_lc?: Maybe<String>;
   city_lc?: Maybe<String>;
   state_lc?: Maybe<String>;
-  stripeCoachCode?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
 }
 
 export interface UserWhereInput {
@@ -231,6 +235,20 @@ export interface UserWhereInput {
   stripeId_not_starts_with?: Maybe<String>;
   stripeId_ends_with?: Maybe<String>;
   stripeId_not_ends_with?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  stripeCusId_not?: Maybe<String>;
+  stripeCusId_in?: Maybe<String[] | String>;
+  stripeCusId_not_in?: Maybe<String[] | String>;
+  stripeCusId_lt?: Maybe<String>;
+  stripeCusId_lte?: Maybe<String>;
+  stripeCusId_gt?: Maybe<String>;
+  stripeCusId_gte?: Maybe<String>;
+  stripeCusId_contains?: Maybe<String>;
+  stripeCusId_not_contains?: Maybe<String>;
+  stripeCusId_starts_with?: Maybe<String>;
+  stripeCusId_not_starts_with?: Maybe<String>;
+  stripeCusId_ends_with?: Maybe<String>;
+  stripeCusId_not_ends_with?: Maybe<String>;
   first_name?: Maybe<String>;
   first_name_not?: Maybe<String>;
   first_name_in?: Maybe<String[] | String>;
@@ -499,20 +517,8 @@ export interface UserWhereInput {
   state_lc_not_starts_with?: Maybe<String>;
   state_lc_ends_with?: Maybe<String>;
   state_lc_not_ends_with?: Maybe<String>;
-  stripeCoachCode?: Maybe<String>;
-  stripeCoachCode_not?: Maybe<String>;
-  stripeCoachCode_in?: Maybe<String[] | String>;
-  stripeCoachCode_not_in?: Maybe<String[] | String>;
-  stripeCoachCode_lt?: Maybe<String>;
-  stripeCoachCode_lte?: Maybe<String>;
-  stripeCoachCode_gt?: Maybe<String>;
-  stripeCoachCode_gte?: Maybe<String>;
-  stripeCoachCode_contains?: Maybe<String>;
-  stripeCoachCode_not_contains?: Maybe<String>;
-  stripeCoachCode_starts_with?: Maybe<String>;
-  stripeCoachCode_not_starts_with?: Maybe<String>;
-  stripeCoachCode_ends_with?: Maybe<String>;
-  stripeCoachCode_not_ends_with?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+  chatActive_not?: Maybe<Boolean>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -520,6 +526,7 @@ export interface UserWhereInput {
 
 export interface UserUpdateManyMutationInput {
   stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
   last_name?: Maybe<String>;
   email?: Maybe<String>;
@@ -540,7 +547,7 @@ export interface UserUpdateManyMutationInput {
   ln_lc?: Maybe<String>;
   city_lc?: Maybe<String>;
   state_lc?: Maybe<String>;
-  stripeCoachCode?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -556,8 +563,9 @@ export interface UserSubscriptionWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
   email?: Maybe<String>;
-  stripeCoachCode?: Maybe<String>;
 }>;
 
 export interface NodeNode {
@@ -599,6 +607,7 @@ export interface BatchPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   stripeId?: String;
+  stripeCusId?: String;
   first_name: String;
   last_name: String;
   email: String;
@@ -619,7 +628,7 @@ export interface UserPreviousValues {
   ln_lc: String;
   city_lc: String;
   state_lc: String;
-  stripeCoachCode?: String;
+  chatActive?: Boolean;
 }
 
 export interface UserPreviousValuesPromise
@@ -627,6 +636,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   stripeId: () => Promise<String>;
+  stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
   last_name: () => Promise<String>;
   email: () => Promise<String>;
@@ -647,7 +657,7 @@ export interface UserPreviousValuesPromise
   ln_lc: () => Promise<String>;
   city_lc: () => Promise<String>;
   state_lc: () => Promise<String>;
-  stripeCoachCode: () => Promise<String>;
+  chatActive: () => Promise<Boolean>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -655,6 +665,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   stripeId: () => Promise<AsyncIterator<String>>;
+  stripeCusId: () => Promise<AsyncIterator<String>>;
   first_name: () => Promise<AsyncIterator<String>>;
   last_name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -675,7 +686,7 @@ export interface UserPreviousValuesSubscription
   ln_lc: () => Promise<AsyncIterator<String>>;
   city_lc: () => Promise<AsyncIterator<String>>;
   state_lc: () => Promise<AsyncIterator<String>>;
-  stripeCoachCode: () => Promise<AsyncIterator<String>>;
+  chatActive: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UserEdge {
@@ -723,6 +734,7 @@ export interface UserSubscriptionPayloadSubscription
 export interface User {
   id: ID_Output;
   stripeId?: String;
+  stripeCusId?: String;
   first_name: String;
   last_name: String;
   email: String;
@@ -743,12 +755,13 @@ export interface User {
   ln_lc: String;
   city_lc: String;
   state_lc: String;
-  stripeCoachCode?: String;
+  chatActive?: Boolean;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   stripeId: () => Promise<String>;
+  stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
   last_name: () => Promise<String>;
   email: () => Promise<String>;
@@ -769,7 +782,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   ln_lc: () => Promise<String>;
   city_lc: () => Promise<String>;
   state_lc: () => Promise<String>;
-  stripeCoachCode: () => Promise<String>;
+  chatActive: () => Promise<Boolean>;
 }
 
 export interface UserSubscription
@@ -777,6 +790,7 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   stripeId: () => Promise<AsyncIterator<String>>;
+  stripeCusId: () => Promise<AsyncIterator<String>>;
   first_name: () => Promise<AsyncIterator<String>>;
   last_name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -797,7 +811,7 @@ export interface UserSubscription
   ln_lc: () => Promise<AsyncIterator<String>>;
   city_lc: () => Promise<AsyncIterator<String>>;
   state_lc: () => Promise<AsyncIterator<String>>;
-  stripeCoachCode: () => Promise<AsyncIterator<String>>;
+  chatActive: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface UserNullablePromise
@@ -805,6 +819,7 @@ export interface UserNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   stripeId: () => Promise<String>;
+  stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
   last_name: () => Promise<String>;
   email: () => Promise<String>;
@@ -825,7 +840,7 @@ export interface UserNullablePromise
   ln_lc: () => Promise<String>;
   city_lc: () => Promise<String>;
   state_lc: () => Promise<String>;
-  stripeCoachCode: () => Promise<String>;
+  chatActive: () => Promise<Boolean>;
 }
 
 export interface UserConnection {
