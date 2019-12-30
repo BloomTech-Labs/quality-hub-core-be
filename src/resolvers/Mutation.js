@@ -218,7 +218,7 @@ async function createStripeLogin(_parent, args, context) {
 
 
 async function stripeDirectCharge(_parent, args, context) {
-	const { amount, currency, source } = args;
+	const { amount, currency, source, on_behalf_of } = args;
 
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
@@ -229,10 +229,9 @@ async function stripeDirectCharge(_parent, args, context) {
 			amount,
 			currency,
 			source,
+			on_behalf_of,
 			// application_fee_amount: 0,
 			// payment_method_types: ['card'],
-		},{ 
-			stripe_account: user.stripeId,
 		}).then(function(charge){
 			console.log(charge);
 		})
@@ -244,7 +243,7 @@ async function stripeDirectCharge(_parent, args, context) {
 }
 
 async function stripePayIntent(_parent, args, context) {
-	const { amount, currency } = args;
+	const { amount, currency, on_behalf_of } = args;
 
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
@@ -255,16 +254,14 @@ async function stripePayIntent(_parent, args, context) {
 		{
 			amount,
 			currency,
-			payment_method_types: ['card'],
+			on_behalf_of,
 			// application_fee_amount: 0,
 		},
-		{ stripe_account: user.stripeId },
-
-		function(err, paymentIntent) {
-			// asynchronously called
-			console.log(paymentIntent);
-		  }	
-	);
+		{ stripe_account: user.stripeId }
+	).then(function(err, paymentIntent) {
+		// asynchronously called
+		console.log(paymentIntent);
+	  });	
 
 	// console.log(paymentIntent);
 

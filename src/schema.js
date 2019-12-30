@@ -7,6 +7,7 @@ const typeDefs = gql`
 		"""
 		id: ID!
 		stripeId: String
+		stripeCusId: String
 		first_name: String!
 		last_name: String!
 		email: String!
@@ -24,7 +25,7 @@ const typeDefs = gql`
 		personal_url: String
 		blog_url: String
 		twitter_url: String
-		stripeCoachCode: String
+		chatActive: Boolean
 	}
 
 	extend type Query {
@@ -114,9 +115,9 @@ const typeDefs = gql`
 
 		createStripeLogin(stripeId: String!): User!
 
-		stripeDirectCharge(amount: Int!, currency: String, source: String, stripe_account: String!): User!
+		stripeDirectCharge(amount: Int!, currency: String, source: String, on_behalf_of: String): User!
 
-		stripePayIntent(amount: Int!, currency: String, payment_method_types: String): User!
+		stripePayIntent(amount: Int!, currency: String, on_behalf_of: String): User!
 
 		stripeCreateToken(customer: String!): User!
 	}
