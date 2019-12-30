@@ -103,6 +103,7 @@ const typeDefs = gql`
 			linkedin_url: String
 			github_url: String
 			bio: String
+			stripeCusId: String
 		): User!
 
 		checkEmail(email: String!): String!
@@ -115,7 +116,12 @@ const typeDefs = gql`
 
 		createStripeLogin(stripeId: String!): User!
 
-		stripeDirectCharge(amount: Int!, currency: String, source: String, on_behalf_of: String): User!
+		stripeDirectCharge(
+			amount: Int!
+			currency: String
+			source: String
+			on_behalf_of: String
+		): User!
 
 		stripePayIntent(amount: Int!, currency: String, on_behalf_of: String): User!
 
