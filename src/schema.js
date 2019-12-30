@@ -87,6 +87,7 @@ const typeDefs = gql`
 		"""
 		update(
 			stripeId: String
+			stripeCusId: String
 			first_name: String
 			last_name: String
 			password: String
