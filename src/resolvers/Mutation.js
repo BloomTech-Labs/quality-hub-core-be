@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const stripe = require('../stripe');
+const stripe = require('../stripe')(process.env.STRIPE_SECRET);
 
 const {
 	generateToken,
@@ -14,12 +14,14 @@ module.exports = {
 	update,
 	deleteUser,
 	checkEmail,
-	createCharge,
+	createCustomer,
 	addCoachStripeId,
 	createStripeLogin,
 	stripeDirectCharge,
+	stripePayout,
 	stripePayIntent,
 	stripeCreateToken,
+
 };
 
 /*
@@ -153,34 +155,37 @@ async function checkEmail(_parent, args, context) {
 	}
 }
 
-async function createCharge(_parent, args, context) {
+// Stripe Integration 
+async function createCustomer(_parent, args, context) {
+	const { source } = args;
 	console.log('turkey bacon', args);
-	// console.log(info)
+
 	const userid = getUserId(context);
-	const user = await context.prisma.user({ id: userid });
+	let user = await context.prisma.user({ id: userid });
 	// console.log(user);
+		// This creates the "customer" in stripe database
+		await stripe.customers.create({
+			email: user.email,
+			source,
+		}).then(async (customer)=>{
+			console.log(customer);
+			cusId = customer.id;
+			await context.prisma.updateUser({
+				data: { stripeCusId: cusId},
+				where: {
+					email: user.email,
+					},
+	
+			});
+			console.log('hi')
+		})
 	if (!user) {
 		throw new Error('not authenticated');
 	}
 
-	// This creates the "customer" in stripe database
-	const customer = await stripe.customers.create({
-		email: user.email,
-		source: args.source,
-	});
-
-	user.stripeId = await customer.id;
-
-	const updatedUser = await context.prisma.updateUser({
-		data: { stripeId: args.source },
-		where: {
-			email: user.email,
-		},
-	});
-
-	return updatedUser;
+	console.log('bye')
+	return "Customer created";
 }
-
 
 async function addCoachStripeId(_parent, args, context) {
 	console.log('addCoachStripeId args: ', args);
@@ -200,70 +205,107 @@ async function addCoachStripeId(_parent, args, context) {
 	});
 }
 
+// One time login in link for a coach to view their dashboard in stripe 
 async function createStripeLogin(_parent, args, context) {
 	// console.log('args:', args.stripeId);
 
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
 
-	stripe.accounts.createLoginLink(
-		user.stripeId,
-		function (err, link) {
-		  // asynchronously called
-			console.log(link);
-		});
+	let login = ''
 
-	return user;
+	await stripe.accounts.createLoginLink(
+		user.stripeId).then(link => {
+		  // asynchronously called
+			console.log(link.url);
+			login = link.url;
+			return link.url
+		})
+	return login;
 }
 
 
 async function stripeDirectCharge(_parent, args, context) {
-	const { amount, currency, source, on_behalf_of } = args;
+	const { amount, currency, source, coachId } = args;
 
-	const userid = getUserId(context);
-	const user = await context.prisma.user({ id: userid });
+	// const userid = getUserId(context);
+	// const user = await context.prisma.user({ id: userid });
 
-	console.log(user.stripeId);
+	// console.log(user.stripeId);
+
+	const coach = await context.prisma.user({id: coachId});
 
 	stripe.charges.create({
 			amount,
 			currency,
 			source,
-			on_behalf_of,
-			// application_fee_amount: 0,
-			// payment_method_types: ['card'],
-		}).then(function(charge){
+			transfer_data: {
+				destination: coach.stripeId
+			}
+		})
+		// {stripeCusId: user.stripeCusId})
+		.then(function(charge){
 			console.log(charge);
 		})
 		.catch(function(err){
 			console.log(err);
 		});
 
-	return user;
+	return 'Payment successful!';
 }
 
+
+async function stripePayout(_parent, args, context){
+	const { amount, currency, method, coachId } = args;
+
+
+	const coach = await context.prisma.user({ id: coachId});
+
+	stripe.payouts.create({
+		amount,
+		currency,
+		method,
+	}, {
+		stripe_account: coach.stripeId,
+	}).then(function(payout){
+		console.log(payout);
+	}).catch(function(err){
+		console.log(err);
+	})
+return 'Payout Successful';
+
+}
+
+
+
+
+
 async function stripePayIntent(_parent, args, context) {
-	const { amount, currency, on_behalf_of } = args;
+	const { amount, currency, source, on_behalf_of } = args;
 
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
 
-	console.log(user.stripeId);
+	console.log('hey', user.stripeCusId);
+console.log('no', user.stripeId);
 
 		stripe.paymentIntents.create(
 		{
 			amount,
 			currency,
+			source,
 			on_behalf_of,
+			
 			// application_fee_amount: 0,
 		},
-		{ stripe_account: user.stripeId }
-	).then(function(err, paymentIntent) {
+		{ stripe_account: user.stripeCusId }
+	).then(function(paymentIntent) {
 		// asynchronously called
-		console.log(paymentIntent);
-	  });	
-
-	// console.log(paymentIntent);
+		console.log('here', paymentIntent);
+	  })
+	  .catch(function(err){
+		console.log(err);
+	});;	
 
 	return user;
 }

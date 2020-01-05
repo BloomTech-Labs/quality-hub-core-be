@@ -6,8 +6,8 @@ const typeDefs = gql`
 		Unique ID of user.
 		"""
 		id: ID!
-		stripeId: String
-		stripeCusId: String
+		stripeCustomerConnected: Boolean
+		stripeCoachConnected: Boolean
 		first_name: String!
 		last_name: String!
 		email: String!
@@ -110,20 +110,27 @@ const typeDefs = gql`
 
 		deleteUser: User!
 
-		createCharge(source: String!, email: String): User!
+		createCustomer(email: String, source: String!): String!
 
 		addCoachStripeId(code: String!): User!
 
-		createStripeLogin(stripeId: String!): User!
+		createStripeLogin(stripeId: String!): String!
 
 		stripeDirectCharge(
 			amount: Int!
 			currency: String
-			source: String
-			on_behalf_of: String
-		): User!
+			source: String!
+			coachId: String!
+		): String!
 
-		stripePayIntent(amount: Int!, currency: String, on_behalf_of: String): User!
+		stripePayout(
+			amount: Int!
+			currency: String
+			method: String
+			coachId: String!):
+			String!
+
+		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
 	}
