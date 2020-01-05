@@ -148,10 +148,11 @@ const typeDefs = gql`
 		available: Int!
 		pending: Int!
 	}
-
+	
 	type Status {
 		success: String
 		error: String
+
 	}
 `;
 
