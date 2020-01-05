@@ -114,14 +114,14 @@ const typeDefs = gql`
 
 		addCoachStripeId(code: String!): User!
 
-		createStripeLogin(stripeId: String!): User!
+		createStripeLogin(stripeId: String!): String!
 
 		stripeDirectCharge(
 			amount: Int!
 			currency: String
-			source: String
-			on_behalf_of: String
-		): User!
+			source: String!
+			coachId: String!
+		): String!
 
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
