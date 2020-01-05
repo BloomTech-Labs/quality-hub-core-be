@@ -121,7 +121,7 @@ const typeDefs = gql`
 			currency: String
 			source: String!
 			coachId: String!
-		): String!
+		): Status!
 
 		stripePayout(
 			amount: Int!
@@ -144,9 +144,15 @@ const typeDefs = gql`
 		user: User!
 	}
 
+
 	type Balance {
 		available: Int!
 		pending: Int!
+
+	type Status {
+		success: String
+		error: String
+
 	}
 `;
 
