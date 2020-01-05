@@ -6,8 +6,8 @@ const typeDefs = gql`
 		Unique ID of user.
 		"""
 		id: ID!
-		stripeId: String
-		stripeCusId: String
+		stripeCustomerConnected: Boolean
+		stripeCoachConnected: Boolean
 		first_name: String!
 		last_name: String!
 		email: String!
@@ -110,7 +110,7 @@ const typeDefs = gql`
 
 		deleteUser: User!
 
-		createCustomer(email: String, source: String!): User!
+		createCustomer(email: String, source: String!): String!
 
 		addCoachStripeId(code: String!): User!
 
