@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const stripe = require('../stripe');
+const stripe = require('../stripe')(process.env.STRIPE_SECRET);
 
 const {
 	generateToken,
