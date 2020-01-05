@@ -110,7 +110,7 @@ const typeDefs = gql`
 
 		deleteUser: User!
 
-		createCharge(source: String!, email: String): User!
+		createCustomer(email: String, source: String!): User!
 
 		addCoachStripeId(code: String!): User!
 
@@ -123,7 +123,7 @@ const typeDefs = gql`
 			on_behalf_of: String
 		): User!
 
-		stripePayIntent(amount: Int!, currency: String, on_behalf_of: String): User!
+		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
 	}
