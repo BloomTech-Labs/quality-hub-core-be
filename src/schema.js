@@ -114,7 +114,7 @@ const typeDefs = gql`
 
 		addCoachStripeId(code: String!): User!
 
-		createStripeLogin(stripeId: String!): String!
+		createStripeLink: String!
 
 		stripeDirectCharge(
 			amount: Int!
@@ -143,7 +143,6 @@ const typeDefs = gql`
 		token: String!
 		user: User!
 	}
-
 
 	type Balance {
 		available: Int!
