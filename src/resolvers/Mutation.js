@@ -16,7 +16,7 @@ module.exports = {
 	checkEmail,
 	createCustomer,
 	addCoachStripeId,
-	createStripeLogin,
+	createStripeLink,
 	stripeDirectCharge,
 	stripePayout,
 	stripeBalance,
