@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const stripe = require('../stripe');
+const stripe = require('../stripe')
 
 const {
 	generateToken,
@@ -207,9 +207,7 @@ async function addCoachStripeId(_parent, args, context) {
 }
 
 // One time login in link for a coach to view their dashboard in stripe 
-async function createStripeLogin(_parent, args, context) {
-	// console.log('args:', args.stripeId);
-
+async function createStripeLink(_parent, _args, context) {
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
 
@@ -231,8 +229,7 @@ async function stripeDirectCharge(_parent, args, context) {
 
 
 	const coach = await context.prisma.user({id: coachId});
-
-	stripe.charges.create({
+	const status = stripe.charges.create({
 			amount,
 			currency,
 			source,
@@ -241,14 +238,15 @@ async function stripeDirectCharge(_parent, args, context) {
 			}
 		})
 		// {stripeCusId: user.stripeCusId})
-		.then(function(charge){
-			console.log(charge);
+		.then((res) => {
+			console.log(res);
+			return {success: "Payment successful!", error: null}
 		})
 		.catch(function(err){
-			console.log(err);
+			return {success: null, error: err.message}
 		});
 
-	return 'Payment successful!';
+	return status;
 }
 
 

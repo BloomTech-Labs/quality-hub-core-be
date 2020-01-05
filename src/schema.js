@@ -114,14 +114,14 @@ const typeDefs = gql`
 
 		addCoachStripeId(code: String!): User!
 
-		createStripeLogin(stripeId: String!): String!
+		createStripeLink: String!
 
 		stripeDirectCharge(
 			amount: Int!
 			currency: String
 			source: String!
 			coachId: String!
-		): String!
+		): Status!
 
 		stripePayout(
 			amount: Int!
@@ -147,6 +147,11 @@ const typeDefs = gql`
 	type Balance {
 		available: Int!
 		pending: Int!
+	}
+
+	type Status {
+		success: String
+		error: String
 	}
 `;
 
