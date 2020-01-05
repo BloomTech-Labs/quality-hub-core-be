@@ -159,12 +159,11 @@ async function createCustomer(_parent, args, context) {
 	console.log('turkey bacon', args);
 
 	const userid = getUserId(context);
-	const user = await context.prisma.user({ id: userid });
+	let user = await context.prisma.user({ id: userid });
 	// console.log(user);
 	if (!user) {
 		throw new Error('not authenticated');
 	}
-
 	// This creates the "customer" in stripe database
 	stripe.customers.create({
 		email: user.email,
@@ -172,18 +171,15 @@ async function createCustomer(_parent, args, context) {
 	}, async function( err, customer){
 		console.log(customer);
 		cusId = customer.id;
-		return await context.prisma.updateUser({
+		await context.prisma.updateUser({
 			data: { stripeCusId: cusId},
 			where: {
 				email: user.email,
 				},
-			});
-		}
-	);
-
-return user;	
+		});
+	})
+	return "Customer created";
 }
-
 
 async function addCoachStripeId(_parent, args, context) {
 	console.log('addCoachStripeId args: ', args);
