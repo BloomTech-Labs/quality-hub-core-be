@@ -130,6 +130,7 @@ const typeDefs = gql`
 			coachId: String!):
 			String!
 
+		stripeBalance: Balance!		
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
@@ -143,9 +144,15 @@ const typeDefs = gql`
 		user: User!
 	}
 
+
+	type Balance {
+		available: Int!
+		pending: Int!
+
 	type Status {
 		success: String
 		error: String
+
 	}
 `;
 

@@ -59,9 +59,11 @@ function splitAndTrimTags(tagString) {
 	});
 }
 
+
 module.exports = {
 	user,
 	users,
 	info,
 	me,
+
 };
