@@ -123,6 +123,13 @@ const typeDefs = gql`
 			coachId: String!
 		): String!
 
+		stripePayout(
+			amount: Int!
+			currency: String
+			method: String
+			coachId: String!):
+			String!
+
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!

@@ -18,8 +18,10 @@ module.exports = {
 	addCoachStripeId,
 	createStripeLogin,
 	stripeDirectCharge,
+	stripePayout,
 	stripePayIntent,
 	stripeCreateToken,
+
 };
 
 /*
@@ -251,6 +253,32 @@ async function stripeDirectCharge(_parent, args, context) {
 
 	return 'Payment successful!';
 }
+
+
+async function stripePayout(_parent, args, context){
+	const { amount, currency, method, coachId } = args;
+
+
+	const coach = await context.prisma.user({ id: coachId});
+
+	stripe.payouts.create({
+		amount,
+		currency,
+		method,
+	}, {
+		stripe_account: coach.stripeId,
+	}).then(function(payout){
+		console.log(payout);
+	}).catch(function(err){
+		console.log(err);
+	})
+return 'Payout Successful';
+
+}
+
+
+
+
 
 async function stripePayIntent(_parent, args, context) {
 	const { amount, currency, source, on_behalf_of } = args;
