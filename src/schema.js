@@ -121,7 +121,7 @@ const typeDefs = gql`
 			currency: String
 			source: String!
 			coachId: String!
-		): String!
+		): Status!
 
 		stripePayout(
 			amount: Int!
@@ -141,6 +141,11 @@ const typeDefs = gql`
 	type AuthPayload {
 		token: String!
 		user: User!
+	}
+
+	type Status {
+		success: String
+		error: String
 	}
 `;
 
