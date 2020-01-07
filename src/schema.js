@@ -53,6 +53,7 @@ const typeDefs = gql`
 		Gets user info based on credentials stored in token
 		"""
 		me: User!
+		checkToken: LoginStatus!
 	}
 
 	type Mutation {
@@ -143,7 +144,10 @@ const typeDefs = gql`
 		token: String!
 		user: User!
 	}
-
+	type LoginStatus {
+		token: String
+		valid: Boolean!
+	}
 
 	type Balance {
 		available: Int!

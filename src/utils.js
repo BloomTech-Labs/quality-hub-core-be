@@ -28,7 +28,7 @@ function generateToken(user) {
     email: user.email,
   };
   const options = {
-    expiresIn: '12h'
+    expiresIn: '3d'
   }
   return jwt.sign(payload, JWT_SECRET, options)
 }
@@ -61,10 +61,32 @@ async function checkAdmin(context) {
   }
 }
 
+function validToken(context) {
+  const Authorization = context.request.get('Authorization')
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '')
+    return jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return {
+          token: "",
+          valid: false
+        }
+      } else {
+        return {
+          token: generateToken(decoded),
+          valid: true
+        }
+      }
+    })
+  }
+  throw new Error('Not Authenticated')
+}
+
 module.exports = {
   checkFields,
   generateToken,
   getUserId,
-  checkAdmin
+  checkAdmin,
+  validToken
 }
 
