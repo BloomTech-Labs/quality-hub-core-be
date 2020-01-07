@@ -53,6 +53,7 @@ const typeDefs = gql`
 		Gets user info based on credentials stored in token
 		"""
 		me: User!
+		checkToken: LoginStatus!
 	}
 
 	type Mutation {
@@ -114,7 +115,7 @@ const typeDefs = gql`
 
 		addCoachStripeId(code: String!): User!
 
-		createStripeLogin(stripeId: String!): String!
+		createStripeLink: String!
 
 		stripeDirectCharge(
 			amount: Int!
@@ -130,6 +131,7 @@ const typeDefs = gql`
 			coachId: String!):
 			String!
 
+		stripeBalance: Balance!		
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
@@ -142,10 +144,21 @@ const typeDefs = gql`
 		token: String!
 		user: User!
 	}
+	
+	type LoginStatus {
+		token: String
+		valid: Boolean!
+	}
 
+	type Balance {
+		available: Int!
+		pending: Int!
+	}
+	
 	type Status {
 		success: String
 		error: String
+
 	}
 `;
 

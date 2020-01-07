@@ -16,9 +16,10 @@ module.exports = {
 	checkEmail,
 	createCustomer,
 	addCoachStripeId,
-	createStripeLogin,
+	createStripeLink,
 	stripeDirectCharge,
 	stripePayout,
+	stripeBalance,
 	stripePayIntent,
 	stripeCreateToken,
 
@@ -206,9 +207,7 @@ async function addCoachStripeId(_parent, args, context) {
 }
 
 // One time login in link for a coach to view their dashboard in stripe 
-async function createStripeLogin(_parent, args, context) {
-	// console.log('args:', args.stripeId);
-
+async function createStripeLink(_parent, _args, context) {
 	const userid = getUserId(context);
 	const user = await context.prisma.user({ id: userid });
 
@@ -228,10 +227,6 @@ async function createStripeLogin(_parent, args, context) {
 async function stripeDirectCharge(_parent, args, context) {
 	const { amount, currency, source, coachId } = args;
 
-	// const userid = getUserId(context);
-	// const user = await context.prisma.user({ id: userid });
-
-	// console.log(user.stripeId);
 
 	const coach = await context.prisma.user({id: coachId});
 	const status = stripe.charges.create({
@@ -277,7 +272,17 @@ return 'Payout Successful';
 }
 
 
-
+async function stripeBalance(_parent, args, context){
+	const coach = await context.prisma.user({ id: getUserId(context)});
+	return stripe.balance.retrieve({
+		stripe_account: coach.stripeId,
+	}).then(function(balance){
+		return {available: balance.available[0].amount, pending: balance.pending[0].amount}
+	}).catch(function(err){
+		console.log(err);
+		return err
+	})
+}
 
 
 async function stripePayIntent(_parent, args, context) {
