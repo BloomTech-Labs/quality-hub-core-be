@@ -1,4 +1,4 @@
-const { getUserId, checkAdmin } = require('../utils');
+const { getUserId, validToken } = require('../utils');
 
 /*
   Test query
@@ -59,11 +59,14 @@ function splitAndTrimTags(tagString) {
 	});
 }
 
+function checkToken(parent, args, context, info) {
+	return validToken(context)
+}
 
 module.exports = {
 	user,
 	users,
 	info,
 	me,
-
+	checkToken
 };
