@@ -1,11 +1,11 @@
-require('dotenv').config()
+// require('dotenv').config()
 const express = require('express');
 const server = require('./server');
 
 server.express.use('/doc', express.static("doc/schema"));
 
-const options = { PORT: process.env.PORT || 4000 };
+const options = { port: process.env.APOLLO_PORT || 4444 };
 
-server.start(options, ({ PORT }) => {
-	console.log(`Running on ${PORT}`);
+server.start(options, ({ port }) => {
+	console.log(`Running on ${port}`);
 });
