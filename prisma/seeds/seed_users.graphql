@@ -1,0 +1,16 @@
+mutation {
+  signup(
+    email: ""
+    password: ""
+    first_name: ""
+    last_name: ""
+    city: ""
+    state: ""
+  ) {
+    user {
+      id
+      first_name
+      last_name
+    }
+  }
+}

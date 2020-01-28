@@ -9,3 +9,6 @@ datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client
+
+seed:
+  import: ./seeds/seed_users.graphql
