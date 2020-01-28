@@ -11,4 +11,5 @@ generate:
     output: ../src/generated/prisma-client
 
 seed:
-  import: ./seeds/seed_users.graphql
+  # import: ./seeds/seed_users.graphql
+  run: node ./seeds/seed_users.js
