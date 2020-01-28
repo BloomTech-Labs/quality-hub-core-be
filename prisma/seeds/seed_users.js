@@ -1,4 +1,3 @@
-// const { prisma } = require('../../src/generated/prisma-client')
 const { Prisma } = require('../../src/generated/prisma-client')
 
 const bcrypt = require('bcryptjs');

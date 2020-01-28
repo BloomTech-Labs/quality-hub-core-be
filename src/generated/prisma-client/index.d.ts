@@ -498,10 +498,10 @@ export interface UserCreateInput {
   blog_url?: Maybe<String>;
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
   chatActive?: Maybe<Boolean>;
 }
 
@@ -592,10 +592,10 @@ export interface User {
   blog_url?: String;
   twitter_url?: String;
   activated_stripe?: Boolean;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
+  fn_lc?: String;
+  ln_lc?: String;
+  city_lc?: String;
+  state_lc?: String;
   chatActive?: Boolean;
 }
 
@@ -822,10 +822,10 @@ export interface UserPreviousValues {
   blog_url?: String;
   twitter_url?: String;
   activated_stripe?: Boolean;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
+  fn_lc?: String;
+  ln_lc?: String;
+  city_lc?: String;
+  state_lc?: String;
   chatActive?: Boolean;
 }
 
