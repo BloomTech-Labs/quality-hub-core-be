@@ -170,3 +170,36 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
 🚫 Add DS iOS and/or Andriod links here if applicable.
+
+
+# Local Development
+
+Requirements: NodeJS, Prisma CLI, and Docker (Docker Desktop was used)
+
+### Initialization
+
+cd to src directory, check out a new feature branch using `git checkout -b <feature-name>`, make sure new feature branch is even with functional master branch (may be production in some cases).
+
+Run `npm i` to install dependencies, check package.json to verify that `env-cmd` has been added.
+
+Run `docker-compose up` to start a Docker container from `docker-compose.yml`
+
+`docker-compose.yml` contains information which docker-compose will use to build the Prisma and Postgres services for this repository.
+
+An .env file is needed at the root directory with the following variables defined:
+
+- `PRISMA_ENDPOINT`, `PRISMA_SECRET`, `PG_USER`, `PG_PASSWORD`
+
+cd to src/prisma and run `prisma deploy -e ..config/development.env`
+
+This will build a Prisma service from prisma.yml and datamodel.prisma and deploy it according to the environment variables contained in src/config/development.env listed below
+
+- `PRISMA_ENDPOINT`, `PRISMA_SECRET`, `PG_USER`, `PG_PASSWORD`, `JWT_SECRET`
+
+cd to the parent directory `cd ..`
+
+Run `npm run development` This executes the development script which assigns the .env variables to those contained in /config/development.env and will start an instance of node at the assigned port. *This endpoint will be specified in the Gateway's environment variable and assigned to its corresponding service.*
+
+### Updating Prisma Service
+
+ If changes are made to datamodel.prisma, the service will need to be deployed using `prisma deploy -e ../config/development.env` following that, the Prisma client will need to be generated. Run `prisma generate -e ../config/development.env` This updates src/generated with the latest version of Prisma Client.

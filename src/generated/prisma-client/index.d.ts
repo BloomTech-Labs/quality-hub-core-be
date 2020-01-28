@@ -153,58 +153,12 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
-  chatActive?: Maybe<Boolean>;
-}
-
-export interface UserUpdateInput {
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
   email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc?: Maybe<String>;
-  ln_lc?: Maybe<String>;
-  city_lc?: Maybe<String>;
-  state_lc?: Maybe<String>;
-  chatActive?: Maybe<Boolean>;
-}
+}>;
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -524,6 +478,59 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+}
+
+export interface UserUpdateInput {
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+}
+
 export interface UserUpdateManyMutationInput {
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
@@ -561,174 +568,8 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  email?: Maybe<String>;
-}>;
-
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  stripeId?: String;
-  stripeCusId?: String;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  gender?: String;
-  bio?: String;
-  image_url?: String;
-  portfolio_url?: String;
-  linkedin_url?: String;
-  github_url?: String;
-  personal_url?: String;
-  blog_url?: String;
-  twitter_url?: String;
-  activated_stripe?: Boolean;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
-  chatActive?: Boolean;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  stripeId: () => Promise<String>;
-  stripeCusId: () => Promise<String>;
-  first_name: () => Promise<String>;
-  last_name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  gender: () => Promise<String>;
-  bio: () => Promise<String>;
-  image_url: () => Promise<String>;
-  portfolio_url: () => Promise<String>;
-  linkedin_url: () => Promise<String>;
-  github_url: () => Promise<String>;
-  personal_url: () => Promise<String>;
-  blog_url: () => Promise<String>;
-  twitter_url: () => Promise<String>;
-  activated_stripe: () => Promise<Boolean>;
-  fn_lc: () => Promise<String>;
-  ln_lc: () => Promise<String>;
-  city_lc: () => Promise<String>;
-  state_lc: () => Promise<String>;
-  chatActive: () => Promise<Boolean>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  stripeId: () => Promise<AsyncIterator<String>>;
-  stripeCusId: () => Promise<AsyncIterator<String>>;
-  first_name: () => Promise<AsyncIterator<String>>;
-  last_name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  gender: () => Promise<AsyncIterator<String>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  image_url: () => Promise<AsyncIterator<String>>;
-  portfolio_url: () => Promise<AsyncIterator<String>>;
-  linkedin_url: () => Promise<AsyncIterator<String>>;
-  github_url: () => Promise<AsyncIterator<String>>;
-  personal_url: () => Promise<AsyncIterator<String>>;
-  blog_url: () => Promise<AsyncIterator<String>>;
-  twitter_url: () => Promise<AsyncIterator<String>>;
-  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
-  fn_lc: () => Promise<AsyncIterator<String>>;
-  ln_lc: () => Promise<AsyncIterator<String>>;
-  city_lc: () => Promise<AsyncIterator<String>>;
-  state_lc: () => Promise<AsyncIterator<String>>;
-  chatActive: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface User {
@@ -751,10 +592,10 @@ export interface User {
   blog_url?: String;
   twitter_url?: String;
   activated_stripe?: Boolean;
-  fn_lc: String;
-  ln_lc: String;
-  city_lc: String;
-  state_lc: String;
+  fn_lc?: String;
+  ln_lc?: String;
+  city_lc?: String;
+  state_lc?: String;
   chatActive?: Boolean;
 }
 
@@ -887,18 +728,175 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
 
-export type Long = string;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  stripeId?: String;
+  stripeCusId?: String;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: String;
+  bio?: String;
+  image_url?: String;
+  portfolio_url?: String;
+  linkedin_url?: String;
+  github_url?: String;
+  personal_url?: String;
+  blog_url?: String;
+  twitter_url?: String;
+  activated_stripe?: Boolean;
+  fn_lc?: String;
+  ln_lc?: String;
+  city_lc?: String;
+  state_lc?: String;
+  chatActive?: Boolean;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
+  stripeCusId: () => Promise<String>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  gender: () => Promise<String>;
+  bio: () => Promise<String>;
+  image_url: () => Promise<String>;
+  portfolio_url: () => Promise<String>;
+  linkedin_url: () => Promise<String>;
+  github_url: () => Promise<String>;
+  personal_url: () => Promise<String>;
+  blog_url: () => Promise<String>;
+  twitter_url: () => Promise<String>;
+  activated_stripe: () => Promise<Boolean>;
+  fn_lc: () => Promise<String>;
+  ln_lc: () => Promise<String>;
+  city_lc: () => Promise<String>;
+  state_lc: () => Promise<String>;
+  chatActive: () => Promise<Boolean>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
+  stripeCusId: () => Promise<AsyncIterator<String>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  image_url: () => Promise<AsyncIterator<String>>;
+  portfolio_url: () => Promise<AsyncIterator<String>>;
+  linkedin_url: () => Promise<AsyncIterator<String>>;
+  github_url: () => Promise<AsyncIterator<String>>;
+  personal_url: () => Promise<AsyncIterator<String>>;
+  blog_url: () => Promise<AsyncIterator<String>>;
+  twitter_url: () => Promise<AsyncIterator<String>>;
+  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+  fn_lc: () => Promise<AsyncIterator<String>>;
+  ln_lc: () => Promise<AsyncIterator<String>>;
+  city_lc: () => Promise<AsyncIterator<String>>;
+  state_lc: () => Promise<AsyncIterator<String>>;
+  chatActive: () => Promise<AsyncIterator<Boolean>>;
+}
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -909,6 +907,8 @@ export type Boolean = boolean;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
+
+export type Long = string;
 
 /**
  * Model Metadata

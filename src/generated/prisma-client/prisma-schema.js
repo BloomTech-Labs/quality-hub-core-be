@@ -70,10 +70,10 @@ type User {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  fn_lc: String!
-  ln_lc: String!
-  city_lc: String!
-  state_lc: String!
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
   chatActive: Boolean
 }
 
@@ -103,10 +103,10 @@ input UserCreateInput {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  fn_lc: String!
-  ln_lc: String!
-  city_lc: String!
-  state_lc: String!
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
   chatActive: Boolean
 }
 
@@ -186,10 +186,10 @@ type UserPreviousValues {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  fn_lc: String!
-  ln_lc: String!
-  city_lc: String!
-  state_lc: String!
+  fn_lc: String
+  ln_lc: String
+  city_lc: String
+  state_lc: String
   chatActive: Boolean
 }
 

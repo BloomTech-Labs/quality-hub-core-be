@@ -1,9 +1,6 @@
 # The HTTP endpoint for your Prisma API
-#endpoint: ''
-#endpoint: ''
-endpoint: https://quality-hub-core-08e5f92e2a.herokuapp.com
-
-
+endpoint: ${env:PRISMA_ENDPOINT}
+# secret: ${env:PRISMA_SECRET}
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
@@ -12,3 +9,7 @@ datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client
+
+seed:
+  # import: ./seeds/seed_users.graphql
+  run: node ./seeds/seed_users.js
