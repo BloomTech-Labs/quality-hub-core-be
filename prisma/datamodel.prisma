@@ -23,12 +23,14 @@ type User @key(fields: "email") {
   city_lc: String
   state_lc: String
   chatActive: Boolean @default(value: false)
+  reviewsReceived: [Review!] @relation(name: "ReviewCoach")
+  reviewsGiven: [Review!] @relation(name:"ReviewSeeker")
 }
 
 type Review {
   id: ID! @id
-  coach: String!
-  seeker: String!
+  coach: User! @relation(link: INLINE, name:"ReviewCoach")
+  seeker: User! @relation(link: INLINE, name:"ReviewSeeker")
   job_id: String!
   rating: Int!
   review: String
@@ -46,7 +48,7 @@ type Response {
   lastUpdated: DateTime! @updatedAt
 }
 
-// MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
+# MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
 enum Microservice {
   INTERVIEWQ
   RESUMEQ
