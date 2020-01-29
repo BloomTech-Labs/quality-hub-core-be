@@ -23,8 +23,8 @@ type User @key(fields: "email") {
   city_lc: String
   state_lc: String
   chatActive: Boolean @default(value: false)
-  reviewsReceived: [Review!] @relation(name: "ReviewCoach")
-  reviewsGiven: [Review!] @relation(name:"ReviewSeeker")
+  reviewsReceived: [Review!]! @relation(name: "ReviewCoach")
+  reviewsGiven: [Review!]! @relation(name:"ReviewSeeker")
 }
 
 type Review {
