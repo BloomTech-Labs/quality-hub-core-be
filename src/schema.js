@@ -1,5 +1,10 @@
 const { gql } = require('apollo-server');
 
+// TODO - extend external type Booking with Review
+
+// TODO - extend external type ResumeReview with Review
+
+
 const typeDefs = gql`
 	type User @key(fields: "id") {
 		"""
