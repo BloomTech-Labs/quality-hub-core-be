@@ -35,6 +35,7 @@ type Review {
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
   response: Response @relation(link: INLINE)
+  microservice: Microservice!
 }
 
 type Response {
@@ -43,4 +44,10 @@ type Response {
   text: String!
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
+}
+
+// MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
+enum Microservice {
+  INTERVIEWQ
+  RESUMEQ
 }
