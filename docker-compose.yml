@@ -25,6 +25,5 @@ services:
       POSTGRES_PASSWORD: ${PG_PASSWORD:-prisma}
     volumes:
       - postgres_core:/var/lib/postgresql-prisma/data
-
 volumes:
   postgres_core: ~
