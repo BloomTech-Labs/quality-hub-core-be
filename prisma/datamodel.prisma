@@ -24,3 +24,23 @@ type User @key(fields: "email") {
   state_lc: String
   chatActive: Boolean @default(value: false)
 }
+
+type Review {
+  id: ID! @id
+  coach: String!
+  seeker: String!
+  job_id: String!
+  rating: Int!
+  review: String
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+  response: Response @relation(link: INLINE)
+}
+
+type Response {
+  id: ID! @id
+  review: Review! @unique
+  text: String!
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+}
