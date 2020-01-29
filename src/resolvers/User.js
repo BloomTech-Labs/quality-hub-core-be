@@ -10,6 +10,15 @@ function stripeCustomerConnected(parent, args, context, info) {
 function stripeCoachConnected(parent, args, context, info) {
 	return Boolean(parent.stripeId)
 }
+
+// function reviewsGiven(parent, args, {prisma}) {
+// 	console.log(`Finding reviews given as seeker.`)
+// 	return prisma.reviews({seeker: parent.id})
+// }
+
+
+
+
 module.exports = {
 	__resolveReference,
 	stripeCustomerConnected,
