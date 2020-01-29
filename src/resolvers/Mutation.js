@@ -367,8 +367,8 @@ async function createReview(parent, args, context) {
 async function updateReview(parent, args, context) {
 	const userID = getUserId(context);
 	const { id, rating, review } = args;
-	const review = await prisma.review({ id })
-	const isAuthor = review.seeker === userID
+	const originalReview = await prisma.review({ id })
+	const isAuthor = originalReview.seeker === userID
 
 	// prevents user from updating a review they didn't write
 	if (!isAuthor) {
@@ -396,4 +396,63 @@ async function deleteReview(parent, { id }, context) {
 	}
 
 	return context.prisma.deleteReview({ id })
+}
+
+async function createResponse(parent, args, context) {
+	const { text, review } = args;
+	// retrieve coach_id from req. in context
+	const userID = getUserId(context)
+	// retrieve review to which this response belongs
+	const recievedReview = await context.prisma.review({
+		where: { id: review }
+	})
+	// check if coach is the recipient of review, and throw error if not
+	const isRecipient = userID === recievedReview.coach;
+	if (!isRecipient) {
+		throw new Error('User is not the recipient of this review.')
+	}
+
+	return await context.prisma.createResponse({
+		text,
+		review
+	})
+}
+
+async function updateResponse(parent, args, context) {
+	const { text, id } = args;
+	// retrieve coach_id from req. in context
+	const userID = getUserId(context)
+	// retrieve review to which this response belongs
+	const recievedReview = await context.prisma.review({
+		where: { response: id }
+	})
+
+	const isAuthor = originalReview.coach === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isRecipient) {
+		throw new Error('User is not recipient of this review and cannot update response.')
+	}
+
+	return context.prisma.updateReview({
+		data: {
+			text
+		},
+		where: {
+			id
+		}
+	})
+}
+
+async function deleteResponse(parent, { id }, context) {
+	const userID = getUserId(context);
+	const review = await prisma.review({ id })
+	const isRecipient = review.coach === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isRecipient) {
+		throw new Error('User is not recipient of this review and cannot delete response.')
+	}
+
+	return context.prisma.deleteResponse({ id })
 }
