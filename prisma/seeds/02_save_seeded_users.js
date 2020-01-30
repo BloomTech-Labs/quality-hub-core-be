@@ -25,4 +25,6 @@ async function saveUsers() {
   }))
 }
 
-saveUsers();
+if (process.env.PRISMA_ENDPOINT.includes('localhost')) {
+  saveUsers();
+}
