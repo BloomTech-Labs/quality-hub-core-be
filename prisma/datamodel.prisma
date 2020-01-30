@@ -23,4 +23,34 @@ type User @key(fields: "email") {
   city_lc: String
   state_lc: String
   chatActive: Boolean @default(value: false)
+  reviewsReceived: [Review!]! @relation(name: "ReviewCoach")
+  reviewsGiven: [Review!]! @relation(name:"ReviewSeeker")
+}
+
+type Review {
+  id: ID! @id
+  coach: User! @relation(link: INLINE, name:"ReviewCoach")
+  seeker: User! @relation(link: INLINE, name:"ReviewSeeker")
+  # job_id is associated with the id of the specific job a seeker and coach engage in (ex. a specific ResumeReview.id or Booking.id)
+  job_id: String!
+  rating: Int!
+  review: String
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+  response: Response @relation(link: INLINE)
+  microservice: Microservice!
+}
+
+type Response {
+  id: ID! @id
+  review: Review! @unique
+  text: String!
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+}
+
+# MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
+enum Microservice {
+  INTERVIEWQ
+  RESUMEQ
 }

@@ -1,5 +1,10 @@
 const { gql } = require('apollo-server');
 
+// TODO - extend external type Booking with Review
+
+// TODO - extend external type ResumeReview with Review
+
+
 const typeDefs = gql`
 	type User @key(fields: "id") {
 		"""
@@ -26,6 +31,31 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
+		reviewsRecieved: [Review!]
+		reviewsGiven: [Review!]
+	}
+
+	type Review @key(fields: "id"){
+		id: ID!
+		coach: User!
+		seeker: User!
+		# configure job_id to return a job
+		# job_id: 
+		rating: Int!
+		review: String
+		response: Response
+		microservice: Microservice!
+	}
+
+	type Response {
+		id: ID!
+		review: Review!
+		text: String!
+	}
+
+	enum Microservice {
+		INTERVIEWQ
+		RESUMEQ
 	}
 
 	extend type Query {
@@ -54,7 +84,17 @@ const typeDefs = gql`
 		"""
 		me: User!
 		checkToken: LoginStatus!
+		
+		reviews: [Review]
+		reviewsByJobId(id: String!): Review
+		reviewsByMicroservice(microservice: String!): [Review]
+		resumeQReviews: [Review]
+		interviewQReiews: [Review]
+		reviewsByCoach: [Review]
+		reviewsBySeeker: [Review]
 	}
+
+
 
 	type Mutation {
 		"""
@@ -128,15 +168,47 @@ const typeDefs = gql`
 			amount: Int!
 			currency: String
 			method: String
-			coachId: String!):
-			String!
+			coachId: String!): String!
 
 		stripeBalance: Balance!		
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
+
+		createReview(input: ReviewInput!): Review!
+		
+		updateReview(
+			id: String!
+			rating: Int
+			review: String
+		) : Review!
+		deleteReview(id: String!): Review!
+
+		createResponse(input: ResponseInput!): Response!
+		updateResponse(
+			id: String!
+			text: String!
+		) : Response!
+		deleteResponse(id: String!): Response!
+		
+
+
 	}
 
+	input ReviewInput {
+		coach: String!
+		seeker: String!
+		job_id: String!
+		microservice: String
+		rating: Int
+		review: String
+	}
+
+	input ResponseInput {
+		review: String
+		text: String
+	}
+	
 	"""
 	Used for log in and sign up. Returns token and user info
 	"""

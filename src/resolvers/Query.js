@@ -2,7 +2,6 @@ const { getUserId, validToken } = require('../utils');
 
 /*
   Test query
-
   @return {String} 
 */
 function info() {
@@ -52,6 +51,49 @@ async function me(_parent, _args, context) {
 	return await context.prisma.user({ id: getUserId(context) });
 }
 
+async function reviewByJobId(parent, args, { prisma }) {
+	return await prisma.review({
+		where: { job_id: args.job_id }
+	})
+}
+
+async function reviewsByCoach(parent, args, { prisma }) {
+	return await prisma.reviews({
+		where: { coach: args.coach }
+	})
+}
+
+async function reviewsBySeeker(parent, args, { prisma }) {
+	return await prisma.reviews({
+		where: { coach: args.seeker }
+	})
+}
+
+async function reviewsByMicroservice(parent, args, { prisma }) {
+	console.log(`reviewsByMicroservice`, args)
+
+	// Prisma does not allow filtering by enum, so will have to return all reviews and manually filter
+	const allReviews = await prisma.reviews()
+	console.log(`reviewsByMicroservice, allReviews`, allReviews)
+	const filteredReviews = allReviews.filter(review => review.microservice === args.microservice)
+
+	console.log(`reviewsByMicroservice, filteredReviews`, filteredReviews)
+	return filteredReviews
+}
+
+async function resumeQReviews(parent, args, { prisma }) {
+	return await prisma.reviews({
+		where: { microservice: 'RESUMEQ' }
+	})
+}
+
+async function interviewQReviews(parent, args, { prisma }) {
+	return await prisma.reviews({
+		where: { microservice: 'INTERVIEWQ' }
+	})
+}
+
+
 function splitAndTrimTags(tagString) {
 	const tagArray = tagString.split(',');
 	return tagArray.map(tag => {
@@ -68,5 +110,11 @@ module.exports = {
 	users,
 	info,
 	me,
-	checkToken
+	checkToken,
+	reviewByJobId,
+	reviewsByMicroservice,
+	resumeQReviews,
+	interviewQReviews,
+	reviewsByCoach,
+	reviewsBySeeker,
 };
