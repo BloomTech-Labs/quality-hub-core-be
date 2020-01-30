@@ -1,6 +1,6 @@
 const { Prisma } = require('../../src/generated/prisma-client')
-
-const bcrypt = require('bcryptjs');
+const fs = require('fs')
+const bcrypt = require('bcryptjs')
 
 
 const db = new Prisma({
@@ -329,16 +329,21 @@ const users = [
 
 ]
 
+
+
 const addUser = async (user) => {
   user.password = bcrypt.hashSync(user.password, 10)
   console.log(`Adding ${user.first_name} ${user.last_name} to db`, user)
 
-
-
-  const response = await db.createUser(user)
-
+  return await db.createUser(user)
 }
 
-users.map(user => {
-  addUser(user)
-})
+
+const submitUsers = (users) => {
+  users.map(user => {
+    addUser(user)
+  })
+}
+
+
+submitUsers(users);

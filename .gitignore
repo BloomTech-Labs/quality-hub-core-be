@@ -82,3 +82,6 @@ node_modules/@types/aws-lambda/package.json
 
 # .vscode
 .vscode/
+
+# ignore saved seed data
+seeded_users.json

@@ -12,4 +12,4 @@ generate:
 
 seed:
   # import: ./seeds/seed_users.graphql
-  run: node ./seeds/seed_users.js
+  run: node ./seeds/01_seed_users.js
