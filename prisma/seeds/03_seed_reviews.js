@@ -6,7 +6,7 @@ const db = new Prisma({
   endpoint: process.env.PRISMA_ENDPOINT
 })
 
-const seeded_ResumeReviews = fs.readFileSync((path.resolve(__dirname, './seeded_resume_reviews.json'), (err => console.log(`err`))))
+const seeded_ResumeReviews = fs.readFileSync((path.resolve(__dirname, './seeded_resume_reviews.json')), (err => console.log(`err`)))
 
 const resumeReviews = JSON.parse(seeded_ResumeReviews)
 
