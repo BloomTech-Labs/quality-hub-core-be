@@ -628,6 +628,7 @@ input ReviewWhereInput {
 
 input ReviewWhereUniqueInput {
   id: ID
+  job_id: String
 }
 
 type Subscription {

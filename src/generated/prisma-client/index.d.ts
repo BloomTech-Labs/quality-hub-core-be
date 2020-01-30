@@ -719,6 +719,7 @@ export interface ResponseWhereInput {
 
 export type ReviewWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  job_id?: Maybe<String>;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{

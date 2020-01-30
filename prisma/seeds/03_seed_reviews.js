@@ -6,9 +6,11 @@ const db = new Prisma({
   endpoint: process.env.PRISMA_ENDPOINT
 })
 
-const seeded_ResumeReviews = fs.readFileSync((path.resolve(__dirname, './seeded_resume_reviews.json')), (err => console.log(`err`)))
+const resumeReviewFile = fs.readFileSync((path.resolve(__dirname, './seeded_resume_reviews.json')), (err => console.log(`err`)))
 
-const resumeReviews = JSON.parse(seeded_ResumeReviews)
+const resumeReviews = JSON.parse(resumeReviewFile)
+
+console.log(`resumeReviews // `, resumeReviews)
 
 resumeReviews.filter(entry => {
   entry.isComplete === true
@@ -36,13 +38,22 @@ async function createReview(resumeReview) {
   // TODO add code to randomize rating
   const rating = Math.ceil(Math.random() * 5);
 
+
   const review = {
     rating,
     job_id: resumeReview.id,
-    coach: resumeReview.coach,
-    seeker: resumeReview.seeker,
-    review: reviewText[rating]
+    coach: {
+      connect: { id: resumeReview.coach }
+    },
+    seeker: {
+      connect: { id: resumeReview.seeker }
+    },
+    review: reviewText[rating],
+    microservice: 'RESUMEQ'
   }
+
+
+  console.log(`createReview / review`, review)
 
   return await db.createReview(review)
 }
