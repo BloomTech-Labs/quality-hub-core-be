@@ -31,8 +31,7 @@ type Review {
   id: ID! @id
   coach: User! @relation(link: INLINE, name:"ReviewCoach")
   seeker: User! @relation(link: INLINE, name:"ReviewSeeker")
-  # job_id is associated with the id of the specific job a seeker and coach engage in (ex. a specific ResumeReview.id or Booking.id)
-  job_id: String! @unique
+  job: String! @unique
   rating: Int!
   review: String
   createdAt: DateTime! @createdAt

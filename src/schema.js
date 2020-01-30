@@ -198,7 +198,7 @@ const typeDefs = gql`
 	input ReviewInput {
 		coach: String!
 		seeker: String!
-		job_id: String!
+		job: String!
 		microservice: String
 		rating: Int
 		review: String
