@@ -25,7 +25,9 @@ module.exports = {
 	createReview,
 	updateReview,
 	deleteReview,
-
+	createResponse,
+	updateResponse,
+	deleteResponse,
 };
 
 /*
