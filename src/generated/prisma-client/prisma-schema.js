@@ -236,7 +236,7 @@ type Review {
   id: ID!
   coach: User!
   seeker: User!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   createdAt: DateTime!
@@ -255,7 +255,7 @@ input ReviewCreateInput {
   id: ID
   coach: UserCreateOneWithoutReviewsReceivedInput!
   seeker: UserCreateOneWithoutReviewsGivenInput!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
@@ -280,7 +280,7 @@ input ReviewCreateOneWithoutResponseInput {
 input ReviewCreateWithoutCoachInput {
   id: ID
   seeker: UserCreateOneWithoutReviewsGivenInput!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
@@ -291,7 +291,7 @@ input ReviewCreateWithoutResponseInput {
   id: ID
   coach: UserCreateOneWithoutReviewsReceivedInput!
   seeker: UserCreateOneWithoutReviewsGivenInput!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   microservice: Microservice!
@@ -300,7 +300,7 @@ input ReviewCreateWithoutResponseInput {
 input ReviewCreateWithoutSeekerInput {
   id: ID
   coach: UserCreateOneWithoutReviewsReceivedInput!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
@@ -315,8 +315,8 @@ type ReviewEdge {
 enum ReviewOrderByInput {
   id_ASC
   id_DESC
-  job_id_ASC
-  job_id_DESC
+  job_ASC
+  job_DESC
   rating_ASC
   rating_DESC
   review_ASC
@@ -331,7 +331,7 @@ enum ReviewOrderByInput {
 
 type ReviewPreviousValues {
   id: ID!
-  job_id: String!
+  job: String!
   rating: Int!
   review: String
   createdAt: DateTime!
@@ -354,20 +354,20 @@ input ReviewScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  job_id: String
-  job_id_not: String
-  job_id_in: [String!]
-  job_id_not_in: [String!]
-  job_id_lt: String
-  job_id_lte: String
-  job_id_gt: String
-  job_id_gte: String
-  job_id_contains: String
-  job_id_not_contains: String
-  job_id_starts_with: String
-  job_id_not_starts_with: String
-  job_id_ends_with: String
-  job_id_not_ends_with: String
+  job: String
+  job_not: String
+  job_in: [String!]
+  job_not_in: [String!]
+  job_lt: String
+  job_lte: String
+  job_gt: String
+  job_gte: String
+  job_contains: String
+  job_not_contains: String
+  job_starts_with: String
+  job_not_starts_with: String
+  job_ends_with: String
+  job_not_ends_with: String
   rating: Int
   rating_not: Int
   rating_in: [Int!]
@@ -436,7 +436,7 @@ input ReviewSubscriptionWhereInput {
 input ReviewUpdateInput {
   coach: UserUpdateOneRequiredWithoutReviewsReceivedInput
   seeker: UserUpdateOneRequiredWithoutReviewsGivenInput
-  job_id: String
+  job: String
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
@@ -444,14 +444,14 @@ input ReviewUpdateInput {
 }
 
 input ReviewUpdateManyDataInput {
-  job_id: String
+  job: String
   rating: Int
   review: String
   microservice: Microservice
 }
 
 input ReviewUpdateManyMutationInput {
-  job_id: String
+  job: String
   rating: Int
   review: String
   microservice: Microservice
@@ -495,7 +495,7 @@ input ReviewUpdateOneRequiredWithoutResponseInput {
 
 input ReviewUpdateWithoutCoachDataInput {
   seeker: UserUpdateOneRequiredWithoutReviewsGivenInput
-  job_id: String
+  job: String
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
@@ -505,7 +505,7 @@ input ReviewUpdateWithoutCoachDataInput {
 input ReviewUpdateWithoutResponseDataInput {
   coach: UserUpdateOneRequiredWithoutReviewsReceivedInput
   seeker: UserUpdateOneRequiredWithoutReviewsGivenInput
-  job_id: String
+  job: String
   rating: Int
   review: String
   microservice: Microservice
@@ -513,7 +513,7 @@ input ReviewUpdateWithoutResponseDataInput {
 
 input ReviewUpdateWithoutSeekerDataInput {
   coach: UserUpdateOneRequiredWithoutReviewsReceivedInput
-  job_id: String
+  job: String
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
@@ -564,20 +564,20 @@ input ReviewWhereInput {
   id_not_ends_with: ID
   coach: UserWhereInput
   seeker: UserWhereInput
-  job_id: String
-  job_id_not: String
-  job_id_in: [String!]
-  job_id_not_in: [String!]
-  job_id_lt: String
-  job_id_lte: String
-  job_id_gt: String
-  job_id_gte: String
-  job_id_contains: String
-  job_id_not_contains: String
-  job_id_starts_with: String
-  job_id_not_starts_with: String
-  job_id_ends_with: String
-  job_id_not_ends_with: String
+  job: String
+  job_not: String
+  job_in: [String!]
+  job_not_in: [String!]
+  job_lt: String
+  job_lte: String
+  job_gt: String
+  job_gte: String
+  job_contains: String
+  job_not_contains: String
+  job_starts_with: String
+  job_not_starts_with: String
+  job_ends_with: String
+  job_not_ends_with: String
   rating: Int
   rating_not: Int
   rating_in: [Int!]
@@ -628,7 +628,7 @@ input ReviewWhereInput {
 
 input ReviewWhereUniqueInput {
   id: ID
-  job_id: String
+  job: String
 }
 
 type Subscription {

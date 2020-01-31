@@ -341,18 +341,13 @@ async function stripeCreateToken(_parent, args, context) {
 }
 
 async function createReview(parent, args, context) {
-	const { coach, job, microservice, rating, review } = args;
+	console.log(`createReview // args`, args.input)
+	const { coach, job, microservice, rating, review } = args.input;
 	const seeker_id = getUserId(context)
-	// const seeker = await context.prisma.user({id: seeker_id})
-	// const coach = await context.prisma.user({id: args.coach})
-	// const review = {
-	// 	...args,
-	// 	seeker
-	// }
 
 	const newReview = {
 		rating,
-		job_id: job,
+		job,
 		coach: {
 			connect: { id: coach }
 		},

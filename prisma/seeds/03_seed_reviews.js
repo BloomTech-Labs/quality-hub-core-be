@@ -41,7 +41,7 @@ async function createReview(resumeReview) {
 
   const review = {
     rating,
-    job_id: resumeReview.id,
+    job: resumeReview.id,
     coach: {
       connect: { id: resumeReview.coach }
     },
