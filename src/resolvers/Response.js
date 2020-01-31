@@ -1,4 +1,4 @@
-
+// TODO update these
 function coach(review) {
   return { __typename: "User", id: review.coach }
 }

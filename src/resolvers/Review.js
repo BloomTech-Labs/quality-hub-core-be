@@ -1,20 +1,15 @@
-
-function coach(review) {
-  console.log(`resolving seeker on review`)
-  return { __typename: "User", id: review.coach }
+async function coach(parent, args, context, info) {
+  const res = await context.prisma.review({ id: parent.id }).coach()
+  return res
 }
 
-function seeker(review) {
-  console.log(`resolving seeker on review`)
-  return { __typename: "User", id: review.seeker }
+async function seeker(parent, args, context, info) {
+  const res = await context.prisma.review({ id: parent.id }).seeker()
+  return res
 }
 
-function __resolveReference(review, { prisma }) {
-  return prisma.review({ id: review.id })
-}
 
 module.exports = {
   coach,
   seeker,
-  __resolveReference
 }

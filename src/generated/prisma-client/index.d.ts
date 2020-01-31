@@ -184,8 +184,8 @@ export type Microservice = "INTERVIEWQ" | "RESUMEQ";
 export type ReviewOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "job_id_ASC"
-  | "job_id_DESC"
+  | "job_ASC"
+  | "job_DESC"
   | "rating_ASC"
   | "rating_DESC"
   | "review_ASC"
@@ -280,20 +280,20 @@ export interface ReviewWhereInput {
   id_not_ends_with?: Maybe<ID_Input>;
   coach?: Maybe<UserWhereInput>;
   seeker?: Maybe<UserWhereInput>;
-  job_id?: Maybe<String>;
-  job_id_not?: Maybe<String>;
-  job_id_in?: Maybe<String[] | String>;
-  job_id_not_in?: Maybe<String[] | String>;
-  job_id_lt?: Maybe<String>;
-  job_id_lte?: Maybe<String>;
-  job_id_gt?: Maybe<String>;
-  job_id_gte?: Maybe<String>;
-  job_id_contains?: Maybe<String>;
-  job_id_not_contains?: Maybe<String>;
-  job_id_starts_with?: Maybe<String>;
-  job_id_not_starts_with?: Maybe<String>;
-  job_id_ends_with?: Maybe<String>;
-  job_id_not_ends_with?: Maybe<String>;
+  job?: Maybe<String>;
+  job_not?: Maybe<String>;
+  job_in?: Maybe<String[] | String>;
+  job_not_in?: Maybe<String[] | String>;
+  job_lt?: Maybe<String>;
+  job_lte?: Maybe<String>;
+  job_gt?: Maybe<String>;
+  job_gte?: Maybe<String>;
+  job_contains?: Maybe<String>;
+  job_not_contains?: Maybe<String>;
+  job_starts_with?: Maybe<String>;
+  job_not_starts_with?: Maybe<String>;
+  job_ends_with?: Maybe<String>;
+  job_not_ends_with?: Maybe<String>;
   rating?: Maybe<Int>;
   rating_not?: Maybe<Int>;
   rating_in?: Maybe<Int[] | Int>;
@@ -719,6 +719,7 @@ export interface ResponseWhereInput {
 
 export type ReviewWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  job?: Maybe<String>;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -743,7 +744,7 @@ export interface ReviewCreateWithoutResponseInput {
   id?: Maybe<ID_Input>;
   coach: UserCreateOneWithoutReviewsReceivedInput;
   seeker: UserCreateOneWithoutReviewsGivenInput;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: Maybe<String>;
   microservice: Microservice;
@@ -792,7 +793,7 @@ export interface ReviewCreateManyWithoutSeekerInput {
 export interface ReviewCreateWithoutSeekerInput {
   id?: Maybe<ID_Input>;
   coach: UserCreateOneWithoutReviewsReceivedInput;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: Maybe<String>;
   response?: Maybe<ResponseCreateOneWithoutReviewInput>;
@@ -852,7 +853,7 @@ export interface ReviewCreateManyWithoutCoachInput {
 export interface ReviewCreateWithoutCoachInput {
   id?: Maybe<ID_Input>;
   seeker: UserCreateOneWithoutReviewsGivenInput;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: Maybe<String>;
   response?: Maybe<ResponseCreateOneWithoutReviewInput>;
@@ -874,7 +875,7 @@ export interface ReviewUpdateOneRequiredWithoutResponseInput {
 export interface ReviewUpdateWithoutResponseDataInput {
   coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
   seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   microservice?: Maybe<Microservice>;
@@ -944,7 +945,7 @@ export interface ReviewUpdateWithWhereUniqueWithoutSeekerInput {
 
 export interface ReviewUpdateWithoutSeekerDataInput {
   coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
@@ -990,20 +991,20 @@ export interface ReviewScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  job_id?: Maybe<String>;
-  job_id_not?: Maybe<String>;
-  job_id_in?: Maybe<String[] | String>;
-  job_id_not_in?: Maybe<String[] | String>;
-  job_id_lt?: Maybe<String>;
-  job_id_lte?: Maybe<String>;
-  job_id_gt?: Maybe<String>;
-  job_id_gte?: Maybe<String>;
-  job_id_contains?: Maybe<String>;
-  job_id_not_contains?: Maybe<String>;
-  job_id_starts_with?: Maybe<String>;
-  job_id_not_starts_with?: Maybe<String>;
-  job_id_ends_with?: Maybe<String>;
-  job_id_not_ends_with?: Maybe<String>;
+  job?: Maybe<String>;
+  job_not?: Maybe<String>;
+  job_in?: Maybe<String[] | String>;
+  job_not_in?: Maybe<String[] | String>;
+  job_lt?: Maybe<String>;
+  job_lte?: Maybe<String>;
+  job_gt?: Maybe<String>;
+  job_gte?: Maybe<String>;
+  job_contains?: Maybe<String>;
+  job_not_contains?: Maybe<String>;
+  job_starts_with?: Maybe<String>;
+  job_not_starts_with?: Maybe<String>;
+  job_ends_with?: Maybe<String>;
+  job_not_ends_with?: Maybe<String>;
   rating?: Maybe<Int>;
   rating_not?: Maybe<Int>;
   rating_in?: Maybe<Int[] | Int>;
@@ -1057,7 +1058,7 @@ export interface ReviewUpdateManyWithWhereNestedInput {
 }
 
 export interface ReviewUpdateManyDataInput {
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   microservice?: Maybe<Microservice>;
@@ -1132,7 +1133,7 @@ export interface ReviewUpdateWithWhereUniqueWithoutCoachInput {
 
 export interface ReviewUpdateWithoutCoachDataInput {
   seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
@@ -1163,7 +1164,7 @@ export interface ReviewCreateInput {
   id?: Maybe<ID_Input>;
   coach: UserCreateOneWithoutReviewsReceivedInput;
   seeker: UserCreateOneWithoutReviewsGivenInput;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: Maybe<String>;
   response?: Maybe<ResponseCreateOneWithoutReviewInput>;
@@ -1173,7 +1174,7 @@ export interface ReviewCreateInput {
 export interface ReviewUpdateInput {
   coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
   seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
@@ -1181,7 +1182,7 @@ export interface ReviewUpdateInput {
 }
 
 export interface ReviewUpdateManyMutationInput {
-  job_id?: Maybe<String>;
+  job?: Maybe<String>;
   rating?: Maybe<Int>;
   review?: Maybe<String>;
   microservice?: Maybe<Microservice>;
@@ -1348,7 +1349,7 @@ export interface ResponseNullablePromise
 
 export interface Review {
   id: ID_Output;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: String;
   createdAt: DateTimeOutput;
@@ -1360,7 +1361,7 @@ export interface ReviewPromise extends Promise<Review>, Fragmentable {
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
   seeker: <T = UserPromise>() => T;
-  job_id: () => Promise<String>;
+  job: () => Promise<String>;
   rating: () => Promise<Int>;
   review: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1375,7 +1376,7 @@ export interface ReviewSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   coach: <T = UserSubscription>() => T;
   seeker: <T = UserSubscription>() => T;
-  job_id: () => Promise<AsyncIterator<String>>;
+  job: () => Promise<AsyncIterator<String>>;
   rating: () => Promise<AsyncIterator<Int>>;
   review: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1390,7 +1391,7 @@ export interface ReviewNullablePromise
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
   seeker: <T = UserPromise>() => T;
-  job_id: () => Promise<String>;
+  job: () => Promise<String>;
   rating: () => Promise<Int>;
   review: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1845,7 +1846,7 @@ export interface ReviewSubscriptionPayloadSubscription
 
 export interface ReviewPreviousValues {
   id: ID_Output;
-  job_id: String;
+  job: String;
   rating: Int;
   review?: String;
   createdAt: DateTimeOutput;
@@ -1857,7 +1858,7 @@ export interface ReviewPreviousValuesPromise
   extends Promise<ReviewPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  job_id: () => Promise<String>;
+  job: () => Promise<String>;
   rating: () => Promise<Int>;
   review: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1869,7 +1870,7 @@ export interface ReviewPreviousValuesSubscription
   extends Promise<AsyncIterator<ReviewPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  job_id: () => Promise<AsyncIterator<String>>;
+  job: () => Promise<AsyncIterator<String>>;
   rating: () => Promise<AsyncIterator<Int>>;
   review: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;

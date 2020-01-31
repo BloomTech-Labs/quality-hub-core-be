@@ -6,6 +6,8 @@ server.express.use('/doc', express.static("doc/schema"));
 
 const options = { port: process.env.APOLLO_PORT || 4444 };
 
+
+
 server.start(options, ({ port }) => {
-	console.log(`Running on ${port}`);
+	console.log(`QualityHub Core running on ${port}`);
 });

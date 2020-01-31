@@ -23,16 +23,15 @@ type User @key(fields: "email") {
   city_lc: String
   state_lc: String
   chatActive: Boolean @default(value: false)
-  reviewsReceived: [Review!]! @relation(name: "ReviewCoach")
-  reviewsGiven: [Review!]! @relation(name:"ReviewSeeker")
+  reviewsReceived: [Review!] @relation(name: "ReviewCoach")
+  reviewsGiven: [Review!] @relation(name:"ReviewSeeker")
 }
 
 type Review {
   id: ID! @id
-  coach: User! @relation(link: INLINE, name:"ReviewCoach")
-  seeker: User! @relation(link: INLINE, name:"ReviewSeeker")
-  # job_id is associated with the id of the specific job a seeker and coach engage in (ex. a specific ResumeReview.id or Booking.id)
-  job_id: String!
+  coach: User! @relation(name:"ReviewCoach")
+  seeker: User! @relation(name:"ReviewSeeker")
+  job: String! @unique
   rating: Int!
   review: String
   createdAt: DateTime! @createdAt

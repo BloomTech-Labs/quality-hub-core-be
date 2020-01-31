@@ -57,27 +57,16 @@ async function reviewByJobId(parent, args, { prisma }) {
 	})
 }
 
-async function reviewsByCoach(parent, args, { prisma }) {
-	return await prisma.reviews({
-		where: { coach: args.coach }
-	})
+async function reviews(_parent, _args, { prisma }) {
+	return await prisma.reviews()
 }
 
-async function reviewsBySeeker(parent, args, { prisma }) {
-	return await prisma.reviews({
-		where: { coach: args.seeker }
-	})
-}
 
 async function reviewsByMicroservice(parent, args, { prisma }) {
-	console.log(`reviewsByMicroservice`, args)
-
 	// Prisma does not allow filtering by enum, so will have to return all reviews and manually filter
 	const allReviews = await prisma.reviews()
-	console.log(`reviewsByMicroservice, allReviews`, allReviews)
 	const filteredReviews = allReviews.filter(review => review.microservice === args.microservice)
 
-	console.log(`reviewsByMicroservice, filteredReviews`, filteredReviews)
 	return filteredReviews
 }
 
@@ -110,11 +99,10 @@ module.exports = {
 	users,
 	info,
 	me,
+	reviews,
 	checkToken,
 	reviewByJobId,
 	reviewsByMicroservice,
 	resumeQReviews,
 	interviewQReviews,
-	reviewsByCoach,
-	reviewsBySeeker,
 };

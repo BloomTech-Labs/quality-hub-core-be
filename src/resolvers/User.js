@@ -11,16 +11,25 @@ function stripeCoachConnected(parent, args, context, info) {
 	return Boolean(parent.stripeId)
 }
 
-// function reviewsGiven(parent, args, {prisma}) {
-// 	console.log(`Finding reviews given as seeker.`)
-// 	return prisma.reviews({seeker: parent.id})
-// }
+
+async function reviewsRecieved(parent, _args, { prisma }) {
+	const res = await prisma.user({ id: parent.id }).reviewsReceived()
+	return res
+}
 
 
+
+async function reviewsGiven(parent, _args, { prisma }) {
+	const res = await prisma.user({ id: parent.id }).reviewsGiven()
+	return res
+}
 
 
 module.exports = {
 	__resolveReference,
 	stripeCustomerConnected,
 	stripeCoachConnected,
+	reviewsRecieved,
+	reviewsGiven,
+
 };

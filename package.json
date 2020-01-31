@@ -8,7 +8,8 @@
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "env-cmd -f ./config/development.env nodemon src/index.js",
-    "save_seeded_users": "env-cmd -f ./config/development.env node prisma/seeds/02_save_seeded_users.js"
+    "save_seeded_users": "env-cmd -f ./config/development.env node prisma/seeds/02_save_seeded_users.js",
+    "seed_reviews": "env-cmd -f ./config/development.env node prisma/seeds/03_seed_reviews.js"
   },
   "repository": {
     "type": "git",

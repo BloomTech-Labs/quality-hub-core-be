@@ -85,3 +85,4 @@ node_modules/@types/aws-lambda/package.json
 
 # ignore saved seed data
 seeded_users.json
+seeded_resume_reviews.json
