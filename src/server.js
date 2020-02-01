@@ -1,5 +1,6 @@
 
-const { GraphQLServer } = require('graphql-yoga');
+// const { GraphQLServer } = require('graphql-yoga');
+const { ApolloServer } = require('apollo-server')
 const { prisma } = require('./generated/prisma-client');
 const { buildFederatedSchema } = require('@apollo/federation');
 
@@ -20,7 +21,7 @@ const resolvers = {
 
 
 
-const server = new GraphQLServer({
+const server = new ApolloServer({
   schema: buildFederatedSchema([
     {
       typeDefs,

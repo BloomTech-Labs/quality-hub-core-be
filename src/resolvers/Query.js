@@ -51,6 +51,11 @@ async function me(_parent, _args, context) {
 	return await context.prisma.user({ id: getUserId(context) });
 }
 
+async function review(parent, args, context) {
+	const res = await context.prisma.user({ where: args })
+	return res
+}
+
 async function reviewByJobId(parent, args, { prisma }) {
 	return await prisma.review({
 		where: { job_id: args.job_id }
@@ -99,6 +104,7 @@ module.exports = {
 	users,
 	info,
 	me,
+	review,
 	reviews,
 	checkToken,
 	reviewByJobId,
