@@ -7,9 +7,6 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 	type User @key(fields: "id") {
-		"""
-		Unique ID of user.
-		"""
 		id: ID!
 		stripeCustomerConnected: Boolean
 		stripeCoachConnected: Boolean
@@ -17,9 +14,6 @@ const typeDefs = gql`
 		last_name: String!
 		email: String!
 		city: String!
-		"""
-		Chosen from a list of States and Regions on Front end
-		"""
 		state: String!
 		gender: String
 		bio: String
@@ -35,12 +29,13 @@ const typeDefs = gql`
 		reviewsGiven: [Review!]
 	}
 
-	type Review @key(fields: "id"){
+	type Review @key(fields: "id") @key(fields: "job"){
 		id: ID!
 		coach: User!
 		seeker: User!
 		# configure job_id to return a job
 		# job_id: 
+		job: String!
 		rating: Int!
 		review: String
 		response: Response
@@ -59,32 +54,12 @@ const typeDefs = gql`
 	}
 
 	extend type Query {
-		"""
-		A test query to show that the backend works
-		"""
 		info: String!
-
-		"""
-		Gets all registered users
-		"""
 		users(keywords: String): [User!]!
-
-		"""
-		Gets user by ID
-		"""
-		user(
-			"""
-			Unique ID
-			"""
-			id: ID!
-		): User!
-
-		"""
-		Gets user info based on credentials stored in token
-		"""
+		user(id: ID!): User!
 		me: User!
 		checkToken: LoginStatus!
-		
+		review(id: String): Review
 		reviews: [Review]
 		reviewsByJobId(id: String!): Review
 		reviewsByMicroservice(microservice: String!): [Review]
