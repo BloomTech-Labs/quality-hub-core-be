@@ -1,3 +1,5 @@
+
+
 function __resolveReference(user, context) {
 	return context.prisma.user({ id: user.id });
 }
@@ -23,14 +25,14 @@ async function reviewsGiven(parent, _args, { prisma }) {
 	return res
 }
 
-function average_resume_q_rating(parent, _args, { prisma }) {
-	console.log(`average_resume_q_rating // parent`, parent)
-	const res = prisma.reviewsReceived({ id: parent.id })
-
-}
-
-function average_interview_q_rating(_parent, _args, { prima }) {
-	console.log(`average_interview_q_rating // parent`, parent)
+// function returns the average rating for a coach -- microservice is an optional argument that can be provided to provide specificity
+async function average_coach_rating(parent, args, { prisma }) {
+	const response = await prisma.user({ id: parent.id }).reviewsReceived({ where: { AND: [{ microservice: args.microservice }, { rating_gte: 1 }] } })
+	const ratings = response.map(review => {
+		return review.rating
+	})
+	const average = (ratings.reduce((a, b) => a + b, 0)) / ratings.length
+	return Math.round(average)
 }
 
 
@@ -40,4 +42,5 @@ module.exports = {
 	stripeCoachConnected,
 	reviewsRecieved,
 	reviewsGiven,
+	average_coach_rating,
 };

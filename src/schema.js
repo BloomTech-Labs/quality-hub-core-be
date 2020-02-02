@@ -27,6 +27,7 @@ const typeDefs = gql`
 		chatActive: Boolean
 		reviewsRecieved: [Review!]
 		reviewsGiven: [Review!]
+		average_coach_rating(microservice: String): Int
 	}
 
 	type Review @key(fields: "id") @key(fields:"job"){
