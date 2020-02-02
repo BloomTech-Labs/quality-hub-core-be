@@ -1,5 +1,4 @@
 function __resolveReference(user, context) {
-	console.log(user);
 	return context.prisma.user({ id: user.id });
 }
 
@@ -22,6 +21,16 @@ async function reviewsRecieved(parent, _args, { prisma }) {
 async function reviewsGiven(parent, _args, { prisma }) {
 	const res = await prisma.user({ id: parent.id }).reviewsGiven()
 	return res
+}
+
+function average_resume_q_rating(parent, _args, { prisma }) {
+	console.log(`average_resume_q_rating // parent`, parent)
+	const res = prisma.reviewsReceived({ id: parent.id })
+
+}
+
+function average_interview_q_rating(_parent, _args, { prima }) {
+	console.log(`average_interview_q_rating // parent`, parent)
 }
 
 
