@@ -82,9 +82,10 @@ function validToken(context) {
   throw new Error('Not Authenticated')
 }
 
+// this function is used to round average_coach_rating
 function round(value) {
-  const inv = 1.0 / .5;
-  return Math.round(value * inv) / inv;
+  const interval = .5;
+  return Math.round(value * interval) / interval;
 }
 
 
