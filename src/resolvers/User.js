@@ -15,7 +15,8 @@ function stripeCoachConnected(parent, args, context, info) {
 // displays reviews given to a user -- filterable by microservice
 async function reviewsReceived(parent, args, { prisma }) {
 	const res = await prisma.user({ id: parent.id }).reviewsReceived({
-		where: { microservice: args.microservice }
+		where: { microservice: args.microservice },
+		orderBy: { first: args.first }
 	})
 	return res
 }
