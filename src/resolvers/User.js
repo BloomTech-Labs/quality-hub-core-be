@@ -35,7 +35,15 @@ async function average_coach_rating(parent, args, { prisma }) {
 
 	const rounded = round(average)
 	return typeof rounded === 'number' ? rounded : null
+}
 
+// returns number of ratings recieved
+async function ratingsReceived(parent, args, { prisma }) {
+	const response = await prisma.user({ id: parent.id }).reviewsReceived({
+		where: { microservice: args.microservice }
+	})
+
+	return response.length
 }
 
 
@@ -46,4 +54,5 @@ module.exports = {
 	reviewsRecieved,
 	reviewsGiven,
 	average_coach_rating,
+	ratingsReceived,
 };
