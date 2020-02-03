@@ -25,8 +25,8 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
-		reviewsRecieved: [Review!]
-		reviewsGiven: [Review!]
+		reviewsReceived(microservice: String): [Review!]
+		reviewsGiven(microservice: String): [Review!]
 		average_coach_rating(microservice: String): Float
 		ratingsReceived(microservice: String): Int
 	}

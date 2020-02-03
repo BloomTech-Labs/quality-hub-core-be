@@ -12,16 +12,20 @@ function stripeCoachConnected(parent, args, context, info) {
 	return Boolean(parent.stripeId)
 }
 
-
-async function reviewsRecieved(parent, _args, { prisma }) {
-	const res = await prisma.user({ id: parent.id }).reviewsReceived()
+// displays reviews given to a user -- filterable by microservice
+async function reviewsReceived(parent, args, { prisma }) {
+	const res = await prisma.user({ id: parent.id }).reviewsReceived({
+		where: { microservice: args.microservice }
+	})
 	return res
 }
 
 
-
+// displays reviews given by a user -- filterable by microservice
 async function reviewsGiven(parent, _args, { prisma }) {
-	const res = await prisma.user({ id: parent.id }).reviewsGiven()
+	const res = await prisma.user({ id: parent.id }).reviewsGiven({
+		where: { microservice: args.microservice }
+	})
 	return res
 }
 
@@ -51,7 +55,7 @@ module.exports = {
 	__resolveReference,
 	stripeCustomerConnected,
 	stripeCoachConnected,
-	reviewsRecieved,
+	reviewsReceived,
 	reviewsGiven,
 	average_coach_rating,
 	ratingsReceived,
