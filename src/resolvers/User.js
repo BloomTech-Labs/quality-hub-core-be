@@ -31,8 +31,9 @@ async function average_coach_rating(parent, args, { prisma }) {
 	const ratings = response.map(review => {
 		return review.rating
 	})
-	const average = (ratings.reduce((a, b) => a + b, 0)) / ratings.length
-	return Math.round(average)
+	const average = ((ratings.reduce((a, b) => a + b, 0)) / ratings.length).toFixed(1)
+
+	return average
 }
 
 
