@@ -19,15 +19,9 @@ async function __resolveReference(reference) {
 }
 
 
-
-
-function resumeReview() {
-  console.log(`resolving resumeReview on Review`)
-}
-
 module.exports = {
   coach,
   seeker,
   __resolveReference,
-  resumeReview,
+
 }
