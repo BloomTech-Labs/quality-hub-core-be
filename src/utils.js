@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET
   a valid input. Goes through each key in the submitted object and throws an error 
   if there are any blank strings.
 */
-function checkFields(args) { 
+function checkFields(args) {
   for (let key of Object.keys(args)) {
     if (!args[key]) {
       throw new Error('Invalid input for required fields');
@@ -55,7 +55,7 @@ function getUserId(context) {
   Checks the email stored in the token against the saved admin email in an .env file.
 */
 async function checkAdmin(context) {
-  const user = await context.prisma.user({id: getUserId(context)})
+  const user = await context.prisma.user({ id: getUserId(context) })
   if (user.email !== process.env.ADMIN_EMAIL) {
     throw new Error('You are unauthorized to perform this action.')
   }
@@ -82,11 +82,18 @@ function validToken(context) {
   throw new Error('Not Authenticated')
 }
 
+// this function is used to round average_coach_rating
+function round(value) {
+  const interval = .5;
+  return Math.round(value * interval) / interval;
+}
+
+
 module.exports = {
   checkFields,
   generateToken,
   getUserId,
   checkAdmin,
-  validToken
+  validToken,
+  round,
 }
-

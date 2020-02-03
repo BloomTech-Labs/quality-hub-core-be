@@ -25,17 +25,17 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
-		reviewsRecieved: [Review!]
-		reviewsGiven: [Review!]
+		reviewsReceived(microservice: String first: Int): [Review!]
+		reviewsGiven(microservice: String): [Review!]
+		average_coach_rating(microservice: String): Float
+		ratingsReceived(microservice: String): Int
 	}
 
-	type Review @key(fields: "id") @key(fields: "job"){
+	type Review @key(fields: "id") @key(fields:"job"){
 		id: ID!
 		coach: User!
 		seeker: User!
-		# configure job_id to return a job
-		# job_id: 
-		job: String!
+		job: String! 
 		rating: Int!
 		review: String
 		response: Response
@@ -47,6 +47,7 @@ const typeDefs = gql`
 		review: Review!
 		text: String!
 	}
+
 
 	enum Microservice {
 		INTERVIEWQ
@@ -68,6 +69,9 @@ const typeDefs = gql`
 		reviewsByCoach: [Review]
 		reviewsBySeeker: [Review]
 	}
+
+
+
 
 
 
@@ -165,9 +169,6 @@ const typeDefs = gql`
 			text: String!
 		) : Response!
 		deleteResponse(id: String!): Response!
-		
-
-
 	}
 
 	input ReviewInput {
