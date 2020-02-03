@@ -1,3 +1,7 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/b8ab95377b571cceb25e/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/quality-hub-core-be/maintainability)  
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b8ab95377b571cceb25e/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/quality-hub-core-be/test_coverage)
+
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
 
 🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
