@@ -37,7 +37,6 @@ async function average_coach_rating(parent, args, { prisma }) {
 		return review.rating
 	})
 	const average = ((ratings.reduce((a, b) => a + b, 0)) / ratings.length)
-
 	const rounded = round(average)
 	return typeof rounded === 'number' ? rounded : null
 }
