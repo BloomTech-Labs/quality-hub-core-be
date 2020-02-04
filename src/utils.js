@@ -85,7 +85,6 @@ function validToken(context) {
 // this function is used to round average_coach_rating
 function round(value) {
   console.log(`rounding value`, value)
-
   const rounded = Math.round(value * 2) / 2;
   console.log(`rounded val`, rounded)
   return rounded
