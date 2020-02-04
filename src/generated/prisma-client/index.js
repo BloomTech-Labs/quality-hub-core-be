@@ -7,11 +7,23 @@ var models = [
   {
     name: "User",
     embedded: false
+  },
+  {
+    name: "Review",
+    embedded: false
+  },
+  {
+    name: "Response",
+    embedded: false
+  },
+  {
+    name: "Microservice",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://quality-hub-core-08e5f92e2a.herokuapp.com`
+  endpoint: `${process.env["PRISMA_ENDPOINT"]}`
 });
 exports.prisma = new exports.Prisma();

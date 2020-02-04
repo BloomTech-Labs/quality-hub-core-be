@@ -22,7 +22,12 @@ module.exports = {
 	stripeBalance,
 	stripePayIntent,
 	stripeCreateToken,
-
+	createReview,
+	updateReview,
+	deleteReview,
+	createResponse,
+	updateResponse,
+	deleteResponse,
 };
 
 /*
@@ -164,22 +169,22 @@ async function createCustomer(_parent, args, context) {
 	const userid = getUserId(context);
 	let user = await context.prisma.user({ id: userid });
 	// console.log(user);
-		// This creates the "customer" in stripe database
-		await stripe.customers.create({
-			email: user.email,
-			source,
-		}).then(async (customer)=>{
-			console.log(customer);
-			cusId = customer.id;
-			await context.prisma.updateUser({
-				data: { stripeCusId: cusId},
-				where: {
-					email: user.email,
-					},
-	
-			});
-			console.log('hi')
-		})
+	// This creates the "customer" in stripe database
+	await stripe.customers.create({
+		email: user.email,
+		source,
+	}).then(async (customer) => {
+		console.log(customer);
+		cusId = customer.id;
+		await context.prisma.updateUser({
+			data: { stripeCusId: cusId },
+			where: {
+				email: user.email,
+			},
+
+		});
+		console.log('hi')
+	})
 	if (!user) {
 		throw new Error('not authenticated');
 	}
@@ -215,7 +220,7 @@ async function createStripeLink(_parent, _args, context) {
 
 	await stripe.accounts.createLoginLink(
 		user.stripeId).then(link => {
-		  // asynchronously called
+			// asynchronously called
 			console.log(link.url);
 			login = link.url;
 			return link.url
@@ -228,33 +233,33 @@ async function stripeDirectCharge(_parent, args, context) {
 	const { amount, currency, source, coachId } = args;
 
 
-	const coach = await context.prisma.user({id: coachId});
+	const coach = await context.prisma.user({ id: coachId });
 	const status = stripe.charges.create({
-			amount,
-			currency,
-			source,
-			transfer_data: {
-				destination: coach.stripeId
-			}
-		})
+		amount,
+		currency,
+		source,
+		transfer_data: {
+			destination: coach.stripeId
+		}
+	})
 		// {stripeCusId: user.stripeCusId})
 		.then((res) => {
 			console.log(res);
-			return {success: "Payment successful!", error: null}
+			return { success: "Payment successful!", error: null }
 		})
-		.catch(function(err){
-			return {success: null, error: err.message}
+		.catch(function (err) {
+			return { success: null, error: err.message }
 		});
 
 	return status;
 }
 
 
-async function stripePayout(_parent, args, context){
+async function stripePayout(_parent, args, context) {
 	const { amount, currency, method, coachId } = args;
 
 
-	const coach = await context.prisma.user({ id: coachId});
+	const coach = await context.prisma.user({ id: coachId });
 
 	stripe.payouts.create({
 		amount,
@@ -262,23 +267,23 @@ async function stripePayout(_parent, args, context){
 		method,
 	}, {
 		stripe_account: coach.stripeId,
-	}).then(function(payout){
+	}).then(function (payout) {
 		console.log(payout);
-	}).catch(function(err){
+	}).catch(function (err) {
 		console.log(err);
 	})
-return 'Payout Successful';
+	return 'Payout Successful';
 
 }
 
 
-async function stripeBalance(_parent, args, context){
-	const coach = await context.prisma.user({ id: getUserId(context)});
+async function stripeBalance(_parent, args, context) {
+	const coach = await context.prisma.user({ id: getUserId(context) });
 	return stripe.balance.retrieve({
 		stripe_account: coach.stripeId,
-	}).then(function(balance){
-		return {available: balance.available[0].amount, pending: balance.pending[0].amount}
-	}).catch(function(err){
+	}).then(function (balance) {
+		return { available: balance.available[0].amount, pending: balance.pending[0].amount }
+	}).catch(function (err) {
 		console.log(err);
 		return err
 	})
@@ -292,25 +297,25 @@ async function stripePayIntent(_parent, args, context) {
 	const user = await context.prisma.user({ id: userid });
 
 	console.log('hey', user.stripeCusId);
-console.log('no', user.stripeId);
+	console.log('no', user.stripeId);
 
-		stripe.paymentIntents.create(
+	stripe.paymentIntents.create(
 		{
 			amount,
 			currency,
 			source,
 			on_behalf_of,
-			
+
 			// application_fee_amount: 0,
 		},
 		{ stripe_account: user.stripeCusId }
-	).then(function(paymentIntent) {
+	).then(function (paymentIntent) {
 		// asynchronously called
 		console.log('here', paymentIntent);
-	  })
-	  .catch(function(err){
-		console.log(err);
-	});;	
+	})
+		.catch(function (err) {
+			console.log(err);
+		});;
 
 	return user;
 }
@@ -335,4 +340,120 @@ async function stripeCreateToken(_parent, args, context) {
 	console.log(token);
 
 	return user;
+}
+
+async function createReview(parent, args, context) {
+	console.log(`createReview // args`, args.input)
+	const { coach, job, microservice, rating, review } = args.input;
+	const seeker_id = getUserId(context)
+
+	const newReview = {
+		rating,
+		job,
+		coach: {
+			connect: { id: coach }
+		},
+		seeker: {
+			connect: { id: seeker_id }
+		},
+		review,
+		microservice
+	}
+
+	console.log(`createReview // newReview`, newReview)
+
+	return await context.prisma.createReview(newReview)
+}
+
+async function updateReview(parent, args, context) {
+	const userID = getUserId(context);
+	const { id, rating, review } = args;
+	const originalReview = await prisma.review({ id })
+	const isAuthor = originalReview.seeker === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isAuthor) {
+		throw new Error('User is not author of this review.')
+	}
+
+	return context.prisma.updateReview({
+		data: {
+			rating, review
+		},
+		where: {
+			id
+		}
+	})
+}
+
+async function deleteReview(parent, { id }, context) {
+	const userID = getUserId(context);
+	const review = await prisma.review({ id })
+	const isAuthor = review.seeker === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isAuthor) {
+		throw new Error('User is not author of this review.')
+	}
+
+	return context.prisma.deleteReview({ id })
+}
+
+async function createResponse(parent, args, context) {
+	const { text, review } = args;
+	// retrieve coach_id from req. in context
+	const userID = getUserId(context)
+	// retrieve review to which this response belongs
+	const recievedReview = await context.prisma.review({
+		where: { id: review }
+	})
+	// check if coach is the recipient of review, and throw error if not
+	const isRecipient = userID === recievedReview.coach;
+	if (!isRecipient) {
+		throw new Error('User is not the recipient of this review.')
+	}
+
+	return await context.prisma.createResponse({
+		text,
+		review
+	})
+}
+
+async function updateResponse(parent, args, context) {
+	const { text, id } = args;
+	// retrieve coach_id from req. in context
+	const userID = getUserId(context)
+	// retrieve review to which this response belongs
+	const recievedReview = await context.prisma.review({
+		where: { response: id }
+	})
+
+	const isAuthor = originalReview.coach === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isRecipient) {
+		throw new Error('User is not recipient of this review and cannot update response.')
+	}
+
+	return context.prisma.updateReview({
+		data: {
+			text
+		},
+		where: {
+			id
+		}
+	})
+}
+
+async function deleteResponse(parent, { id }, context) {
+	const userID = getUserId(context);
+	const review = await prisma.review({ id })
+	const isRecipient = review.coach === userID
+
+	// prevents user from updating a review they didn't write
+	if (!isRecipient) {
+		throw new Error('User is not recipient of this review and cannot delete response.')
+	}
+
+	return context.prisma.deleteResponse({ id })
 }
