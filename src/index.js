@@ -4,7 +4,7 @@ const server = require('./server');
 
 server.express.use('/doc', express.static("doc/schema"));
 
-const options = { port: process.env.APOLLO_PORT || 4444 };
+const options = { port: (process.env.APOLLO_PORT || process.env.PORT) || 4444 };
 
 
 
