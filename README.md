@@ -120,9 +120,15 @@ To get the server running locally:
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
-create a .env file that includes the following:
+For dynamic deployment, env-cmd is recommended. in the ./config directory you may specify different environment files for different purposes. For local development, the development.env file can be created and used. See Docker information below to more details.
 
-🚫 These are just examples, replace them with the specifics for your app
+- PRISMA_ENDPOINT - specifies prisma service endpoint.
+- PRISMA_SECRET - specifies secret to access prisma.
+- PRISMA_MANAGEMENT_API_SECRET - not in use. Specifies the secret to manage Prisma.
+- PRISMA_PORT - Port on which Prisma service Runs
+- APOLLO_PORT - Port on which Apollo Server Runs
+- PG_USER - Postgres DB username.
+- PG_PASSWORD - Postgres DB password.
   
  _ STAGING_DB - optional development db for using functionality not available in SQLite
 _ NODE_ENV - set to "development" until ready for "production"
