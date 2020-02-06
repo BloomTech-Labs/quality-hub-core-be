@@ -6,7 +6,10 @@
   "scripts": {
     "test": "jest --watch",
     "server": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "development": "env-cmd -f ./config/development.env nodemon src/index.js",
+    "save_seeded_users": "env-cmd -f ./config/development.env node prisma/seeds/02_save_seeded_users.js",
+    "seed_reviews": "env-cmd -f ./config/development.env node prisma/seeds/03_seed_reviews.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,7 @@
     "apollo-server": "^2.9.7",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
+    "env-cmd": "^10.0.1",
     "express": "^4.17.1",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",

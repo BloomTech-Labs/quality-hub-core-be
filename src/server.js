@@ -7,12 +7,20 @@ const typeDefs = require('./schema');
 const Mutation = require('./resolvers/Mutation');
 const Query = require('./resolvers/Query');
 const User = require('./resolvers/User');
+const Review = require('./resolvers/Review');
+const Response = require('./resolvers/Response');
+const ResumeReview = require('./resolvers/ResumeReview')
 
 const resolvers = {
   Query,
   Mutation,
   User,
+  Review,
+  Response,
+  ResumeReview,
 };
+
+
 
 const server = new GraphQLServer({
   schema: buildFederatedSchema([
