@@ -1,10 +1,12 @@
 const { gql } = require('apollo-server');
 
+// TODO - extend external type Booking with Review
+
+// TODO - extend external type ResumeReview with Review
+
+
 const typeDefs = gql`
 	type User @key(fields: "id") {
-		"""
-		Unique ID of user.
-		"""
 		id: ID!
 		stripeCustomerConnected: Boolean
 		stripeCoachConnected: Boolean
@@ -12,9 +14,6 @@ const typeDefs = gql`
 		last_name: String!
 		email: String!
 		city: String!
-		"""
-		Chosen from a list of States and Regions on Front end
-		"""
 		state: String!
 		gender: String
 		bio: String
@@ -26,35 +25,55 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
+		reviewsReceived(microservice: String first: Int): [Review!]
+		reviewsGiven(microservice: String): [Review!]
+		average_coach_rating(microservice: String): Float
+		ratingsReceived(microservice: String): Int
+	}
+
+	type Review @key(fields: "id") @key(fields:"job"){
+		id: ID!
+		coach: User!
+		seeker: User!
+		job: String! 
+		rating: Int!
+		review: String
+		response: Response
+		microservice: Microservice!
+	}
+
+	type Response {
+		id: ID!
+		review: Review!
+		text: String!
+	}
+
+
+	enum Microservice {
+		INTERVIEWQ
+		RESUMEQ
 	}
 
 	extend type Query {
-		"""
-		A test query to show that the backend works
-		"""
 		info: String!
-
-		"""
-		Gets all registered users
-		"""
 		users(keywords: String): [User!]!
-
-		"""
-		Gets user by ID
-		"""
-		user(
-			"""
-			Unique ID
-			"""
-			id: ID!
-		): User!
-
-		"""
-		Gets user info based on credentials stored in token
-		"""
+		user(id: ID!): User!
 		me: User!
 		checkToken: LoginStatus!
+		review(id: String): Review
+		reviews: [Review]
+		reviewsByJobId(id: String!): Review
+		reviewsByMicroservice(microservice: String!): [Review]
+		resumeQReviews: [Review]
+		interviewQReiews: [Review]
+		reviewsByCoach: [Review]
+		reviewsBySeeker: [Review]
 	}
+
+
+
+
+
 
 	type Mutation {
 		"""
@@ -128,15 +147,44 @@ const typeDefs = gql`
 			amount: Int!
 			currency: String
 			method: String
-			coachId: String!):
-			String!
+			coachId: String!): String!
 
 		stripeBalance: Balance!		
 		stripePayIntent(amount: Int!, currency: String, source: String): User!
 
 		stripeCreateToken(customer: String!): User!
+
+		createReview(input: ReviewInput!): Review!
+		
+		updateReview(
+			id: String!
+			rating: Int
+			review: String
+		) : Review!
+		deleteReview(id: String!): Review!
+
+		createResponse(input: ResponseInput!): Response!
+		updateResponse(
+			id: String!
+			text: String!
+		) : Response!
+		deleteResponse(id: String!): Response!
 	}
 
+	input ReviewInput {
+		coach: String!
+		seeker: String!
+		job: String!
+		microservice: String
+		rating: Int
+		review: String
+	}
+
+	input ResponseInput {
+		review: String
+		text: String
+	}
+	
 	"""
 	Used for log in and sign up. Returns token and user info
 	"""
