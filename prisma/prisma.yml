@@ -1,5 +1,6 @@
 # The HTTP endpoint for your Prisma API
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: http://localhost:4456
 # secret: ${env:PRISMA_SECRET}
 
 # Points to the file that contains your datamodel
@@ -12,4 +13,4 @@ generate:
 
 seed:
   # import: ./seeds/seed_users.graphql
-  run: node ./seeds/01_seed_users.js
+  run: node ./prisma/seeds/01_seed_users.js

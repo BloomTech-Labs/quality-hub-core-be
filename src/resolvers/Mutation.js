@@ -2,9 +2,10 @@ const bcrypt = require("bcryptjs");
 const stripe = require("../stripe");
 
 const {
-  generateToken,
-  checkFields,
-  getUserId
+	getAuth0Token,
+	generateToken,
+  	checkFields,
+  	getUserId
   // checkAdmin,
 } = require("../utils");
 
@@ -65,7 +66,8 @@ async function signup(_parent, args, context) {
     city_lc: city.toLowerCase(),
     state_lc: state.toLowerCase()
   });
-  const token = generateToken(user);
+//   const token = generateToken(context);
+const token = getAuth0Token();
 
   return {
     token,
@@ -84,7 +86,8 @@ async function signup(_parent, args, context) {
 */
 async function login(_parent, args, context) {
   const user = await context.prisma.user({ email: args.email });
-  const token = generateToken(user);
+//   const token = generateToken(context);
+const token = getAuth0Token();
   const passwordMatch = await bcrypt.compare(args.password, user.password);
   console.log(user);
   if (!user || !passwordMatch) {

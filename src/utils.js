@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = 'AXEA4pelcjSTgBeoCOUQ8PNwrBzdNxLpV2Htjp6gVaDxc7oVnW7EDkK6Tvc2Wksi';
+const options = {
+  audience: "https://explorequality.auth0.com/api/v2/",
+  issuer: "https://explorequality.auth0.com/"
+}
 
 /*
   @param {Object} args - arguments sent into mutation such as fields for signup
@@ -15,6 +19,21 @@ function checkFields(args) {
       throw new Error("Invalid input for required fields");
     }
   }
+}
+
+/* 
+  generate jwt token based on auth o token
+*/
+const generateAuth0Token = (token) => {
+  const payload = {
+    id: jwt.decoded(token.id)
+  }
+}
+
+async function getAuth0Token(context){
+  const Authorization = await context.request.get('Authorization');
+  console.log("getAuth0Token Authorization", Authorization);
+  return Authorization;
 }
 
 /*
@@ -33,6 +52,8 @@ function generateToken(user) {
   return jwt.sign(payload, JWT_SECRET, options);
 }
 
+
+
 /* 
   @param {Object} context - Contains request object
 
@@ -43,13 +64,27 @@ function generateToken(user) {
 */
 function getUserId(context) {
   const Authorization = context.request.get("Authorization");
+console.log("Authorization", Authorization)
+  console.log("GET AUTH0 TOKEN!!!!!!!!!!", getAuth0Token());
+
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
-    const { sub: userId } = jwt.verify(token, JWT_SECRET);
-    return userId;
-  }
+    console.log("token", token);  
+    const jwToken = jwt.verify(token, JWT_SECRET);
+    return jwToken.sub;
+  } 
   throw new Error("Not Authenticated");
 }
+
+// function getUserId(context) {
+//   const Authorization = context.request.get('Authorization')
+//   if (Authorization) {
+//     const token = Authorization.replace('Bearer ', '')
+//     const jwToken = jwt.verify(token, JWT_SECRET)
+//     return jwToken.userId;
+//   }
+//   throw new Error('Not Authenticated')
+// }
 
 /*
   Checks the email stored in the token against the saved admin email in an .env file.
@@ -96,5 +131,6 @@ module.exports = {
   getUserId,
   checkAdmin,
   validToken,
+  getAuth0Token,
   round
 };

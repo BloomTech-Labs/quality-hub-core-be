@@ -30,6 +30,7 @@ async function users(parent, args, context, info) {
 
 
 async function me(_parent, _args, context) {
+	console.log('user', getUserId(context))
 	return await context.prisma.user({ id: getUserId(context) });
 }
 
@@ -78,6 +79,7 @@ function splitAndTrimTags(tagString) {
 }
 
 function checkToken(parent, args, context, info) {
+	// console.log("checkToken context", context);
 	return validToken(context)
 }
 
