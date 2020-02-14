@@ -20,6 +20,17 @@ const resolvers = {
   ResumeReview,
 };
 
+const autheticate = async (resolve, root, args, context, info) => {
+  let token;
+  try {
+      token = context.request.get("Authorization");
+      console.log('token', token)
+  } catch (e) {
+      return new AuthenticationError("No token");
+  }
+  const result = await resolve(root, args, context, info);
+  return result;
+};
 
 
 const server = new GraphQLServer({
@@ -32,6 +43,7 @@ const server = new GraphQLServer({
   context: request => {
     return { ...request, prisma };
   },
+  middlewares: [autheticate]
 });
 
 module.exports = server;
