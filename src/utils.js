@@ -1,6 +1,27 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const formatKey = key => {
+  const beginKey = "-----BEGIN CERTIFICATE-----";
+  const endKey = "-----END CERTIFICATE-----";
+
+  const sanatizedKey = key
+    .replace(beginKey, "")
+    .replace(endKey, "")
+    .replace("\n", "");
+
+  const keyArray = sanatizedKey.split("").map((l, i) => {
+    const position = i + 1;
+    const isLastCharacter = sanatizedKey.length === position;
+    if (position % 64 === 0 || isLastCharacter) {
+      return l + "\n";
+    }
+    return l;
+  });
+
+  return `${beginKey}\n${keyArray.join("")}${endKey}\n`;
+};
 
 /*
   @param {Object} args - arguments sent into mutation such as fields for signup
@@ -12,7 +33,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 function checkFields(args) {
   for (let key of Object.keys(args)) {
     if (!args[key]) {
-      throw new Error('Invalid input for required fields');
+      throw new Error("Invalid input for required fields");
     }
   }
 }
@@ -25,12 +46,12 @@ function checkFields(args) {
 function generateToken(user) {
   const payload = {
     id: user.id,
-    email: user.email,
+    email: user.email
   };
   const options = {
-    expiresIn: '3d'
-  }
-  return jwt.sign(payload, JWT_SECRET, options)
+    expiresIn: "3d"
+  };
+  return jwt.sign(payload, JWT_SECRET, options);
 }
 
 /* 
@@ -42,61 +63,64 @@ function generateToken(user) {
   @return {ID} userId - User ID stored in token
 */
 function getUserId(context) {
-  // const Authorization = context.request.get('Authorization')
-  // if (Authorization) {
-  //   const token = Authorization.replace('Bearer ', '')
-  //   const { id: userId } = jwt.verify(token, JWT_SECRET)
-  //   return userId
-  // }
-  return 'ck6l9nbo4002r0904usi9aly2'
-  throw new Error('Not Authenticated')
+  const Authorization = context.request.get("Authorization");
+
+  if (Authorization) {
+    const token = Authorization.replace("Bearer ", "");
+    const userId = jwt.decode(token).sub;
+    console.log("GETTING USER ID: ", userId);
+    return userId;
+  }
+
+  // return "ck6qypadb000v0733r95a33gb";
+  throw new Error("Not Authenticated");
 }
 
 /*
   Checks the email stored in the token against the saved admin email in an .env file.
 */
 async function checkAdmin(context) {
-  const user = await context.prisma.user({ id: getUserId(context) })
+  const user = await context.prisma.user({ id: getUserId(context) });
   if (user.email !== process.env.ADMIN_EMAIL) {
-    throw new Error('You are unauthorized to perform this action.')
+    throw new Error("You are unauthorized to perform this action.");
   }
 }
 
 function validToken(context) {
-  const Authorization = context.request.get('Authorization')
+  const Authorization = context.request.get("Authorization");
   if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
+    const token = Authorization.replace("Bearer ", "");
     return jwt.verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {
         return {
           token: "",
           valid: false
-        }
+        };
       } else {
         return {
           token: generateToken(decoded),
           valid: true
-        }
+        };
       }
-    })
+    });
   }
-  throw new Error('Not Authenticated')
+  throw new Error("Not Authenticated");
 }
 
 // this function is used to round average_coach_rating
 function round(value) {
-  console.log(`rounding value`, value)
+  console.log(`rounding value`, value);
   const rounded = Math.round(value * 2) / 2;
-  console.log(`rounded val`, rounded)
-  return rounded
+  console.log(`rounded val`, rounded);
+  return rounded;
 }
 
-
 module.exports = {
+  formatKey,
   checkFields,
   generateToken,
   getUserId,
   checkAdmin,
   validToken,
-  round,
-}
+  round
+};
