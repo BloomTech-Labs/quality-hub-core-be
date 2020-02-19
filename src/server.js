@@ -74,8 +74,8 @@ const authenticate = async (resolve, root, args, context, info) => {
 
 const authCheck = {
   Query: {
-    user: authenticate,
-    users: authenticate
+    // user: authenticate,
+    // users: authenticate
     // me: authenticate
   }
 };

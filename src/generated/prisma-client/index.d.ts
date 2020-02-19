@@ -210,6 +210,8 @@ export type ResponseOrderByInput =
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "authId_ASC"
+  | "authId_DESC"
   | "stripeId_ASC"
   | "stripeId_DESC"
   | "stripeCusId_ASC"
@@ -259,41 +261,9 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ResponseUpdateInput {
-  review?: Maybe<ReviewUpdateOneRequiredWithoutResponseInput>;
-  text?: Maybe<String>;
-}
-
 export type ResponseWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface UserUpdateWithoutReviewsReceivedDataInput {
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc?: Maybe<String>;
-  ln_lc?: Maybe<String>;
-  city_lc?: Maybe<String>;
-  state_lc?: Maybe<String>;
-  chatActive?: Maybe<Boolean>;
-  reviewsGiven?: Maybe<ReviewUpdateManyWithoutSeekerInput>;
-}
 
 export interface ReviewWhereInput {
   id?: Maybe<ID_Input>;
@@ -374,245 +344,6 @@ export interface ReviewWhereInput {
   NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
 }
 
-export interface ReviewCreateWithoutSeekerInput {
-  id?: Maybe<ID_Input>;
-  coach: UserCreateOneWithoutReviewsReceivedInput;
-  job: String;
-  rating: Int;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
-  microservice: Microservice;
-}
-
-export interface UserUpdateWithoutReviewsGivenDataInput {
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc?: Maybe<String>;
-  ln_lc?: Maybe<String>;
-  city_lc?: Maybe<String>;
-  state_lc?: Maybe<String>;
-  chatActive?: Maybe<Boolean>;
-  reviewsReceived?: Maybe<ReviewUpdateManyWithoutCoachInput>;
-}
-
-export interface ResponseCreateOneWithoutReviewInput {
-  create?: Maybe<ResponseCreateWithoutReviewInput>;
-  connect?: Maybe<ResponseWhereUniqueInput>;
-}
-
-export interface ReviewUpdateManyWithoutSeekerInput {
-  create?: Maybe<
-    ReviewCreateWithoutSeekerInput[] | ReviewCreateWithoutSeekerInput
-  >;
-  delete?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  set?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  disconnect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  update?: Maybe<
-    | ReviewUpdateWithWhereUniqueWithoutSeekerInput[]
-    | ReviewUpdateWithWhereUniqueWithoutSeekerInput
-  >;
-  upsert?: Maybe<
-    | ReviewUpsertWithWhereUniqueWithoutSeekerInput[]
-    | ReviewUpsertWithWhereUniqueWithoutSeekerInput
-  >;
-  deleteMany?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
-  updateMany?: Maybe<
-    | ReviewUpdateManyWithWhereNestedInput[]
-    | ReviewUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ResponseCreateWithoutReviewInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface UserCreateOneWithoutReviewsGivenInput {
-  create?: Maybe<UserCreateWithoutReviewsGivenInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ResponseSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ResponseWhereInput>;
-  AND?: Maybe<
-    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
-  >;
-  OR?: Maybe<ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput>;
-  NOT?: Maybe<
-    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
-  >;
-}
-
-export interface UserCreateWithoutReviewsGivenInput {
-  id?: Maybe<ID_Input>;
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc?: Maybe<String>;
-  ln_lc?: Maybe<String>;
-  city_lc?: Maybe<String>;
-  state_lc?: Maybe<String>;
-  chatActive?: Maybe<Boolean>;
-  reviewsReceived?: Maybe<ReviewCreateManyWithoutCoachInput>;
-}
-
-export interface UserUpdateInput {
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  gender?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  fn_lc?: Maybe<String>;
-  ln_lc?: Maybe<String>;
-  city_lc?: Maybe<String>;
-  state_lc?: Maybe<String>;
-  chatActive?: Maybe<Boolean>;
-  reviewsReceived?: Maybe<ReviewUpdateManyWithoutCoachInput>;
-  reviewsGiven?: Maybe<ReviewUpdateManyWithoutSeekerInput>;
-}
-
-export interface ReviewCreateManyWithoutCoachInput {
-  create?: Maybe<
-    ReviewCreateWithoutCoachInput[] | ReviewCreateWithoutCoachInput
-  >;
-  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-}
-
-export interface ReviewUpdateManyMutationInput {
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  microservice?: Maybe<Microservice>;
-}
-
-export interface ReviewCreateWithoutCoachInput {
-  id?: Maybe<ID_Input>;
-  seeker: UserCreateOneWithoutReviewsGivenInput;
-  job: String;
-  rating: Int;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
-  microservice: Microservice;
-}
-
-export interface ReviewUpdateInput {
-  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
-  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
-  microservice?: Maybe<Microservice>;
-}
-
-export interface ReviewUpdateWithWhereUniqueWithoutCoachInput {
-  where: ReviewWhereUniqueInput;
-  data: ReviewUpdateWithoutCoachDataInput;
-}
-
-export interface ResponseUpdateManyMutationInput {
-  text?: Maybe<String>;
-}
-
-export interface ReviewUpdateOneRequiredWithoutResponseInput {
-  create?: Maybe<ReviewCreateWithoutResponseInput>;
-  update?: Maybe<ReviewUpdateWithoutResponseDataInput>;
-  upsert?: Maybe<ReviewUpsertWithoutResponseInput>;
-  connect?: Maybe<ReviewWhereUniqueInput>;
-}
-
-export interface ReviewUpsertWithoutResponseInput {
-  update: ReviewUpdateWithoutResponseDataInput;
-  create: ReviewCreateWithoutResponseInput;
-}
-
-export interface ReviewUpdateWithoutResponseDataInput {
-  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
-  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  microservice?: Maybe<Microservice>;
-}
-
-export interface ReviewUpsertWithWhereUniqueWithoutCoachInput {
-  where: ReviewWhereUniqueInput;
-  update: ReviewUpdateWithoutCoachDataInput;
-  create: ReviewCreateWithoutCoachInput;
-}
-
-export interface UserUpdateOneRequiredWithoutReviewsReceivedInput {
-  create?: Maybe<UserCreateWithoutReviewsReceivedInput>;
-  update?: Maybe<UserUpdateWithoutReviewsReceivedDataInput>;
-  upsert?: Maybe<UserUpsertWithoutReviewsReceivedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ReviewCreateOneWithoutResponseInput {
-  create?: Maybe<ReviewCreateWithoutResponseInput>;
-  connect?: Maybe<ReviewWhereUniqueInput>;
-}
-
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -628,6 +359,20 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  authId?: Maybe<String>;
+  authId_not?: Maybe<String>;
+  authId_in?: Maybe<String[] | String>;
+  authId_not_in?: Maybe<String[] | String>;
+  authId_lt?: Maybe<String>;
+  authId_lte?: Maybe<String>;
+  authId_gt?: Maybe<String>;
+  authId_gte?: Maybe<String>;
+  authId_contains?: Maybe<String>;
+  authId_not_contains?: Maybe<String>;
+  authId_starts_with?: Maybe<String>;
+  authId_not_starts_with?: Maybe<String>;
+  authId_ends_with?: Maybe<String>;
+  authId_not_ends_with?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeId_not?: Maybe<String>;
   stripeId_in?: Maybe<String[] | String>;
@@ -937,32 +682,123 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface ResponseWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  review?: Maybe<ReviewWhereInput>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+}
+
+export type ReviewWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  job?: Maybe<String>;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  authId?: Maybe<String>;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  email?: Maybe<String>;
+}>;
+
+export interface ResponseCreateInput {
+  id?: Maybe<ID_Input>;
+  review: ReviewCreateOneWithoutResponseInput;
+  text: String;
+}
+
+export interface ReviewCreateOneWithoutResponseInput {
+  create?: Maybe<ReviewCreateWithoutResponseInput>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface ReviewCreateWithoutResponseInput {
+  id?: Maybe<ID_Input>;
+  coach: UserCreateOneWithoutReviewsReceivedInput;
+  seeker: UserCreateOneWithoutReviewsGivenInput;
+  job: String;
+  rating: Int;
+  review?: Maybe<String>;
+  microservice: Microservice;
+}
+
 export interface UserCreateOneWithoutReviewsReceivedInput {
   create?: Maybe<UserCreateWithoutReviewsReceivedInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface ReviewUpdateManyWithoutCoachInput {
-  create?: Maybe<
-    ReviewCreateWithoutCoachInput[] | ReviewCreateWithoutCoachInput
-  >;
-  delete?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  set?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  disconnect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
-  update?: Maybe<
-    | ReviewUpdateWithWhereUniqueWithoutCoachInput[]
-    | ReviewUpdateWithWhereUniqueWithoutCoachInput
-  >;
-  upsert?: Maybe<
-    | ReviewUpsertWithWhereUniqueWithoutCoachInput[]
-    | ReviewUpsertWithWhereUniqueWithoutCoachInput
-  >;
-  deleteMany?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
-  updateMany?: Maybe<
-    | ReviewUpdateManyWithWhereNestedInput[]
-    | ReviewUpdateManyWithWhereNestedInput
-  >;
+export interface UserCreateWithoutReviewsReceivedInput {
+  id?: Maybe<ID_Input>;
+  authId: String;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+  reviewsGiven?: Maybe<ReviewCreateManyWithoutSeekerInput>;
 }
 
 export interface ReviewCreateManyWithoutSeekerInput {
@@ -972,33 +808,34 @@ export interface ReviewCreateManyWithoutSeekerInput {
   connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
 }
 
-export interface ReviewUpdateWithWhereUniqueWithoutSeekerInput {
-  where: ReviewWhereUniqueInput;
-  data: ReviewUpdateWithoutSeekerDataInput;
-}
-
-export interface ReviewSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ReviewWhereInput>;
-  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-}
-
-export interface ReviewUpdateWithoutSeekerDataInput {
-  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
-  microservice?: Maybe<Microservice>;
-}
-
-export interface UserCreateInput {
+export interface ReviewCreateWithoutSeekerInput {
   id?: Maybe<ID_Input>;
+  coach: UserCreateOneWithoutReviewsReceivedInput;
+  job: String;
+  rating: Int;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
+  microservice: Microservice;
+}
+
+export interface ResponseCreateOneWithoutReviewInput {
+  create?: Maybe<ResponseCreateWithoutReviewInput>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
+}
+
+export interface ResponseCreateWithoutReviewInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+}
+
+export interface UserCreateOneWithoutReviewsGivenInput {
+  create?: Maybe<UserCreateWithoutReviewsGivenInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutReviewsGivenInput {
+  id?: Maybe<ID_Input>;
+  authId: String;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name: String;
@@ -1023,21 +860,17 @@ export interface UserCreateInput {
   state_lc?: Maybe<String>;
   chatActive?: Maybe<Boolean>;
   reviewsReceived?: Maybe<ReviewCreateManyWithoutCoachInput>;
-  reviewsGiven?: Maybe<ReviewCreateManyWithoutSeekerInput>;
 }
 
-export interface ResponseUpdateOneWithoutReviewInput {
-  create?: Maybe<ResponseCreateWithoutReviewInput>;
-  update?: Maybe<ResponseUpdateWithoutReviewDataInput>;
-  upsert?: Maybe<ResponseUpsertWithoutReviewInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ResponseWhereUniqueInput>;
+export interface ReviewCreateManyWithoutCoachInput {
+  create?: Maybe<
+    ReviewCreateWithoutCoachInput[] | ReviewCreateWithoutCoachInput
+  >;
+  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
 }
 
-export interface ReviewCreateInput {
+export interface ReviewCreateWithoutCoachInput {
   id?: Maybe<ID_Input>;
-  coach: UserCreateOneWithoutReviewsReceivedInput;
   seeker: UserCreateOneWithoutReviewsGivenInput;
   job: String;
   rating: Int;
@@ -1046,42 +879,44 @@ export interface ReviewCreateInput {
   microservice: Microservice;
 }
 
-export interface ResponseUpdateWithoutReviewDataInput {
+export interface ResponseUpdateInput {
+  review?: Maybe<ReviewUpdateOneRequiredWithoutResponseInput>;
   text?: Maybe<String>;
 }
 
-export interface UserUpsertWithoutReviewsGivenInput {
-  update: UserUpdateWithoutReviewsGivenDataInput;
-  create: UserCreateWithoutReviewsGivenInput;
+export interface ReviewUpdateOneRequiredWithoutResponseInput {
+  create?: Maybe<ReviewCreateWithoutResponseInput>;
+  update?: Maybe<ReviewUpdateWithoutResponseDataInput>;
+  upsert?: Maybe<ReviewUpsertWithoutResponseInput>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
 }
 
-export interface ResponseUpsertWithoutReviewInput {
-  update: ResponseUpdateWithoutReviewDataInput;
-  create: ResponseCreateWithoutReviewInput;
+export interface ReviewUpdateWithoutResponseDataInput {
+  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
+  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  microservice?: Maybe<Microservice>;
 }
 
-export interface ResponseCreateInput {
-  id?: Maybe<ID_Input>;
-  review: ReviewCreateOneWithoutResponseInput;
-  text: String;
+export interface UserUpdateOneRequiredWithoutReviewsReceivedInput {
+  create?: Maybe<UserCreateWithoutReviewsReceivedInput>;
+  update?: Maybe<UserUpdateWithoutReviewsReceivedDataInput>;
+  upsert?: Maybe<UserUpsertWithoutReviewsReceivedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface ReviewUpsertWithWhereUniqueWithoutSeekerInput {
-  where: ReviewWhereUniqueInput;
-  update: ReviewUpdateWithoutSeekerDataInput;
-  create: ReviewCreateWithoutSeekerInput;
-}
-
-export interface UserCreateWithoutReviewsReceivedInput {
-  id?: Maybe<ID_Input>;
+export interface UserUpdateWithoutReviewsReceivedDataInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
   gender?: Maybe<String>;
   bio?: Maybe<String>;
   image_url?: Maybe<String>;
@@ -1097,7 +932,68 @@ export interface UserCreateWithoutReviewsReceivedInput {
   city_lc?: Maybe<String>;
   state_lc?: Maybe<String>;
   chatActive?: Maybe<Boolean>;
-  reviewsGiven?: Maybe<ReviewCreateManyWithoutSeekerInput>;
+  reviewsGiven?: Maybe<ReviewUpdateManyWithoutSeekerInput>;
+}
+
+export interface ReviewUpdateManyWithoutSeekerInput {
+  create?: Maybe<
+    ReviewCreateWithoutSeekerInput[] | ReviewCreateWithoutSeekerInput
+  >;
+  delete?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  set?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  disconnect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  update?: Maybe<
+    | ReviewUpdateWithWhereUniqueWithoutSeekerInput[]
+    | ReviewUpdateWithWhereUniqueWithoutSeekerInput
+  >;
+  upsert?: Maybe<
+    | ReviewUpsertWithWhereUniqueWithoutSeekerInput[]
+    | ReviewUpsertWithWhereUniqueWithoutSeekerInput
+  >;
+  deleteMany?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
+  updateMany?: Maybe<
+    | ReviewUpdateManyWithWhereNestedInput[]
+    | ReviewUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ReviewUpdateWithWhereUniqueWithoutSeekerInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUpdateWithoutSeekerDataInput;
+}
+
+export interface ReviewUpdateWithoutSeekerDataInput {
+  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
+  microservice?: Maybe<Microservice>;
+}
+
+export interface ResponseUpdateOneWithoutReviewInput {
+  create?: Maybe<ResponseCreateWithoutReviewInput>;
+  update?: Maybe<ResponseUpdateWithoutReviewDataInput>;
+  upsert?: Maybe<ResponseUpsertWithoutReviewInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
+}
+
+export interface ResponseUpdateWithoutReviewDataInput {
+  text?: Maybe<String>;
+}
+
+export interface ResponseUpsertWithoutReviewInput {
+  update: ResponseUpdateWithoutReviewDataInput;
+  create: ResponseCreateWithoutReviewInput;
+}
+
+export interface ReviewUpsertWithWhereUniqueWithoutSeekerInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUpdateWithoutSeekerDataInput;
+  create: ReviewCreateWithoutSeekerInput;
 }
 
 export interface ReviewScalarWhereInput {
@@ -1176,7 +1072,204 @@ export interface ReviewScalarWhereInput {
   NOT?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
 }
 
+export interface ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUpdateManyDataInput;
+}
+
+export interface ReviewUpdateManyDataInput {
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  microservice?: Maybe<Microservice>;
+}
+
+export interface UserUpsertWithoutReviewsReceivedInput {
+  update: UserUpdateWithoutReviewsReceivedDataInput;
+  create: UserCreateWithoutReviewsReceivedInput;
+}
+
+export interface UserUpdateOneRequiredWithoutReviewsGivenInput {
+  create?: Maybe<UserCreateWithoutReviewsGivenInput>;
+  update?: Maybe<UserUpdateWithoutReviewsGivenDataInput>;
+  upsert?: Maybe<UserUpsertWithoutReviewsGivenInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutReviewsGivenDataInput {
+  authId?: Maybe<String>;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+  reviewsReceived?: Maybe<ReviewUpdateManyWithoutCoachInput>;
+}
+
+export interface ReviewUpdateManyWithoutCoachInput {
+  create?: Maybe<
+    ReviewCreateWithoutCoachInput[] | ReviewCreateWithoutCoachInput
+  >;
+  delete?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  set?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  disconnect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
+  update?: Maybe<
+    | ReviewUpdateWithWhereUniqueWithoutCoachInput[]
+    | ReviewUpdateWithWhereUniqueWithoutCoachInput
+  >;
+  upsert?: Maybe<
+    | ReviewUpsertWithWhereUniqueWithoutCoachInput[]
+    | ReviewUpsertWithWhereUniqueWithoutCoachInput
+  >;
+  deleteMany?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
+  updateMany?: Maybe<
+    | ReviewUpdateManyWithWhereNestedInput[]
+    | ReviewUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ReviewUpdateWithWhereUniqueWithoutCoachInput {
+  where: ReviewWhereUniqueInput;
+  data: ReviewUpdateWithoutCoachDataInput;
+}
+
+export interface ReviewUpdateWithoutCoachDataInput {
+  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
+  microservice?: Maybe<Microservice>;
+}
+
+export interface ReviewUpsertWithWhereUniqueWithoutCoachInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUpdateWithoutCoachDataInput;
+  create: ReviewCreateWithoutCoachInput;
+}
+
+export interface UserUpsertWithoutReviewsGivenInput {
+  update: UserUpdateWithoutReviewsGivenDataInput;
+  create: UserCreateWithoutReviewsGivenInput;
+}
+
+export interface ReviewUpsertWithoutResponseInput {
+  update: ReviewUpdateWithoutResponseDataInput;
+  create: ReviewCreateWithoutResponseInput;
+}
+
+export interface ResponseUpdateManyMutationInput {
+  text?: Maybe<String>;
+}
+
+export interface ReviewCreateInput {
+  id?: Maybe<ID_Input>;
+  coach: UserCreateOneWithoutReviewsReceivedInput;
+  seeker: UserCreateOneWithoutReviewsGivenInput;
+  job: String;
+  rating: Int;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
+  microservice: Microservice;
+}
+
+export interface ReviewUpdateInput {
+  coach?: Maybe<UserUpdateOneRequiredWithoutReviewsReceivedInput>;
+  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
+  microservice?: Maybe<Microservice>;
+}
+
+export interface ReviewUpdateManyMutationInput {
+  job?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  microservice?: Maybe<Microservice>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  authId: String;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+  reviewsReceived?: Maybe<ReviewCreateManyWithoutCoachInput>;
+  reviewsGiven?: Maybe<ReviewCreateManyWithoutSeekerInput>;
+}
+
+export interface UserUpdateInput {
+  authId?: Maybe<String>;
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  gender?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  fn_lc?: Maybe<String>;
+  ln_lc?: Maybe<String>;
+  city_lc?: Maybe<String>;
+  state_lc?: Maybe<String>;
+  chatActive?: Maybe<Boolean>;
+  reviewsReceived?: Maybe<ReviewUpdateManyWithoutCoachInput>;
+  reviewsGiven?: Maybe<ReviewUpdateManyWithoutSeekerInput>;
+}
+
 export interface UserUpdateManyMutationInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
@@ -1202,354 +1295,80 @@ export interface UserUpdateManyMutationInput {
   chatActive?: Maybe<Boolean>;
 }
 
-export interface UserUpdateOneRequiredWithoutReviewsGivenInput {
-  create?: Maybe<UserCreateWithoutReviewsGivenInput>;
-  update?: Maybe<UserUpdateWithoutReviewsGivenDataInput>;
-  upsert?: Maybe<UserUpsertWithoutReviewsGivenInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface ResponseSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ResponseWhereInput>;
+  AND?: Maybe<
+    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
+  >;
+  OR?: Maybe<ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput>;
+  NOT?: Maybe<
+    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
+  >;
 }
 
-export interface UserUpsertWithoutReviewsReceivedInput {
-  update: UserUpdateWithoutReviewsReceivedDataInput;
-  create: UserCreateWithoutReviewsReceivedInput;
+export interface ReviewSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ReviewWhereInput>;
+  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
 }
 
-export interface ReviewUpdateManyDataInput {
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  microservice?: Maybe<Microservice>;
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
-
-export interface ReviewUpdateManyWithWhereNestedInput {
-  where: ReviewScalarWhereInput;
-  data: ReviewUpdateManyDataInput;
-}
-
-export type ReviewWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  job?: Maybe<String>;
-}>;
-
-export interface ResponseWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  review?: Maybe<ReviewWhereInput>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  lastUpdated?: Maybe<DateTimeInput>;
-  lastUpdated_not?: Maybe<DateTimeInput>;
-  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_lt?: Maybe<DateTimeInput>;
-  lastUpdated_lte?: Maybe<DateTimeInput>;
-  lastUpdated_gt?: Maybe<DateTimeInput>;
-  lastUpdated_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-}
-
-export interface ReviewCreateWithoutResponseInput {
-  id?: Maybe<ID_Input>;
-  coach: UserCreateOneWithoutReviewsReceivedInput;
-  seeker: UserCreateOneWithoutReviewsGivenInput;
-  job: String;
-  rating: Int;
-  review?: Maybe<String>;
-  microservice: Microservice;
-}
-
-export interface ReviewUpdateWithoutCoachDataInput {
-  seeker?: Maybe<UserUpdateOneRequiredWithoutReviewsGivenInput>;
-  job?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
-  microservice?: Maybe<Microservice>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  email?: Maybe<String>;
-}>;
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UserPreviousValues {
+export interface Response {
   id: ID_Output;
-  stripeId?: String;
-  stripeCusId?: String;
-  first_name: String;
-  last_name: String;
-  email: String;
-  password: String;
-  city: String;
-  state: String;
-  gender?: String;
-  bio?: String;
-  image_url?: String;
-  portfolio_url?: String;
-  linkedin_url?: String;
-  github_url?: String;
-  personal_url?: String;
-  blog_url?: String;
-  twitter_url?: String;
-  activated_stripe?: Boolean;
-  fn_lc?: String;
-  ln_lc?: String;
-  city_lc?: String;
-  state_lc?: String;
-  chatActive?: Boolean;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  stripeId: () => Promise<String>;
-  stripeCusId: () => Promise<String>;
-  first_name: () => Promise<String>;
-  last_name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  city: () => Promise<String>;
-  state: () => Promise<String>;
-  gender: () => Promise<String>;
-  bio: () => Promise<String>;
-  image_url: () => Promise<String>;
-  portfolio_url: () => Promise<String>;
-  linkedin_url: () => Promise<String>;
-  github_url: () => Promise<String>;
-  personal_url: () => Promise<String>;
-  blog_url: () => Promise<String>;
-  twitter_url: () => Promise<String>;
-  activated_stripe: () => Promise<Boolean>;
-  fn_lc: () => Promise<String>;
-  ln_lc: () => Promise<String>;
-  city_lc: () => Promise<String>;
-  state_lc: () => Promise<String>;
-  chatActive: () => Promise<Boolean>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  stripeId: () => Promise<AsyncIterator<String>>;
-  stripeCusId: () => Promise<AsyncIterator<String>>;
-  first_name: () => Promise<AsyncIterator<String>>;
-  last_name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  state: () => Promise<AsyncIterator<String>>;
-  gender: () => Promise<AsyncIterator<String>>;
-  bio: () => Promise<AsyncIterator<String>>;
-  image_url: () => Promise<AsyncIterator<String>>;
-  portfolio_url: () => Promise<AsyncIterator<String>>;
-  linkedin_url: () => Promise<AsyncIterator<String>>;
-  github_url: () => Promise<AsyncIterator<String>>;
-  personal_url: () => Promise<AsyncIterator<String>>;
-  blog_url: () => Promise<AsyncIterator<String>>;
-  twitter_url: () => Promise<AsyncIterator<String>>;
-  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
-  fn_lc: () => Promise<AsyncIterator<String>>;
-  ln_lc: () => Promise<AsyncIterator<String>>;
-  city_lc: () => Promise<AsyncIterator<String>>;
-  state_lc: () => Promise<AsyncIterator<String>>;
-  chatActive: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface ReviewConnection {
-  pageInfo: PageInfo;
-  edges: ReviewEdge[];
-}
-
-export interface ReviewConnectionPromise
-  extends Promise<ReviewConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ReviewEdge>>() => T;
-  aggregate: <T = AggregateReviewPromise>() => T;
-}
-
-export interface ReviewConnectionSubscription
-  extends Promise<AsyncIterator<ReviewConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateReviewSubscription>() => T;
-}
-
-export interface ReviewSubscriptionPayload {
-  mutation: MutationType;
-  node: Review;
-  updatedFields: String[];
-  previousValues: ReviewPreviousValues;
-}
-
-export interface ReviewSubscriptionPayloadPromise
-  extends Promise<ReviewSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ReviewPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ReviewPreviousValuesPromise>() => T;
-}
-
-export interface ReviewSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ReviewSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateResponse {
-  count: Int;
-}
-
-export interface AggregateResponsePromise
-  extends Promise<AggregateResponse>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateResponseSubscription
-  extends Promise<AsyncIterator<AggregateResponse>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ResponseEdge {
-  node: Response;
-  cursor: String;
-}
-
-export interface ResponseEdgePromise
-  extends Promise<ResponseEdge>,
-    Fragmentable {
-  node: <T = ResponsePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ResponseEdgeSubscription
-  extends Promise<AsyncIterator<ResponseEdge>>,
-    Fragmentable {
-  node: <T = ResponseSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ReviewPreviousValues {
-  id: ID_Output;
-  job: String;
-  rating: Int;
-  review?: String;
+  text: String;
   createdAt: DateTimeOutput;
   lastUpdated: DateTimeOutput;
-  microservice: Microservice;
 }
 
-export interface ReviewPreviousValuesPromise
-  extends Promise<ReviewPreviousValues>,
-    Fragmentable {
+export interface ResponsePromise extends Promise<Response>, Fragmentable {
   id: () => Promise<ID_Output>;
-  job: () => Promise<String>;
-  rating: () => Promise<Int>;
-  review: () => Promise<String>;
+  review: <T = ReviewPromise>() => T;
+  text: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   lastUpdated: () => Promise<DateTimeOutput>;
-  microservice: () => Promise<Microservice>;
 }
 
-export interface ReviewPreviousValuesSubscription
-  extends Promise<AsyncIterator<ReviewPreviousValues>>,
+export interface ResponseSubscription
+  extends Promise<AsyncIterator<Response>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  job: () => Promise<AsyncIterator<String>>;
-  rating: () => Promise<AsyncIterator<Int>>;
-  review: () => Promise<AsyncIterator<String>>;
+  review: <T = ReviewSubscription>() => T;
+  text: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-  microservice: () => Promise<AsyncIterator<Microservice>>;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ResponseNullablePromise
+  extends Promise<Response | null>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<ID_Output>;
+  review: <T = ReviewPromise>() => T;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
 }
 
 export interface Review {
@@ -1605,147 +1424,9 @@ export interface ReviewNullablePromise
   microservice: () => Promise<Microservice>;
 }
 
-export interface ResponseConnection {
-  pageInfo: PageInfo;
-  edges: ResponseEdge[];
-}
-
-export interface ResponseConnectionPromise
-  extends Promise<ResponseConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ResponseEdge>>() => T;
-  aggregate: <T = AggregateResponsePromise>() => T;
-}
-
-export interface ResponseConnectionSubscription
-  extends Promise<AsyncIterator<ResponseConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ResponseEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateResponseSubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface ReviewEdge {
-  node: Review;
-  cursor: String;
-}
-
-export interface ReviewEdgePromise extends Promise<ReviewEdge>, Fragmentable {
-  node: <T = ReviewPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ReviewEdgeSubscription
-  extends Promise<AsyncIterator<ReviewEdge>>,
-    Fragmentable {
-  node: <T = ReviewSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ResponsePreviousValues {
-  id: ID_Output;
-  text: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
-}
-
-export interface ResponsePreviousValuesPromise
-  extends Promise<ResponsePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-}
-
-export interface ResponsePreviousValuesSubscription
-  extends Promise<AsyncIterator<ResponsePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ResponseSubscriptionPayload {
-  mutation: MutationType;
-  node: Response;
-  updatedFields: String[];
-  previousValues: ResponsePreviousValues;
-}
-
-export interface ResponseSubscriptionPayloadPromise
-  extends Promise<ResponseSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ResponsePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ResponsePreviousValuesPromise>() => T;
-}
-
-export interface ResponseSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ResponseSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ResponseSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ResponsePreviousValuesSubscription>() => T;
-}
-
-export interface Response {
-  id: ID_Output;
-  text: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
-}
-
-export interface ResponsePromise extends Promise<Response>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  review: <T = ReviewPromise>() => T;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-}
-
-export interface ResponseSubscription
-  extends Promise<AsyncIterator<Response>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  review: <T = ReviewSubscription>() => T;
-  text: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ResponseNullablePromise
-  extends Promise<Response | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  review: <T = ReviewPromise>() => T;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-}
-
 export interface User {
   id: ID_Output;
+  authId: String;
   stripeId?: String;
   stripeCusId?: String;
   first_name: String;
@@ -1773,6 +1454,7 @@ export interface User {
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
   stripeId: () => Promise<String>;
   stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
@@ -1820,6 +1502,7 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  authId: () => Promise<AsyncIterator<String>>;
   stripeId: () => Promise<AsyncIterator<String>>;
   stripeCusId: () => Promise<AsyncIterator<String>>;
   first_name: () => Promise<AsyncIterator<String>>;
@@ -1867,6 +1550,7 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
   stripeId: () => Promise<String>;
   stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
@@ -1910,45 +1594,121 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface AggregateUser {
+export interface ResponseConnection {
+  pageInfo: PageInfo;
+  edges: ResponseEdge[];
+}
+
+export interface ResponseConnectionPromise
+  extends Promise<ResponseConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ResponseEdge>>() => T;
+  aggregate: <T = AggregateResponsePromise>() => T;
+}
+
+export interface ResponseConnectionSubscription
+  extends Promise<AsyncIterator<ResponseConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ResponseEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateResponseSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ResponseEdge {
+  node: Response;
+  cursor: String;
+}
+
+export interface ResponseEdgePromise
+  extends Promise<ResponseEdge>,
+    Fragmentable {
+  node: <T = ResponsePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ResponseEdgeSubscription
+  extends Promise<AsyncIterator<ResponseEdge>>,
+    Fragmentable {
+  node: <T = ResponseSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateResponse {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateResponsePromise
+  extends Promise<AggregateResponse>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateResponseSubscription
+  extends Promise<AsyncIterator<AggregateResponse>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface ReviewConnection {
+  pageInfo: PageInfo;
+  edges: ReviewEdge[];
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface ReviewConnectionPromise
+  extends Promise<ReviewConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ReviewEdge>>() => T;
+  aggregate: <T = AggregateReviewPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface ReviewConnectionSubscription
+  extends Promise<AsyncIterator<ReviewConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateReviewSubscription>() => T;
+}
+
+export interface ReviewEdge {
+  node: Review;
+  cursor: String;
+}
+
+export interface ReviewEdgePromise extends Promise<ReviewEdge>, Fragmentable {
+  node: <T = ReviewPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ReviewEdgeSubscription
+  extends Promise<AsyncIterator<ReviewEdge>>,
+    Fragmentable {
+  node: <T = ReviewSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateReview {
@@ -1988,6 +1748,293 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ResponseSubscriptionPayload {
+  mutation: MutationType;
+  node: Response;
+  updatedFields: String[];
+  previousValues: ResponsePreviousValues;
+}
+
+export interface ResponseSubscriptionPayloadPromise
+  extends Promise<ResponseSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ResponsePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ResponsePreviousValuesPromise>() => T;
+}
+
+export interface ResponseSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ResponseSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ResponseSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ResponsePreviousValuesSubscription>() => T;
+}
+
+export interface ResponsePreviousValues {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
+}
+
+export interface ResponsePreviousValuesPromise
+  extends Promise<ResponsePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+}
+
+export interface ResponsePreviousValuesSubscription
+  extends Promise<AsyncIterator<ResponsePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ReviewSubscriptionPayload {
+  mutation: MutationType;
+  node: Review;
+  updatedFields: String[];
+  previousValues: ReviewPreviousValues;
+}
+
+export interface ReviewSubscriptionPayloadPromise
+  extends Promise<ReviewSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ReviewPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ReviewPreviousValuesPromise>() => T;
+}
+
+export interface ReviewSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ReviewSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
+}
+
+export interface ReviewPreviousValues {
+  id: ID_Output;
+  job: String;
+  rating: Int;
+  review?: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
+  microservice: Microservice;
+}
+
+export interface ReviewPreviousValuesPromise
+  extends Promise<ReviewPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  job: () => Promise<String>;
+  rating: () => Promise<Int>;
+  review: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  microservice: () => Promise<Microservice>;
+}
+
+export interface ReviewPreviousValuesSubscription
+  extends Promise<AsyncIterator<ReviewPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  job: () => Promise<AsyncIterator<String>>;
+  rating: () => Promise<AsyncIterator<Int>>;
+  review: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+  microservice: () => Promise<AsyncIterator<Microservice>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  authId: String;
+  stripeId?: String;
+  stripeCusId?: String;
+  first_name: String;
+  last_name: String;
+  email: String;
+  password: String;
+  city: String;
+  state: String;
+  gender?: String;
+  bio?: String;
+  image_url?: String;
+  portfolio_url?: String;
+  linkedin_url?: String;
+  github_url?: String;
+  personal_url?: String;
+  blog_url?: String;
+  twitter_url?: String;
+  activated_stripe?: Boolean;
+  fn_lc?: String;
+  ln_lc?: String;
+  city_lc?: String;
+  state_lc?: String;
+  chatActive?: Boolean;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
+  stripeId: () => Promise<String>;
+  stripeCusId: () => Promise<String>;
+  first_name: () => Promise<String>;
+  last_name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  city: () => Promise<String>;
+  state: () => Promise<String>;
+  gender: () => Promise<String>;
+  bio: () => Promise<String>;
+  image_url: () => Promise<String>;
+  portfolio_url: () => Promise<String>;
+  linkedin_url: () => Promise<String>;
+  github_url: () => Promise<String>;
+  personal_url: () => Promise<String>;
+  blog_url: () => Promise<String>;
+  twitter_url: () => Promise<String>;
+  activated_stripe: () => Promise<Boolean>;
+  fn_lc: () => Promise<String>;
+  ln_lc: () => Promise<String>;
+  city_lc: () => Promise<String>;
+  state_lc: () => Promise<String>;
+  chatActive: () => Promise<Boolean>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  authId: () => Promise<AsyncIterator<String>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
+  stripeCusId: () => Promise<AsyncIterator<String>>;
+  first_name: () => Promise<AsyncIterator<String>>;
+  last_name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  state: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  bio: () => Promise<AsyncIterator<String>>;
+  image_url: () => Promise<AsyncIterator<String>>;
+  portfolio_url: () => Promise<AsyncIterator<String>>;
+  linkedin_url: () => Promise<AsyncIterator<String>>;
+  github_url: () => Promise<AsyncIterator<String>>;
+  personal_url: () => Promise<AsyncIterator<String>>;
+  blog_url: () => Promise<AsyncIterator<String>>;
+  twitter_url: () => Promise<AsyncIterator<String>>;
+  activated_stripe: () => Promise<AsyncIterator<Boolean>>;
+  fn_lc: () => Promise<AsyncIterator<String>>;
+  ln_lc: () => Promise<AsyncIterator<String>>;
+  city_lc: () => Promise<AsyncIterator<String>>;
+  state_lc: () => Promise<AsyncIterator<String>>;
+  chatActive: () => Promise<AsyncIterator<Boolean>>;
+}
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
@@ -2004,22 +2051,6 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 export type Long = string;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /**
  * Model Metadata

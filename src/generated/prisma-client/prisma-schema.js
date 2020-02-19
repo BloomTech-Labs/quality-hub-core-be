@@ -639,6 +639,7 @@ type Subscription {
 
 type User {
   id: ID!
+  authId: String!
   stripeId: String
   stripeCusId: String
   first_name: String!
@@ -674,6 +675,7 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
+  authId: String!
   stripeId: String
   stripeCusId: String
   first_name: String!
@@ -713,6 +715,7 @@ input UserCreateOneWithoutReviewsReceivedInput {
 
 input UserCreateWithoutReviewsGivenInput {
   id: ID
+  authId: String!
   stripeId: String
   stripeCusId: String
   first_name: String!
@@ -741,6 +744,7 @@ input UserCreateWithoutReviewsGivenInput {
 
 input UserCreateWithoutReviewsReceivedInput {
   id: ID
+  authId: String!
   stripeId: String
   stripeCusId: String
   first_name: String!
@@ -775,6 +779,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  authId_ASC
+  authId_DESC
   stripeId_ASC
   stripeId_DESC
   stripeCusId_ASC
@@ -825,6 +831,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
+  authId: String!
   stripeId: String
   stripeCusId: String
   first_name: String!
@@ -869,6 +876,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
+  authId: String
   stripeId: String
   stripeCusId: String
   first_name: String
@@ -897,6 +905,7 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyMutationInput {
+  authId: String
   stripeId: String
   stripeCusId: String
   first_name: String
@@ -937,6 +946,7 @@ input UserUpdateOneRequiredWithoutReviewsReceivedInput {
 }
 
 input UserUpdateWithoutReviewsGivenDataInput {
+  authId: String
   stripeId: String
   stripeCusId: String
   first_name: String
@@ -964,6 +974,7 @@ input UserUpdateWithoutReviewsGivenDataInput {
 }
 
 input UserUpdateWithoutReviewsReceivedDataInput {
+  authId: String
   stripeId: String
   stripeCusId: String
   first_name: String
@@ -1015,6 +1026,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  authId: String
+  authId_not: String
+  authId_in: [String!]
+  authId_not_in: [String!]
+  authId_lt: String
+  authId_lte: String
+  authId_gt: String
+  authId_gte: String
+  authId_contains: String
+  authId_not_contains: String
+  authId_starts_with: String
+  authId_not_starts_with: String
+  authId_ends_with: String
+  authId_not_ends_with: String
   stripeId: String
   stripeId_not: String
   stripeId_in: [String!]
@@ -1326,6 +1351,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  authId: String
   stripeId: String
   stripeCusId: String
   email: String

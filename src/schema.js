@@ -7,6 +7,7 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   type User @key(fields: "id") {
     id: ID!
+    authId: String!
     stripeCustomerConnected: Boolean
     stripeCoachConnected: Boolean
     first_name: String!
@@ -73,8 +74,11 @@ const typeDefs = gql`
     Register user. Requires unique email. No empty strings cannot be passed in.
     """
     signup(
+      authId: String!
       first_name: String!
       last_name: String!
+      email: String!
+      password: String!
       city: String!
       state: String!
       image_url: String
@@ -174,7 +178,6 @@ const typeDefs = gql`
   Used for log in and sign up. Returns token and user info
   """
   type AuthPayload {
-    token: String!
     user: User!
   }
 

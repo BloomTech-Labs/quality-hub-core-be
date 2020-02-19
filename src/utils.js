@@ -69,10 +69,10 @@ function getUserId(context) {
     const token = Authorization.replace("Bearer ", "");
     const userId = jwt.decode(token).sub;
     console.log("GETTING USER ID: ", userId);
+
     return userId;
   }
-
-  // return "ck6qypadb000v0733r95a33gb";
+  // return "ck6tv2p4l00670733jil2x1xp";
   throw new Error("Not Authenticated");
 }
 

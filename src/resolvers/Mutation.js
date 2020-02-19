@@ -53,30 +53,11 @@ module.exports = {
   @return {String} - token: required for authorization
   @return {Object} - user: type User for newly created account
 */
-// async function signup(_parent, args, context) {
-// 	const { first_name, last_name, password, email, city, state } = args;
-// 	checkFields({ first_name, last_name, password, email, city, state });
-// 	const hash = bcrypt.hashSync(args.password, 10);
-// 	args.password = hash;
-// 	const user = await context.prisma.createUser({
-// 		...args,
-// 		fn_lc: first_name.toLowerCase(),
-// 		ln_lc: last_name.toLowerCase(),
-// 		city_lc: city.toLowerCase(),
-// 		state_lc: state.toLowerCase(),
-// 	});
-// 	const token = generateToken(user);
-
-// 	return {
-// 		token,
-// 		user,
-// 	};
-// }
-
 async function signup(_parent, args, context) {
-  const { first_name, last_name, city, state } = args;
-  checkFields({ first_name, last_name, city, state });
-
+  const { authId, first_name, last_name, password, email, city, state } = args;
+  checkFields({ authId, first_name, last_name, password, email, city, state });
+  const hash = bcrypt.hashSync(args.password, 10);
+  args.password = hash;
   const user = await context.prisma.createUser({
     ...args,
     fn_lc: first_name.toLowerCase(),
@@ -84,6 +65,7 @@ async function signup(_parent, args, context) {
     city_lc: city.toLowerCase(),
     state_lc: state.toLowerCase()
   });
+  // const token = generateToken(user);
 
   return {
     user
@@ -107,7 +89,6 @@ async function login(_parent, args, context) {
     throw new Error("Invalid Login");
   }
   return {
-    token,
     user
   };
 }

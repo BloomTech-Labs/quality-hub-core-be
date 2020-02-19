@@ -1,5 +1,6 @@
 type User @key(fields: "email") {
   id: ID! @id
+  authId: String! @unique
   stripeId: String @unique
   stripeCusId: String @unique
   first_name: String!
