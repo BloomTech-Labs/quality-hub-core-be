@@ -4,7 +4,14 @@ function info() {
   return "Welcome to Quality Hub";
 }
 
+// async function user(parents, args, context, info) {
+//   return await context.prisma.user({ authId: args.authId });
+// }
 async function user(parents, args, context, info) {
+  return await context.prisma.user({ id: args.id });
+}
+
+async function userByAuth(parents, args, context, info) {
   return await context.prisma.user({ authId: args.authId });
 }
 
@@ -27,6 +34,7 @@ async function users(parent, args, context, info) {
 }
 
 async function me(_parent, _args, context) {
+  console.log(await context.prisma.user({ authId: getUserId(context) }));
   return await context.prisma.user({ authId: getUserId(context) });
 }
 
@@ -81,6 +89,7 @@ function checkToken(parent, args, context, info) {
 module.exports = {
   user,
   users,
+  userByAuth,
   info,
   me,
   review,

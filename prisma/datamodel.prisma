@@ -1,4 +1,4 @@
-type User @key(fields: "email") {
+type User @key(fields: "authId") {
   id: ID! @id
   authId: String! @unique
   stripeId: String @unique

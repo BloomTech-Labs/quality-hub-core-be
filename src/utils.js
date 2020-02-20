@@ -45,7 +45,7 @@ function checkFields(args) {
 */
 function generateToken(user) {
   const payload = {
-    id: user.id,
+    // id: user.id,
     email: user.email
   };
   const options = {
@@ -68,11 +68,10 @@ function getUserId(context) {
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
     const userId = jwt.decode(token).sub;
-    console.log("GETTING USER ID: ", userId);
+    console.log("GETTING USER ID FROM CORE!!!: ", userId);
 
     return userId;
   }
-  // return "ck6tv2p4l00670733jil2x1xp";
   throw new Error("Not Authenticated");
 }
 
@@ -80,7 +79,7 @@ function getUserId(context) {
   Checks the email stored in the token against the saved admin email in an .env file.
 */
 async function checkAdmin(context) {
-  const user = await context.prisma.user({ id: getUserId(context) });
+  const user = await context.prisma.user({ id: await getUserId(context) });
   if (user.email !== process.env.ADMIN_EMAIL) {
     throw new Error("You are unauthorized to perform this action.");
   }

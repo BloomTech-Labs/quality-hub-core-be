@@ -5,7 +5,7 @@ const { gql } = require("apollo-server");
 // TODO - extend external type ResumeReview with Review
 
 const typeDefs = gql`
-  type User @key(fields: "id") {
+  type User @key(fields: "authId") @key(fields: "id") {
     id: ID!
     authId: String!
     stripeCustomerConnected: Boolean
@@ -57,6 +57,7 @@ const typeDefs = gql`
     info: String!
     users(keywords: String): [User!]!
     user(id: ID!): User!
+    userByAuth(authId: String): User!
     me: User!
     checkToken: LoginStatus!
     review(id: String): Review
