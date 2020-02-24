@@ -1,16 +1,16 @@
 // TODO update these
 function coach(review) {
-  console.log(`CORE // Response // coach`)
-  return { __typename: "User", id: review.coach }
+  console.log(`CORE // Response // coach`);
+  return { __typename: "User", authId: review.coach };
 }
 
 function seeker(review) {
-  console.log(`CORE // Response // coach`)
+  console.log(`CORE // Response // coach`);
 
-  return { __typename: "User", id: review.seeker }
+  return { __typename: "User", authId: review.seeker };
 }
 
 module.exports = {
   coach,
   seeker
-}
+};

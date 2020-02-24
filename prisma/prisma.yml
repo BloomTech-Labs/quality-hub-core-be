@@ -1,5 +1,6 @@
 # The HTTP endpoint for your Prisma API
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}endpoint: https://core-3ed47f88fe.herokuapp.com/quality-hub-core-be/dev
+
 # secret: ${env:PRISMA_SECRET}
 
 # Points to the file that contains your datamodel

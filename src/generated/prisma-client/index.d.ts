@@ -210,6 +210,8 @@ export type ResponseOrderByInput =
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "authId_ASC"
+  | "authId_DESC"
   | "stripeId_ASC"
   | "stripeId_DESC"
   | "stripeCusId_ASC"
@@ -357,6 +359,20 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  authId?: Maybe<String>;
+  authId_not?: Maybe<String>;
+  authId_in?: Maybe<String[] | String>;
+  authId_not_in?: Maybe<String[] | String>;
+  authId_lt?: Maybe<String>;
+  authId_lte?: Maybe<String>;
+  authId_gt?: Maybe<String>;
+  authId_gte?: Maybe<String>;
+  authId_contains?: Maybe<String>;
+  authId_not_contains?: Maybe<String>;
+  authId_starts_with?: Maybe<String>;
+  authId_not_starts_with?: Maybe<String>;
+  authId_ends_with?: Maybe<String>;
+  authId_not_ends_with?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeId_not?: Maybe<String>;
   stripeId_in?: Maybe<String[] | String>;
@@ -724,6 +740,7 @@ export type ReviewWhereUniqueInput = AtLeastOne<{
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   email?: Maybe<String>;
@@ -757,6 +774,7 @@ export interface UserCreateOneWithoutReviewsReceivedInput {
 
 export interface UserCreateWithoutReviewsReceivedInput {
   id?: Maybe<ID_Input>;
+  authId: String;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name: String;
@@ -817,6 +835,7 @@ export interface UserCreateOneWithoutReviewsGivenInput {
 
 export interface UserCreateWithoutReviewsGivenInput {
   id?: Maybe<ID_Input>;
+  authId: String;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name: String;
@@ -889,6 +908,7 @@ export interface UserUpdateOneRequiredWithoutReviewsReceivedInput {
 }
 
 export interface UserUpdateWithoutReviewsReceivedDataInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
@@ -1077,6 +1097,7 @@ export interface UserUpdateOneRequiredWithoutReviewsGivenInput {
 }
 
 export interface UserUpdateWithoutReviewsGivenDataInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
@@ -1190,6 +1211,7 @@ export interface ReviewUpdateManyMutationInput {
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
+  authId: String;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name: String;
@@ -1218,6 +1240,7 @@ export interface UserCreateInput {
 }
 
 export interface UserUpdateInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
@@ -1246,6 +1269,7 @@ export interface UserUpdateInput {
 }
 
 export interface UserUpdateManyMutationInput {
+  authId?: Maybe<String>;
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
   first_name?: Maybe<String>;
@@ -1402,6 +1426,7 @@ export interface ReviewNullablePromise
 
 export interface User {
   id: ID_Output;
+  authId: String;
   stripeId?: String;
   stripeCusId?: String;
   first_name: String;
@@ -1429,6 +1454,7 @@ export interface User {
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
   stripeId: () => Promise<String>;
   stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
@@ -1476,6 +1502,7 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  authId: () => Promise<AsyncIterator<String>>;
   stripeId: () => Promise<AsyncIterator<String>>;
   stripeCusId: () => Promise<AsyncIterator<String>>;
   first_name: () => Promise<AsyncIterator<String>>;
@@ -1523,6 +1550,7 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
   stripeId: () => Promise<String>;
   stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
@@ -1905,6 +1933,7 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
+  authId: String;
   stripeId?: String;
   stripeCusId?: String;
   first_name: String;
@@ -1934,6 +1963,7 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  authId: () => Promise<String>;
   stripeId: () => Promise<String>;
   stripeCusId: () => Promise<String>;
   first_name: () => Promise<String>;
@@ -1963,6 +1993,7 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  authId: () => Promise<AsyncIterator<String>>;
   stripeId: () => Promise<AsyncIterator<String>>;
   stripeCusId: () => Promise<AsyncIterator<String>>;
   first_name: () => Promise<AsyncIterator<String>>;
