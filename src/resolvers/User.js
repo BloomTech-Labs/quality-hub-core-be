@@ -1,10 +1,6 @@
 const { round, getUserId } = require("../utils");
 
 function __resolveReference(user, context) {
-  console.log(
-    "resolve reference!!!:",
-    context.prisma.user({ authId: user.authId })
-  );
   return context.prisma.user({ authId: user.authId });
 }
 
