@@ -1,0 +1,34 @@
+# The name of the workflow
+    name: build
+    
+    # What conditions trigger the workflow
+    #  In this case, all pushes and pull requests
+    on:
+# Trigger the workflow on push or pull request,
+   # but only for the master branch
+      push:
+       branches:
+         - master
+      pull_request:
+        branches:
+         - master
+    
+    # The jobs that will be run, usually in parallel
+    jobs:
+      # A job to generate and publish code coverage
+      coverage:
+        name: Test and publish test coverage
+    
+        runs-on: ubuntu-latest
+    
+        steps:	
+          - uses: actions/checkout@master
+          - uses: actions/setup-node@master
+            with:
+              node-version: "12"
+          - run: npm install
+          - uses: paambaati/codeclimate-action@v2.4.0
+            env:
+              CC_TEST_REPORTER_ID: acf022d1bacc1cb1e336f1b62a8d0bfa7c0470eaef100c5cb8199a20b406f50b
+            with:
+              coverageCommand: npm run coverage
