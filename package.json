@@ -4,13 +4,13 @@
   "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --detectOpenHandles --forceExit",
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "env-cmd -f ./config/development.env nodemon src/index.js",
     "save_seeded_users": "env-cmd -f ./config/development.env node prisma/seeds/02_save_seeded_users.js",
     "seed_reviews": "env-cmd -f ./config/development.env node prisma/seeds/03_seed_reviews.js",
-    "coverage": "CI=true npm run test || true"
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "repository": {
     "type": "git",
