@@ -1,6 +1,10 @@
 
 Quality Hub Core BE
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/b8ab95377b571cceb25e/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/quality-hub-core-be/maintainability)  
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b8ab95377b571cceb25e/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/quality-hub-core-be/test_coverage)
+
 Deployed on Heroku at [link].
 [Deployment used by Labs19](https://qhub-core.herokuapp.com/)
 
