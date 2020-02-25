@@ -9,6 +9,7 @@
       push:
        branches:
          - master
+         - code-climate-badge
       pull_request:
         branches:
          - master
